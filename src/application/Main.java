@@ -2,6 +2,7 @@ package application;
 import java.util.Scanner;
 
 import model.Account;
+import model.Admin;
 
 
 //MOvie Booking and LIsting Management Application
@@ -20,6 +21,26 @@ public class Main {
 		System.out.printf("\t Password : ");
 		pass = sc.next();
 		Account acc = new Account();
+		boolean work = acc.checkAccount(user,pass);
+		if(work == true) {
+			System.out.println("Successfully Logged In!");
+		} else {
+			System.out.println("Wrong Username or Password");
+		}
+	}
+	
+	public static void AdminLogin(){
+		Scanner sc = new Scanner(System.in);
+		String user;
+		String pass;
+		System.out.printf("\t------------------------------------%n"); // \tab
+		System.out.printf("\t            Admin Login             %n");
+		System.out.printf("\t------------------------------------%n");
+		System.out.printf("\t User Name : ");
+		user = sc.next();
+		System.out.printf("\t Password : ");
+		pass = sc.next();
+		Admin acc = new Admin();
 		boolean work = acc.checkAccount(user,pass);
 		if(work == true) {
 			System.out.println("Successfully Logged In!");
@@ -74,15 +95,21 @@ public class Main {
 		
 		do {
 			System.out.println("1: Login");
-			System.out.println("2: Register");
+			System.out.println("2: Admin Login");
+			System.out.println("3: Register");
+			System.out.println("4: Quit");
 			choice = sc.nextInt();
 			switch (choice) {
 			 case 1: login();
 			 		break;
-			 case 2: register();
+			 case 2:AdminLogin();
+			 		break;
+			 case 3: register();
 				    break;
+			 case 4: System.out.println("Quiting...");
+			    break;
 			}
-		}while(choice >1 || choice <=0);
+		}while(choice != 4);
 	}
 
 }

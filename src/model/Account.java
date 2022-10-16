@@ -1,6 +1,7 @@
 package model;
 
 import data.AccountDAO;
+import data.AdminDAO;
 import model.Required;
 
 public class Account {
