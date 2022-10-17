@@ -1,0 +1,3 @@
+NTU;NTU Cineplex;5
+SEK;Sengkang Cineplex;4
+BIS;Bishan Cineplex;3

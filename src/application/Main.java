@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 import model.Account;
 import model.Admin;
+import pages.AdminPage;
 
 
 //MOvie Booking and LIsting Management Application
@@ -13,9 +14,11 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		String user;
 		String pass;
+		System.out.printf("\n");
 		System.out.printf("\t------------------------------------%n"); // \tab
 		System.out.printf("\t               Login                %n");
 		System.out.printf("\t------------------------------------%n");
+		System.out.printf("\n");
 		System.out.printf("\t User Name : ");
 		user = sc.next();
 		System.out.printf("\t Password : ");
@@ -24,6 +27,7 @@ public class Main {
 		boolean work = acc.checkAccount(user,pass);
 		if(work == true) {
 			System.out.println("Successfully Logged In!");
+			
 		} else {
 			System.out.println("Wrong Username or Password");
 		}
@@ -33,9 +37,11 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		String user;
 		String pass;
+		System.out.printf("\n");
 		System.out.printf("\t------------------------------------%n"); // \tab
 		System.out.printf("\t            Admin Login             %n");
 		System.out.printf("\t------------------------------------%n");
+		System.out.printf("\n");
 		System.out.printf("\t User Name : ");
 		user = sc.next();
 		System.out.printf("\t Password : ");
@@ -43,9 +49,10 @@ public class Main {
 		Admin acc = new Admin();
 		boolean work = acc.checkAccount(user,pass);
 		if(work == true) {
-			System.out.println("Successfully Logged In!");
+			System.out.println("\t Successfully Logged In!");
+			AdminPage ap = new AdminPage();
 		} else {
-			System.out.println("Wrong Username or Password");
+			System.out.println("\t Wrong Username or Password");
 		}
 	}
 	
@@ -56,9 +63,11 @@ public class Main {
 		String cPass;
 		String contact;
 		String email;
+		System.out.printf("\n");
 		System.out.printf("\t------------------------------------%n"); // \tab
 		System.out.printf("\t              Register              %n");
 		System.out.printf("\t------------------------------------%n");
+		System.out.printf("\n");
 		System.out.printf("\t User Name : ");
 		user = sc.next();
 		System.out.printf("\t Password : ");
