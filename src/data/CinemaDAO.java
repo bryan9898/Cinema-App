@@ -46,5 +46,36 @@ public class CinemaDAO {
 		}
 		return cinemas;
 	}
-	
+
+	public String getLayout(String cineplexCode, String cinemaCode) {
+		ArrayList<Cinema> cinemas = getLayouts();
+		for (Cinema a:cinemas) {
+			if (a.getCineplexCode().equals(cineplexCode) && a.getCinemaCode().equals(cinemaCode)) {
+				return a.getLayout();
+			}
+		}
+		return null;
+	}
+
+	public int getNumOfCinema(String cineplexCode) {
+		Scanner in;
+		String record = null;
+		String[] fields;
+		int numOfCinema = 0;
+		try {
+			in = new Scanner(dataFile);
+			while (in.hasNextLine()) {
+				record=in.nextLine();
+				fields=record.split(";");
+				if (fields[0].equals(cineplexCode)) {
+					numOfCinema++;
+				}
+			}
+			in.close();
+		} catch (FileNotFoundException e) {
+			System.out.println("No record found!");
+		}
+		return numOfCinema;
+	}
+
 }
