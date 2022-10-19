@@ -7,6 +7,7 @@ import pages.AdminPage;
 
 
 //MOvie Booking and LIsting Management Application
+// Install ANSI Escape in Console in eclipse market place , unless if u use intelij then no need install
 
 public class Main {
 	
