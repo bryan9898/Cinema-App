@@ -4,6 +4,7 @@ import model.Admin;
 import model.Cinema;
 import model.Movies.Movies;
 import model.Movies.TimeSlots;
+import model.SystemSettings;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class AdminPage {
 		System.out.printf("\n");
 		System.out.printf("\t------------------------------------\n"); // \tab
 		System.out.printf("\t");
-		System.out.printf("\u001B[47m" + "\u001B[30m");
+		System.out.printf("\u001B[46m" + "\u001B[30m");
 		System.out.printf("             Admin Page            ");
 		System.out.printf("\u001B[0m");
 		System.out.printf("\n\t------------------------------------");
@@ -33,8 +34,7 @@ public class AdminPage {
 			System.out.println("7: Sign out");
 			choice = sc.nextInt();
 			switch (choice) {
-				 case 1:
-						break;
+				 case 1: editSystemSettings(); break;
 				 case 2: listMovies();
 						break;
 				 case 3: addMovies();
@@ -52,9 +52,74 @@ public class AdminPage {
 		}while(choice != 7);
 	}
 
+	private void editSystemSettings() {
+		System.out.printf("\n");
+		System.out.printf("\n");
+		System.out.printf("\t------------------------------------\n"); // \tab
+		System.out.printf("\t");
+		System.out.printf("\u001B[47m" + "\u001B[30m");
+		System.out.printf("        Edit System Settings        ");
+		System.out.printf("\u001B[0m");
+		System.out.printf("\n\t------------------------------------");
+		System.out.printf("\n");
+		Scanner sc = new Scanner(System.in);
+		int choice;
+		do {
+			System.out.println("1: Print list of public holidays");
+			System.out.println("2: Add Date of Public Holidays ");
+			System.out.println("3: Remove Date of Public Holidays");
+			System.out.println("4: Edit Normal Price Tickets");
+			System.out.println("5: Edit Platinum Price Tickets");
+			System.out.println("6: Quit");
+			choice = sc.nextInt();
+			SystemSettings ss = new SystemSettings();
+			boolean work = false;
+			switch (choice) {
+				case 1: ss.printPublicHolidays();
+					break;
+				case 2:
+					System.out.println("Enter Date of public holiday: ");
+					String date = sc.next();
+					work = ss.addHoliday(date);
+					if (work) {System.out.println("Holiday added successfully");} else {System.out.println("Holiday already added");}
+					break;
+				case 3:
+					System.out.println("Enter Date to be removed: ");
+					String rm = sc.next();
+					work = ss.removeHoliday(rm);
+					if (work) {System.out.println("Holiday Removed successfully");} else {System.out.println("Holiday not found");}
+					break;
+				case 4: System.out.println("Enter New Price: ");
+						String price = sc.next();
+						work = ss.updateTicketPrice(price);
+						if (work) {System.out.println("Price updated successfully!");} else {System.out.println("Price already the same!");}
+					break;
+				case 5: System.out.println("Enter New Platinum Price: ");
+						String price2 = sc.next();
+						work = ss.updatePlatinumPrice(price2);
+						if (work) {System.out.println("Price updated successfully!");} else {System.out.println("Price already the same!");}
+						break;
+				case 6:
+					System.out.println("Quitting...");
+					System.out.printf("\n");
+					break;
+			}
+		} while (choice != 6);
+	}
+
 	private void editMovies() {
+
 		Movies m = new Movies();
 		m.listMovies();
+		System.out.printf("\n");
+		System.out.printf("\n");
+		System.out.printf("\t------------------------------------\n"); // \tab
+		System.out.printf("\t");
+		System.out.printf("\u001B[47m" + "\u001B[30m");
+		System.out.printf("             Edit Movies           ");
+		System.out.printf("\u001B[0m");
+		System.out.printf("\n\t------------------------------------");
+		System.out.printf("\n");
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter the name of the movie you want to edit");
 		String name = sc.nextLine();
