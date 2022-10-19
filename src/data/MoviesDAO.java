@@ -89,4 +89,80 @@ public class MoviesDAO {
 
     }
 
+    public void editMovieName(String name, String newName) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(name)) {
+                a.setMovieName(newName);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
+
+    public void editMovieSynopsis(String name, String newSynopsis) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(name)) {
+                a.setDescription(newSynopsis);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
+
+    public void editMoviePGrating(String name, String newPGrating) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(name)) {
+                a.setPGrating(newPGrating);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
+
+    public void editMovieDirector(String name, String newDirector) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(name)) {
+                a.setDirector(newDirector);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
+
+    public void editMovieCast(String name, String newCast) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(name)) {
+                a.setCast(newCast);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
+
+    public void removeMovieFromCinema(String name) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(name)) {
+                movies.remove(a);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
+
+    public void editMovieStatus(String name, String newStatus) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(name)) {
+                a.setShowStatus(newStatus);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
 }

@@ -34,6 +34,38 @@ public class Movies implements Reviews{
 
 	}
 
+	public void setMovieName(String movieName) {
+		MovieName = movieName;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setPGrating(String PGrating) {
+		this.PGrating = PGrating;
+	}
+
+	public void setDescription(String description) {
+		Description = description;
+	}
+
+	public void setDirector(String director) {
+		Director = director;
+	}
+
+	public void setCast(String cast) {
+		Cast = cast;
+	}
+
+	public void setRuntime(String runtime) {
+		this.runtime = runtime;
+	}
+
+	public void setShowStatus(String showStatus) {
+		this.showStatus = showStatus;
+	}
+
 	public void setRating(double rating) {
 		this.rating= rating;
 	}
@@ -125,5 +157,38 @@ public class Movies implements Reviews{
 	}
 
 
-	
+	public void editMovieName(String name, String newName) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		moviesDAO.editMovieName(name, newName);
+	}
+
+	public void editMovieSynopsis(String name, String newSynopsis) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		moviesDAO.editMovieSynopsis(name, newSynopsis);
+	}
+
+	public void editMoviePGrating(String name, String newPGrating) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		moviesDAO.editMoviePGrating(name, newPGrating);
+	}
+
+	public void editMovieDirector(String name, String newDirector) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		moviesDAO.editMovieDirector(name, newDirector);
+	}
+
+	public void editMovieCast(String name, String newCast) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		moviesDAO.editMovieCast(name, newCast);
+	}
+
+	public void removeMovieFromCinema(String name) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		moviesDAO.removeMovieFromCinema(name);
+	}
+
+	public void editMovieStatus(String name, String newStatus) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		moviesDAO.editMovieStatus(name, newStatus);
+	}
 }

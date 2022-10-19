@@ -84,4 +84,22 @@ public class TimeSlotsDAO {
 
     }
 
+    public void editTimeSlots(String cineplex, String cinemaNum, String movieName,String previousDate,String previousTime, String date, String time) {
+        ArrayList<TimeSlots> ts = getAllTimeSlot();
+        for (TimeSlots a:ts) {
+            if (a.getCineplex().equals(cineplex) && a.getCinemaNum().equals(cinemaNum) && a.getMovieName().equals(movieName) && a.getDate().equals(previousDate) && a.getTime().equals(previousTime)) {
+                ts.remove(a);
+                TimeSlots newTs = new TimeSlots(cineplex, cinemaNum, movieName, date, time);
+                ts.add(newTs);
+                synToFile(ts);
+                break;
+            }
+        }
+    }
+
+    public void removeTimeSlots(int index) {
+        ArrayList<TimeSlots> ts = getAllTimeSlot();
+        ts.remove(index);
+        synToFile(ts);
+    }
 }

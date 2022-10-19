@@ -3,6 +3,8 @@ package model.Movies;
 import data.CinemaDAO;
 import data.TimeSlotsDAO;
 
+import java.util.ArrayList;
+
 public class TimeSlots {
     private String time;
     private String movieName;
@@ -28,6 +30,10 @@ public class TimeSlots {
         this.cinemaNum = cinemaNum;
         this.date = date;
         this.cineplex = cineplex;
+    }
+
+    public TimeSlots() {
+
     }
 
     public String getTime() {
@@ -73,5 +79,20 @@ public class TimeSlots {
     public boolean addTimeSlot(){
         TimeSlotsDAO ts = new TimeSlotsDAO();
         return ts.addTimeSlot(this);
+    }
+
+    public ArrayList<TimeSlots> showTimeSlots(){
+        TimeSlotsDAO ts = new TimeSlotsDAO();
+        return ts.getAllTimeSlot();
+    }
+
+    public void editTimeSlots(String cineplex, String cinemaNum, String movieName,String previousDate,String previousTime ,String date, String time) {
+        TimeSlotsDAO ts = new TimeSlotsDAO();
+        ts.editTimeSlots(cineplex, cinemaNum, movieName,previousDate,previousTime, date, time);
+    }
+
+    public void removeTimeSlots(int index) {
+        TimeSlotsDAO ts = new TimeSlotsDAO();
+        ts.removeTimeSlots(index);
     }
 }
