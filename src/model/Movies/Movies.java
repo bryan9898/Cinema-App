@@ -126,6 +126,11 @@ public class Movies implements Reviews{
 		System.out.println("Movie ShowStatus: "+ANSI_YELLOW+showStatusWord+ ANSI_RESET);
 	}
 
+	public ArrayList<Movies> getAllMovies() {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		return moviesDAO.getAllMovies();
+	}
+
 	public void listMovies() {
 		MoviesDAO mDAO = new MoviesDAO();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
@@ -191,4 +196,20 @@ public class Movies implements Reviews{
 		MoviesDAO moviesDAO = new MoviesDAO();
 		moviesDAO.editMovieStatus(name, newStatus);
 	}
+
+	public void searchMovie(String movieName) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		ArrayList<Movies> movies = moviesDAO.searchMovie(movieName);
+		for (Movies m : movies) {
+			System.out.println("--------------------------------------");
+			m.printAll();
+		}
+		System.out.println("--------------------------------------");
+		System.out.println("\n");
+	}
+
+    public boolean check3D(String movieName) {
+		MoviesDAO moviesDAO = new MoviesDAO();
+		return moviesDAO.check3D(movieName);
+    }
 }

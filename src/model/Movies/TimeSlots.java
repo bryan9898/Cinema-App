@@ -1,7 +1,7 @@
 package model.Movies;
 
-import data.CinemaDAO;
 import data.TimeSlotsDAO;
+import model.CinemaTable;
 
 import java.util.ArrayList;
 
@@ -11,8 +11,11 @@ public class TimeSlots {
     private String cinemaNum;
     private String date;
     private String cineplex;
+    private String[][] layout;
 
-    public TimeSlots(int cineplex, String cinemaNum, String movieName, String date, String time) {
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
+    public TimeSlots(int cineplex, String cinemaNum, String movieName, String date, String time,String[][] layout) {
         this.time = time;
         this.movieName = movieName;
         switch (cineplex) {
@@ -22,6 +25,16 @@ public class TimeSlots {
         }
         this.cinemaNum = cinemaNum;
         this.date = date;
+        this.layout = layout;
+    }
+
+    public TimeSlots(String cineplex, String cinemaNum, String movieName, String date, String time,String[][] layout) {
+        this.time = time;
+        this.movieName = movieName;
+        this.cinemaNum = cinemaNum;
+        this.date = date;
+        this.cineplex = cineplex;
+        this.layout = layout;
     }
 
     public TimeSlots(String cineplex, String cinemaNum, String movieName, String date, String time) {
@@ -76,6 +89,14 @@ public class TimeSlots {
         this.cineplex = cineplex;
     }
 
+    public String[][] getLayout() {
+        return this.layout;
+    }
+
+    public void setLayout(String[][] layout) {
+        this.layout = layout;
+    }
+
     public boolean addTimeSlot(){
         TimeSlotsDAO ts = new TimeSlotsDAO();
         return ts.addTimeSlot(this);
@@ -86,13 +107,53 @@ public class TimeSlots {
         return ts.getAllTimeSlot();
     }
 
-    public void editTimeSlots(String cineplex, String cinemaNum, String movieName,String previousDate,String previousTime ,String date, String time) {
+    public void editTimeSlots(String cineplex, String cinemaNum, String movieName, String previousDate, String previousTime , String date, String time, String[][] layout) {
         TimeSlotsDAO ts = new TimeSlotsDAO();
-        ts.editTimeSlots(cineplex, cinemaNum, movieName,previousDate,previousTime, date, time);
+        ts.editTimeSlots(cineplex, cinemaNum, movieName,previousDate,previousTime, date, time , layout);
     }
 
     public void removeTimeSlots(int index) {
         TimeSlotsDAO ts = new TimeSlotsDAO();
         ts.removeTimeSlots(index);
+    }
+
+    public ArrayList<TimeSlots> getTimeSlots(String movieName) {
+        TimeSlotsDAO ts = new TimeSlotsDAO();
+        return ts.getTimeSlots(movieName);
+    }
+
+    public void printAll() {
+        System.out.println(ANSI_YELLOW + "Cineplex: " + ANSI_RESET + cineplex);
+        System.out.println(ANSI_YELLOW + "Cinema: " + ANSI_RESET + cinemaNum);
+        System.out.println(ANSI_YELLOW + "Movie: " + ANSI_RESET + movieName);
+        System.out.println(ANSI_YELLOW + "Date: " + ANSI_RESET + date);
+        System.out.println(ANSI_YELLOW + "Time: " + ANSI_RESET + time);
+
+        System.out.printf("-----------------------------------------------      %n");
+        System.out.printf("                     Screen                          %n");
+        System.out.printf("-----------------------------------------------      %n");
+        CinemaTable st = new CinemaTable();
+        st.setHeaders(layout[0]);
+        for(int i = 1;i<layout.length;i++) {
+            st.addRow(layout[i]);
+        }
+        st.print();
+        System.out.printf("-----------------------------------------------      %n");
+        System.out.printf("                    Entrance                         %n");
+        System.out.printf("-----------------------------------------------      %n");
+    }
+
+    public void setSeats(int seat, int row) {
+        layout[row][seat] = "X";
+    }
+
+
+    public void updateTimeSlots(TimeSlots timeSlots) {
+        TimeSlotsDAO ts = new TimeSlotsDAO();
+        ts.updateTimeSlots(timeSlots);
+    }
+
+    public String[][] getSeats() {
+        return layout;
     }
 }

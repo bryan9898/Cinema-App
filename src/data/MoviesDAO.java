@@ -11,6 +11,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class MoviesDAO {
 
@@ -164,5 +165,28 @@ public class MoviesDAO {
             }
         }
         synToFile(movies);
+    }
+
+    public ArrayList<Movies> searchMovie(String movieName) {
+        ArrayList<Movies> movies=getAllMovies();
+        ArrayList<Movies> MV = new ArrayList<Movies>();
+        for (Movies a:movies) {
+            if ( Pattern.compile(Pattern.quote(movieName), Pattern.CASE_INSENSITIVE).matcher(a.getMovieName()).find()) {
+                MV.add(a);
+            }
+        }
+        return MV;
+    }
+
+    public boolean check3D(String movieName) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(movieName)) {
+                if (a.getType().equals("3D")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

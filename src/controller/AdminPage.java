@@ -207,7 +207,7 @@ public class AdminPage {
 			String date = sc.next();
 			System.out.println("Enter the new time : ");
 			String time = sc.next();
-			ts.editTimeSlots(allTimeSlots.get(index).getCineplex(), allTimeSlots.get(index).getCinemaNum(), allTimeSlots.get(index).getMovieName(),allTimeSlots.get(index).getDate(),allTimeSlots.get(index).getTime(), date, time);
+			ts.editTimeSlots(allTimeSlots.get(index).getCineplex(), allTimeSlots.get(index).getCinemaNum(), allTimeSlots.get(index).getMovieName(),allTimeSlots.get(index).getDate(),allTimeSlots.get(index).getTime(), date, time , allTimeSlots.get(index).getLayout());
 		} else if (choice == 2) {
 			ts.removeTimeSlots(index);
 		}
@@ -245,7 +245,8 @@ public class AdminPage {
 			String showtime = sc.nextLine();
 			System.out.println("Enter Time (00:00-23:59): ");
 			String time = sc.nextLine();
-			TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movieName, showtime, time);
+			String[][] layout = cinema.getCineLayout(cineplexNum, cinemaNum);
+			TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movieName, showtime, time , layout);
 			boolean work = t.addTimeSlot();
 			if (work){
 				System.out.println("Successfully added!");

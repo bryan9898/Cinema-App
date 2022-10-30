@@ -1,6 +1,7 @@
 package application;
 import java.util.Scanner;
 
+import controller.ClientPage;
 import model.Account;
 import model.Admin;
 import controller.AdminPage;
@@ -28,10 +29,10 @@ public class Main {
 		Account acc = new Account();
 		boolean work = acc.checkAccount(user,pass);
 		if(work == true) {
-			System.out.println("Successfully Logged In!");
-			
+			System.out.println("\t Successfully Logged In!");
+			ClientPage cp = new ClientPage(user);
 		} else {
-			System.out.println("Wrong Username or Password");
+			System.out.println("\t Wrong Username or Password");
 		}
 	}
 	

@@ -77,5 +77,8 @@ public class Account {
 		AccountDAO accountDao=new AccountDAO();
 		return accountDao.createAccount(this);
 	}
-	
+
+	public void setSession(String user) {
+		this.username = user;
+	}
 }

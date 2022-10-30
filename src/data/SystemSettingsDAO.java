@@ -191,4 +191,24 @@ public class SystemSettingsDAO {
         }
         System.out.printf("\n");
     }
+
+    public double getTicketPrice() {
+        ArrayList<String> prices=getAllPrices();
+        return Double.parseDouble(prices.get(0));
+    }
+
+    public Boolean checkHoliday(String date) {
+        ArrayList<String> holidays=getAllHolidays();
+        for (String a:holidays) {
+            if (a.equals(date)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public double getPlatinumPrice() {
+        ArrayList<String> prices=getAllPrices();
+        return Double.parseDouble(prices.get(1));
+    }
 }
