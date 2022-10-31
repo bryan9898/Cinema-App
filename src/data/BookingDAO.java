@@ -4,6 +4,7 @@ import model.Account;
 import model.Movies.Bookings;
 import model.Movies.Movies;
 import model.Movies.TimeSlots;
+import model.Movies.TopMovies;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -90,5 +91,41 @@ public class BookingDAO {
         }
         return bookings;
     }
+
+    public ArrayList<TopMovies> top5MoviesBySales() {
+        ArrayList<Bookings> bookings = getAllBookings();
+        ArrayList<TopMovies> top5 = new ArrayList<>();
+        ArrayList<TopMovies> allMovies = new ArrayList<TopMovies>();
+        for (Bookings b : bookings) {
+            boolean found = false;
+            for (TopMovies m : allMovies) {
+                if (m.getMovieName().equals(b.getMovieName())) {
+                    m.setNumberOfTickets(m.getNumberOfTickets() + b.getAllSeats().length);
+                    m.setTotalSales(m.getTotalSales() + b.getTotalPrice());
+                    found = true;
+                }
+            }
+            if (!found) {
+                allMovies.add(new TopMovies(b.getMovieName(), b.getAllSeats().length, b.getTotalPrice())); // movie name , number of seats, total sales
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            if(allMovies.size() == 0){
+                break;
+            }
+            TopMovies max = allMovies.get(0);
+            for (TopMovies t : allMovies) {
+                if (t.getTotalSales() > max.getTotalSales()) {
+                    max = t;
+                }
+            }
+            allMovies.remove(max);
+            top5.add(max);
+        }
+
+        return top5;
+    }
+
 
 }

@@ -2,6 +2,7 @@ package data;
 
 import model.Account;
 import model.Movies.Movies;
+import model.Movies.TopMovies;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -190,4 +192,15 @@ public class MoviesDAO {
         return false;
     }
 
+    public ArrayList<TopMovies> top5MoviesByUser() {
+        ArrayList<Movies> movies=getAllMovies();
+        ArrayList<TopMovies> top5 = new ArrayList<TopMovies>();
+        for (Movies a:movies) {
+            if (a.getRating()!=0) {
+                TopMovies b = new TopMovies(a.getMovieName(), a.getRating());
+                top5.add(b);
+            }
+        }
+        return top5;
+    }
 }

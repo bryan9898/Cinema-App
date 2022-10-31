@@ -4,7 +4,9 @@ import model.Account;
 import model.Movies.Bookings;
 import model.Movies.Movies;
 import model.Movies.TimeSlots;
+import model.Movies.TopMovies;
 
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,6 +32,7 @@ public class ClientPage {
             System.out.println("2: Search Movie");
             System.out.println("3: Book seats");
             System.out.println("4: View all Bookings");
+            System.out.println("5: Top 5 Movies ranking");
             System.out.println("7: Sign out");
             choice = sc.nextInt();
             switch (choice) {
@@ -37,8 +40,7 @@ public class ClientPage {
                 case 2: searchMovie(); break;
                 case 3: bookSeats(a); break;
                 case 4: viewBookings(a); break;
-                case 5:
-                    break;
+                case 5: top5Movies(); break;
                 case 6:
                     break;
                 case 7:System.out.println("Signing Out...");
@@ -46,6 +48,54 @@ public class ClientPage {
                     break;
             }
         }while(choice != 7);
+    }
+
+    private void top5Movies() {
+        System.out.printf("\n");
+        System.out.printf("\t------------------------------------\n"); // \tab
+        System.out.printf("\t");
+        System.out.printf("\u001B[47m" + "\u001B[30m");
+        System.out.printf("          Top 5 Movies            ");
+        System.out.printf("\u001B[0m");
+        System.out.printf("\n\t------------------------------------");
+        System.out.printf("\n\t By Ticket Sales");
+        System.out.printf("\n\t------------------------------------");
+        System.out.printf("\n");
+
+        TopMovies b = new TopMovies();
+        ArrayList<TopMovies> top5Movies = b.top5MoviesBySales();
+        int counter = 1;
+        for (TopMovies t : top5Movies) {
+            System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", counter);
+            System.out.printf("\u001B[33m");
+            System.out.println("\t Movie Name: " + t.getMovieName());
+            System.out.println("\t Total Tickets Sold: " + t.getNumberOfTickets());
+            System.out.println("\t Total Revenue: " + t.getTotalSales());
+            System.out.printf("\n");
+            System.out.printf("\t------------------------------------\n"); // \tab
+            System.out.printf("\u001B[0m");
+            counter++;
+        }
+
+        System.out.printf("\n\t------------------------------------");
+        System.out.printf("\n\t By User Ratings");
+        System.out.printf("\n\t------------------------------------");
+        /*
+        TopMovies topUserRating = new TopMovies();
+        ArrayList<TopMovies> top5Ratings = b.top5MoviesByUser();
+        int topCounterForRating = 1;
+        for (TopMovies t : top5Movies) {
+            System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", topCounterForRating);
+            System.out.printf("\u001B[33m");
+            System.out.println("\t Movie Name: " + t.getMovieName());
+            System.out.println("\t Total Tickets Sold: " + t.getNumberOfTickets());
+            System.out.println("\t Total Revenue: " + t.getTotalSales());
+            System.out.printf("\n");
+            System.out.printf("\t------------------------------------\n"); // \tab
+            System.out.printf("\u001B[0m");
+            topCounterForRating++;
+        } */
+
     }
 
     private void viewBookings(Account a) {
@@ -79,6 +129,7 @@ public class ClientPage {
             System.out.printf("\n\t------------------------------------");
             System.out.printf("\n");
         }
+
     }
 
     private void bookSeats(Account a) {
