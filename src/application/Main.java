@@ -8,6 +8,7 @@ import controller.AdminPage;
 
 
 //MOvie Booking and LIsting Management Application
+// If using eclipse, install ANSI Escape in Console plugin in eclipse marketplace
 
 public class Main {
 	
