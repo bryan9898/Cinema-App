@@ -1,6 +1,7 @@
 package model.Movies;
 
-public interface Reviews {
+public class Reviews {
+	
 
 }
 

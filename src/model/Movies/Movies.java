@@ -4,7 +4,7 @@ import data.MoviesDAO;
 
 import java.util.ArrayList;
 
-public class Movies implements Reviews{
+public class Movies {
 	private static final String ANSI_RESET = "\u001B[0m";
 	private static final String ANSI_YELLOW = "\u001B[33m";
 	private String MovieName;
