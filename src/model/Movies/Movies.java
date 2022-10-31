@@ -212,4 +212,8 @@ public class Movies implements Reviews{
 		MoviesDAO moviesDAO = new MoviesDAO();
 		return moviesDAO.check3D(movieName);
     }
+
+    public String getMovieStatus() {
+		return showStatus;
+    }
 }

@@ -143,7 +143,7 @@ public class TimeSlots {
         System.out.printf("-----------------------------------------------      %n");
     }
 
-    public void setSeats(int seat, int row) {
+    public void setSeats(int row,int seat ) {
         layout[row][seat] = "X";
     }
 

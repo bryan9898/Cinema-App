@@ -29,14 +29,14 @@ public class ClientPage {
             System.out.println("1: List Movies");
             System.out.println("2: Search Movie");
             System.out.println("3: Book seats");
+            System.out.println("4: View all Bookings");
             System.out.println("7: Sign out");
             choice = sc.nextInt();
             switch (choice) {
                 case 1: listMovies(); break;
                 case 2: searchMovie(); break;
                 case 3: bookSeats(a); break;
-                case 4:
-                    break;
+                case 4: viewBookings(a); break;
                 case 5:
                     break;
                 case 6:
@@ -46,6 +46,39 @@ public class ClientPage {
                     break;
             }
         }while(choice != 7);
+    }
+
+    private void viewBookings(Account a) {
+        System.out.printf("\n");
+        System.out.printf("\t------------------------------------\n"); // \tab
+        System.out.printf("\t");
+        System.out.printf("\u001B[47m" + "\u001B[30m");
+        System.out.printf("          List Of Bookings          ");
+        System.out.printf("\u001B[0m");
+        System.out.printf("\n\t------------------------------------");
+        System.out.printf("\n\t User : "+a.getUsername());
+        System.out.printf("\n\t------------------------------------");
+        Bookings b = new Bookings();
+        ArrayList<Bookings> bookings = new ArrayList<Bookings>();
+        bookings = b.viewBookings(a);
+        for (Bookings booking : bookings) {
+            System.out.printf("\n");
+            System.out.printf("\u001B[36m");
+            System.out.println("\tBooking ID: " + booking.getBookingID());
+            System.out.println("\tMovie Name: " + booking.getMovieName());
+            System.out.println("\tCineplex: " +booking.getCineplex());
+            System.out.println("\tCinema Number: " +booking.getCinemaNum());
+            System.out.println("\tDate: " +booking.getDate());
+            System.out.println("\tTime: " +booking.getTime());
+            for (int i = 0; i < booking.getAllSeats().length; i++) {
+                char columnLetter = (char) (booking.getAllSeats()[i][1] + 64);
+                System.out.println("\t\t Seat "+(i+1)+": Column: "+columnLetter+" , Row: "+booking.getAllSeats()[i][0]);
+            }
+            System.out.println("\tTotal Price: " + booking.getTotalPrice());
+            System.out.printf("\u001B[0m");
+            System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n");
+        }
     }
 
     private void bookSeats(Account a) {
@@ -73,8 +106,17 @@ public class ClientPage {
         System.out.println("Enter Movie Index: ");
         Scanner sc = new Scanner(System.in);
         int index = sc.nextInt();
+        if (index > movies.size()-1 || index < 0) {System.out.println("No such movie index!");return;}
+
+        if (movies.get(index).getMovieStatus().equals("1")) {
+            System.out.println("Movie is not showing yet!");
+            return;
+        }
+
         TimeSlots ts = new TimeSlots();
         ArrayList<TimeSlots> fullTimeSlots = new ArrayList<TimeSlots>();
+
+
         fullTimeSlots = ts.getTimeSlots(movies.get(index).getMovieName());
         int counter2 = 0;
         for (TimeSlots t : fullTimeSlots) {
@@ -101,9 +143,9 @@ public class ClientPage {
             seatInt = Integer.valueOf(seat.toUpperCase().charAt(0))- 64;
             //check if seat already taken
             try {
-                if (fullTimeSlots.get(index2).getSeats()[row][seatInt].equals("O")) {
+                if (fullTimeSlots.get(index2).getSeats()[row][seatInt].equals("O") || fullTimeSlots.get(index2).getSeats()[row][seatInt].equals("[") || fullTimeSlots.get(index2).getSeats()[row][seatInt].equals("]")) {
                     int seatBooked = 0;
-                    for (int j = 0; j < allSeats.length; j++) {
+                    for (int j = 0; j < i; j++) {
                         if (allSeats[j][0] == row && allSeats[j][1] == seatInt) {
                             System.out.println("You already booked this seat");
                             i--;
@@ -134,9 +176,11 @@ public class ClientPage {
         Bookings b = new Bookings();
         boolean success = b.bookSeats(a,fullTimeSlots.get(index2),seats,allSeats,child,senior,student);
         if (success) {
-            System.out.println("Booking Successful!");
-            fullTimeSlots.get(index2).setSeats(seatInt, row);
+            for (int i = 0; i < seats; i++) {
+                fullTimeSlots.get(index2).setSeats(allSeats[i][0],allSeats[i][1]);
+            }
             ts.updateTimeSlots(fullTimeSlots.get(index2));
+            System.out.println("Booking Successful!");
         } else {
             System.out.println("Booking Failed!");
         }

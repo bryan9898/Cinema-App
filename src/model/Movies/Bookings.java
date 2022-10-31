@@ -8,13 +8,33 @@ import model.SystemSettings;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class Bookings {
 
+    private String id;
+    private  String cineplex;
+    private String cinemaNum;
+    private  String movieName;
+    private  String date;
+    private  String time;
+    private  double totalPrice;
+    private Integer[][] allSeats;
+    private String username;
+
     public Bookings() {
+    }
+
+    public Bookings(String id, String username, String cineplex, String cinemaNum, String movieName, String date, String time, double totalPrice, Integer[][] allSeats) {
+        this.id = id;
+        this.username = username;
+        this.cineplex = cineplex;
+        this.cinemaNum = cinemaNum;
+        this.movieName = movieName;
+        this.date = date;
+        this.time = time;
+        this.totalPrice = totalPrice;
+        this.allSeats = allSeats;
     }
 
     public boolean bookSeats(Account a, TimeSlots timeSlots, int seats, Integer[][] allSeats, int child, int senior, int student){
@@ -72,32 +92,86 @@ public class Bookings {
         System.out.printf("\u001B[36m"); System.out.printf("\tBooking ID: %s \n",id); System.out.printf("\u001B[0m");
         for(int i = 0; i < seats; i++){
             System.out.printf("\u001B[36m");
-            System.out.println("\t Seat "+(i+1)+": $"+price + " (Row "+allSeats[i][0]+", Column "+allSeats[i][1]+")");
+            char rowLetter = (char) (allSeats[i][1] + 64);
+            System.out.println("\t Seat "+(i+1)+": $"+price + " (Row "+allSeats[i][0]+", Column "+rowLetter+")");
             if(child > 0){
-                System.out.println("\t "+ child + " Child Discount: -$"+childPrice);
+                System.out.println("\t 1 Child Discount: -$"+childPrice);
                 child--;
             } else
             if(senior > 0){
-                System.out.println("\t "+ senior + " Senior Discount: -$"+seniorPrice);
+                System.out.println("\t 1 Senior Discount: -$"+seniorPrice);
                 senior--;
             } else
             if(student > 0){
-                System.out.println("\t "+ student + " student Discount: -$"+studentPrice);
+                System.out.println("\t 1 student Discount: -$"+studentPrice);
                 student--;
             }
             System.out.printf("\u001B[0m");
         }
+        System.out.printf("\n\n");
         System.out.printf("\u001B[36m");
         System.out.println("\t Total Price: $" + totalPrice);
         System.out.printf("\u001B[0m");
 
         System.out.printf("\n");
 
-        BookingDAO bookingDAO = new BookingDAO();
-        bookingDAO.bookSeats(id,a,timeSlots,allSeats,totalPrice);
-
-
-        return false;
+        System.out.printf("Type Yes to confirm booking: ");
+        Scanner sc = new Scanner(System.in);
+        String confirm = sc.nextLine();
+        if(confirm.equalsIgnoreCase("Yes")){
+            BookingDAO bookingDAO = new BookingDAO();
+            Boolean bookingStatus = bookingDAO.bookSeats(id,a,timeSlots,allSeats,totalPrice);
+            if (bookingStatus){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
+
+    public ArrayList<Bookings> viewBookings(Account a) {
+        BookingDAO bookingDAO = new BookingDAO();
+        return bookingDAO.viewBookings(a);
+
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getBookingID() {
+        return id;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public String getCineplex() {
+        return cineplex;
+    }
+
+    public String getCinemaNum() {
+        return cinemaNum;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Integer[][] getAllSeats() {
+        return allSeats;
+    }
+
 
 }
