@@ -5,13 +5,13 @@ import data.AccountDAO;
 
 public class Account {
 	@Required
-	private String username;
+	protected String username;
 	@Required
-	private String password;
+	protected String password;
 	@Required
-	private String contact;
+	protected String contact;
 	@Required
-	private String email;
+	protected String email;
 	
 	
 	public Account(String username, String password,String contact,String email) {
