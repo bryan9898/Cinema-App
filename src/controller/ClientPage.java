@@ -3,6 +3,7 @@ package controller;
 import model.Account;
 import model.Movies.Bookings;
 import model.Movies.Movies;
+import model.Movies.Reviews;
 import model.Movies.TimeSlots;
 import model.Movies.TopMovies;
 
@@ -33,6 +34,7 @@ public class ClientPage {
             System.out.println("3: Book seats");
             System.out.println("4: View all Bookings");
             System.out.println("5: Top 5 Movies ranking");
+            System.out.println("6: Add Review");
             System.out.println("7: Sign out");
             choice = sc.nextInt();
             switch (choice) {
@@ -41,16 +43,30 @@ public class ClientPage {
                 case 3: bookSeats(a); break;
                 case 4: viewBookings(a); break;
                 case 5: top5Movies(); break;
-                case 6:
+                case 6: addReview(a);
                     break;
                 case 7:System.out.println("Signing Out...");
                     System.out.printf("\n");
                     break;
+                default: break;
             }
         }while(choice != 7);
     }
 
-    private void top5Movies() {
+    private void addReview(Account a) {
+    	System.out.println("Which movie would you like to leave a review for?");
+    	Scanner sc = new Scanner(System.in);
+    	String movieName = sc.nextLine();
+		System.out.println("Enter the rating:");
+		int rating = sc.nextInt();
+		System.out.println("Enter your review:");
+		Scanner sc1 = new Scanner(System.in);
+		String review = sc1.nextLine();
+		Reviews newReview = new Reviews(review, rating, movieName, a.getUsername());
+		newReview.printReview();
+	}
+
+	private void top5Movies() {
         System.out.printf("\n");
         System.out.printf("\t------------------------------------\n"); // \tab
         System.out.printf("\t");
