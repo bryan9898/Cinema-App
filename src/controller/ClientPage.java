@@ -11,6 +11,8 @@ import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import data.MoviesDAO;
+
 public class ClientPage {
 
     public ClientPage(String user){
@@ -54,9 +56,13 @@ public class ClientPage {
     }
 
     private void addReview(Account a) {
-    	System.out.println("Which movie would you like to leave a review for?");
+    	MoviesDAO mDAO = new MoviesDAO();
+		ArrayList<Movies> movies = mDAO.getAllMovies();
+    	this.listMovies();
+    	System.out.println("Which movie would you like to leave a review for? (Enter index)");
     	Scanner sc = new Scanner(System.in);
-    	String movieName = sc.nextLine();
+    	int index = sc.nextInt();
+    	String movieName = movies.get(index-1).getMovieName();
 		System.out.println("Enter the rating:");
 		int rating = sc.nextInt();
 		System.out.println("Enter your review:");
@@ -64,6 +70,7 @@ public class ClientPage {
 		String review = sc1.nextLine();
 		Reviews newReview = new Reviews(review, rating, movieName, a.getUsername());
 		newReview.printReview();
+		newReview.addReview();
 	}
 
 	private void top5Movies() {

@@ -1,15 +1,16 @@
 package model.Movies;
 
+import data.MoviesDAO;
 import data.ReviewsDAO;
 
 public class Reviews {
 	
 	private String review;
-	private int rating;
+	private double rating;
 	private String movieName;
 	private String username;
 	
-	public Reviews(String review, int rating, String movieName, String username) {
+	public Reviews(String review, double rating, String movieName, String username) {
 		this.review=review;
 		this.rating=rating;
 		this.movieName=movieName;
@@ -24,7 +25,7 @@ public class Reviews {
 		return review;
 	}
 	
-	public int getRating() {
+	public double getRating() {
 		return rating;
 	}
 	
@@ -53,7 +54,15 @@ public class Reviews {
 	}
 	
 	public void printReview() {
-		System.out.println(username + ": " + review);
+		System.out.println("Movie: " + movieName);
+		System.out.println("Rating: " + rating);
+		System.out.println("Review: " + review);
+	}
+	
+	//data access
+	public void addReview() {
+		ReviewsDAO reviewsDAO = new ReviewsDAO();
+		reviewsDAO.addReview(this);
 	}
 	
 

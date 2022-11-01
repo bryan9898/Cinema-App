@@ -144,10 +144,13 @@ public class Movies {
 		System.out.printf("\u001B[0m");
 		System.out.printf("\n\t------------------------------------");
 		System.out.printf("\n");
-
+		
+		int i = 1;
 
 		for (Movies m : movies) {
 			System.out.println("--------------------------------------");
+			System.out.println("Index: " + i);
+			i++;
 			m.printAll();
 		}
 		System.out.println("--------------------------------------");
