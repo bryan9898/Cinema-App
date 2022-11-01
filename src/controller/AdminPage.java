@@ -1,5 +1,6 @@
 package controller;
 
+import data.MoviesDAO;
 import model.Admin;
 import model.Cinema;
 import model.Movies.Movies;
@@ -110,6 +111,8 @@ public class AdminPage {
 	private void editMovies() {
 
 		Movies m = new Movies();
+		MoviesDAO mDAO = new MoviesDAO();
+		ArrayList<Movies> movies = mDAO.getAllMovies();
 		m.listMovies();
 		System.out.printf("\n");
 		System.out.printf("\n");
@@ -121,8 +124,8 @@ public class AdminPage {
 		System.out.printf("\n\t------------------------------------");
 		System.out.printf("\n");
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter the name of the movie you want to edit");
-		String name = sc.nextLine();
+		System.out.println("Enter the index of the movie you want to edit : ");
+		int name = sc.nextInt();
 
 		String choice;
 		do {
@@ -132,33 +135,33 @@ public class AdminPage {
 				case "1":
 					System.out.println("Enter the new name of the movie");
 					String newName = sc.nextLine();
-					m.editMovieName(name, newName);
-					name = newName;
+					m.editMovieName(movies.get(name-1).getMovieName(), newName);
+					movies.get(name-1).setMovieName(newName);
 					break;
 				case "2": System.out.println("Enter the new PGrating of the movie");
 					String newPGrating = sc.nextLine();
-					m.editMoviePGrating(name, newPGrating);
+					m.editMoviePGrating(movies.get(name-1).getMovieName(), newPGrating);
 					break;
 				case "3":
 					System.out.println("Enter the new description of the movie");
 					String newSynopsis = sc.nextLine();
-					m.editMovieSynopsis(name, newSynopsis);
+					m.editMovieSynopsis(movies.get(name-1).getMovieName(), newSynopsis);
 					break;
 				case "4":
 					System.out.println("Enter the new director of the movie");
 					String newDirector = sc.nextLine();
-					m.editMovieDirector(name, newDirector);
+					m.editMovieDirector(movies.get(name-1).getMovieName(), newDirector);
 					break;
 				case "5":
 					System.out.println("Enter the new cast of the movie");
 					String newCast = sc.nextLine();
-					m.editMovieCast(name, newCast);
+					m.editMovieCast(movies.get(name-1).getMovieName(), newCast);
 					break;
 				case "6":
 					System.out.println("Edit movie status in numbers ((1)Coming Soon, (2)Preview, (3)Now Showing, (4)End of Showing) :");
 					String newStatus = sc.nextLine();
 					if (newStatus.equals("4")) {
-						m.removeMovieFromCinema(name);
+						m.removeMovieFromCinema(movies.get(name-1).getMovieName());
 						choice = "7";
 						System.out.printf("\n");
 						System.out.printf("\t");
@@ -167,7 +170,7 @@ public class AdminPage {
 						System.out.printf("\u001B[0m");
 						System.out.printf("\n");
 					} else {
-						m.editMovieStatus(name, newStatus);
+						m.editMovieStatus(movies.get(name-1).getMovieName(), newStatus);
 					}
 					break;
 			}
@@ -223,10 +226,12 @@ public class AdminPage {
 		System.out.printf("\n\t------------------------------------");
 		System.out.printf("\n");
 
+		MoviesDAO mDAO = new MoviesDAO();
+		ArrayList<Movies> movies = mDAO.getAllMovies();
 		listMovies();
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter Movie Name to add / edit to cinema showtimes: ");
-		String movieName = sc.nextLine();
+		System.out.println("Enter Movie index to add / edit to cinema showtimes: ");
+		int movieName = sc.nextInt();
 		System.out.println("Enter Cineplex Num (1)NTU (2)SEK (3)BIS: ");
 		int cineplexNum = sc.nextInt();
 		Cinema c = new Cinema();
@@ -246,7 +251,7 @@ public class AdminPage {
 			System.out.println("Enter Time (00:00-23:59): ");
 			String time = sc.nextLine();
 			String[][] layout = cinema.getCineLayout(cineplexNum, cinemaNum);
-			TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movieName, showtime, time , layout);
+			TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movies.get(movieName-1).getMovieName(), showtime, time , layout);
 			boolean work = t.addTimeSlot();
 			if (work){
 				System.out.println("Successfully added!");
