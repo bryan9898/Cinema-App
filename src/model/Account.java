@@ -12,8 +12,7 @@ public class Account {
 	protected String contact;
 	@Required
 	protected String email;
-	
-	
+
 	public Account(String username, String password,String contact,String email) {
 		super();
 		this.username = username;
@@ -65,18 +64,7 @@ public class Account {
 	public String getUsername() {
 		return username;
 	}
-	
-	public boolean checkAccount(String user, String pass) {
-		this.username = user;
-		this.password = pass;
-		AccountDAO accountDao=new AccountDAO();
-		return accountDao.checkAcc(this);
-	}
-	
-	public boolean createAccount() {
-		AccountDAO accountDao=new AccountDAO();
-		return accountDao.createAccount(this);
-	}
+
 
 	public void setSession(String user) {
 		this.username = user;

@@ -1,5 +1,8 @@
 package controller;
 
+import data.TimeSlotsDAO;
+import data.impl.MoviesDaoImpl;
+import data.impl.TimeSlotsDaoImpl;
 import model.Account;
 import model.Movies.Bookings;
 import model.Movies.Movies;
@@ -56,7 +59,7 @@ public class ClientPage {
     }
 
     private void addReview(Account a) {
-    	MoviesDAO mDAO = new MoviesDAO();
+    	MoviesDAO mDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
     	this.listMovies();
     	System.out.println("Which movie would you like to leave a review for? (Enter index)");
@@ -157,8 +160,8 @@ public class ClientPage {
     }
 
     private void bookSeats(Account a) {
-        Movies movie = new Movies();
-        ArrayList<Movies> movies = movie.getAllMovies();
+        MoviesDAO movieDAO = new MoviesDaoImpl();
+        ArrayList<Movies> movies = movieDAO.getAllMovies();
         System.out.printf("\n");
         System.out.printf("\n");
         System.out.printf("\t------------------------------------\n"); // \tab
@@ -188,11 +191,11 @@ public class ClientPage {
             return;
         }
 
-        TimeSlots ts = new TimeSlots();
+        TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
         ArrayList<TimeSlots> fullTimeSlots = new ArrayList<TimeSlots>();
 
 
-        fullTimeSlots = ts.getTimeSlots(movies.get(index).getMovieName());
+        fullTimeSlots = tsDAO.getTimeSlots(movies.get(index).getMovieName());
         int counter2 = 0;
         for (TimeSlots t : fullTimeSlots) {
             System.out.println("--------------------------------------");
@@ -254,7 +257,7 @@ public class ClientPage {
             for (int i = 0; i < seats; i++) {
                 fullTimeSlots.get(index2).setSeats(allSeats[i][0],allSeats[i][1]);
             }
-            ts.updateTimeSlots(fullTimeSlots.get(index2));
+            tsDAO.updateTimeSlots(fullTimeSlots.get(index2));
             System.out.println("Booking Successful!");
         } else {
             System.out.println("Booking Failed!");

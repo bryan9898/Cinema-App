@@ -2,6 +2,7 @@ package model;
 
 import data.AccountDAO;
 import data.CinemaDAO;
+import data.impl.CinemaDaoImpl;
 
 public class Cinema {
 	private String cineplexCode;
@@ -55,7 +56,7 @@ public class Cinema {
 			case 3: this.cineplexCode = "BIS"; break;
 		}
 		this.cinemaCode = cinemaCode;
-		CinemaDAO cinemaDAO = new CinemaDAO();
+		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		this.layout  = cinemaDAO.getLayout(this.cineplexCode, this.cinemaCode);
 	}
 	
@@ -141,7 +142,7 @@ public class Cinema {
 	}
 
 	public int getNumOfCinema(int cineplex){
-		CinemaDAO cinemaDAO = new CinemaDAO();
+		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		switch (cineplex) {
 			case 1: return cinemaDAO.getNumOfCinema("NTU");
 			case 2: return cinemaDAO.getNumOfCinema("SEK");
@@ -152,7 +153,7 @@ public class Cinema {
 
 
 	public String[][] getCineLayout(int cineplex, String cinemaNum) {
-		CinemaDAO cinemaDAO = new CinemaDAO();
+		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		String layout = null;
 		if(cineplex == 1) {
 			layout = cinemaDAO.getLayout("NTU", cinemaNum);}
@@ -171,7 +172,7 @@ public class Cinema {
 	}
 
 	public String[][] getCineLayout(String cineplex, String cinemaNum) {
-		CinemaDAO cinemaDAO = new CinemaDAO();
+		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		String layout = null;
 		layout = cinemaDAO.getLayout(cineplex, cinemaNum);
 		if(layout.equals("1")) {
@@ -185,7 +186,7 @@ public class Cinema {
 	}
 
 	public int getType(String cineplex, String cinemaNum) {
-		CinemaDAO cinemaDAO = new CinemaDAO();
+		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		String layout = null;
 		layout = cinemaDAO.getLayout(cineplex, cinemaNum);
 		if(layout.equals("1")) {

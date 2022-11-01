@@ -97,31 +97,6 @@ public class TimeSlots {
         this.layout = layout;
     }
 
-    public boolean addTimeSlot(){
-        TimeSlotsDAO ts = new TimeSlotsDAO();
-        return ts.addTimeSlot(this);
-    }
-
-    public ArrayList<TimeSlots> showTimeSlots(){
-        TimeSlotsDAO ts = new TimeSlotsDAO();
-        return ts.getAllTimeSlot();
-    }
-
-    public void editTimeSlots(String cineplex, String cinemaNum, String movieName, String previousDate, String previousTime , String date, String time, String[][] layout) {
-        TimeSlotsDAO ts = new TimeSlotsDAO();
-        ts.editTimeSlots(cineplex, cinemaNum, movieName,previousDate,previousTime, date, time , layout);
-    }
-
-    public void removeTimeSlots(int index) {
-        TimeSlotsDAO ts = new TimeSlotsDAO();
-        ts.removeTimeSlots(index);
-    }
-
-    public ArrayList<TimeSlots> getTimeSlots(String movieName) {
-        TimeSlotsDAO ts = new TimeSlotsDAO();
-        return ts.getTimeSlots(movieName);
-    }
-
     public void printAll() {
         System.out.println(ANSI_YELLOW + "Cineplex: " + ANSI_RESET + cineplex);
         System.out.println(ANSI_YELLOW + "Cinema: " + ANSI_RESET + cinemaNum);
@@ -129,29 +104,24 @@ public class TimeSlots {
         System.out.println(ANSI_YELLOW + "Date: " + ANSI_RESET + date);
         System.out.println(ANSI_YELLOW + "Time: " + ANSI_RESET + time);
 
-        System.out.printf("-----------------------------------------------      %n");
-        System.out.printf("                     Screen                          %n");
-        System.out.printf("-----------------------------------------------      %n");
+        System.out.printf("-------------------------------------------      %n");
+        System.out.printf("                 Screen                          %n");
+        System.out.printf("-------------------------------------------      %n");
         CinemaTable st = new CinemaTable();
         st.setHeaders(layout[0]);
         for(int i = 1;i<layout.length;i++) {
             st.addRow(layout[i]);
         }
         st.print();
-        System.out.printf("-----------------------------------------------      %n");
-        System.out.printf("                    Entrance                         %n");
-        System.out.printf("-----------------------------------------------      %n");
+        System.out.printf("-------------------------------------------      %n");
+        System.out.printf("                  Entrance                       %n");
+        System.out.printf("-------------------------------------------      %n");
     }
 
     public void setSeats(int row,int seat ) {
         layout[row][seat] = "X";
     }
 
-
-    public void updateTimeSlots(TimeSlots timeSlots) {
-        TimeSlotsDAO ts = new TimeSlotsDAO();
-        ts.updateTimeSlots(timeSlots);
-    }
 
     public String[][] getSeats() {
         return layout;

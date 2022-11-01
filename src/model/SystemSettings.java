@@ -1,6 +1,7 @@
 package model;
 
 import data.SystemSettingsDAO;
+import data.impl.SystemSettingsDaoImpl;
 
 import java.util.Calendar;
 
@@ -21,43 +22,43 @@ public class SystemSettings {
     }
 
     public boolean addHoliday(String date) {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.addHoliday(date);
     }
 
     public boolean removeHoliday(String date) {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.removeHoliday(date);
     }
 
     public boolean updateTicketPrice(String price) {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.updateTicketPrice(price);
     }
 
     public boolean updatePlatinumPrice(String price) {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.updatePlatinumPrice(price);
     }
 
 
     public void printPublicHolidays() {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         systemSettingsDAO.printPublicHolidays();
     }
 
     public double getTicketPrice() {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.getTicketPrice();
     }
 
     public Boolean checkHoliday(String date) {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.checkHoliday(date);
     }
 
     public double getPlatinumPrice() {
-        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDAO();
+        SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.getPlatinumPrice();
     }
 

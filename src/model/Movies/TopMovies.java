@@ -2,6 +2,8 @@ package model.Movies;
 
 import data.BookingDAO;
 import data.MoviesDAO;
+import data.impl.BookingDaoImpl;
+import data.impl.MoviesDaoImpl;
 
 import java.util.ArrayList;
 
@@ -52,13 +54,13 @@ public class TopMovies extends Movies {
 
 
     public ArrayList<TopMovies> top5MoviesBySales() {
-        BookingDAO bookingDAO = new BookingDAO();
+        BookingDAO bookingDAO = new BookingDaoImpl();
         return bookingDAO.top5MoviesBySales();
     }
 
 
     public ArrayList<TopMovies> top5MoviesByUser() {
-        MoviesDAO moviesDAO = new MoviesDAO();
+        MoviesDAO moviesDAO = new MoviesDaoImpl();
         return moviesDAO.top5MoviesByUser();
     }
 }

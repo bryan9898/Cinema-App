@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import data.MoviesDAO;
 import data.ReviewsDAO;
+import data.impl.ReviewsDaoImpl;
 
 public class Reviews {
 	
@@ -63,14 +64,14 @@ public class Reviews {
 	
 	//data access
 	public void addReview() {
-		ReviewsDAO reviewsDAO = new ReviewsDAO();
+		ReviewsDAO reviewsDAO = new ReviewsDaoImpl();
 		reviewsDAO.addReview(this);
 	}
 	
 	public double updateRating() {
 		double newRating=0;
 		int count=0;
-		ReviewsDAO reviewsDAO = new ReviewsDAO();
+		ReviewsDAO reviewsDAO = new ReviewsDaoImpl();
 		ArrayList<Reviews> x=reviewsDAO.getAllReviews();
 		for (Reviews a:x) {
 			if (a.getMovieName().equals(this.movieName)) {

@@ -1,6 +1,11 @@
 package controller;
 
 import data.MoviesDAO;
+import data.SystemSettingsDAO;
+import data.TimeSlotsDAO;
+import data.impl.MoviesDaoImpl;
+import data.impl.SystemSettingsDaoImpl;
+import data.impl.TimeSlotsDaoImpl;
 import model.Admin;
 import model.Cinema;
 import model.Movies.Movies;
@@ -73,7 +78,7 @@ public class AdminPage {
 			System.out.println("5: Edit Platinum Price Tickets");
 			System.out.println("6: Quit");
 			choice = sc.nextInt();
-			SystemSettings ss = new SystemSettings();
+			SystemSettingsDAO ss = new SystemSettingsDaoImpl();
 			boolean work = false;
 			switch (choice) {
 				case 1: ss.printPublicHolidays();
@@ -111,7 +116,7 @@ public class AdminPage {
 	private void editMovies() {
 
 		Movies m = new Movies();
-		MoviesDAO mDAO = new MoviesDAO();
+		MoviesDAO mDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
 		m.listMovies();
 		System.out.printf("\n");
@@ -128,40 +133,43 @@ public class AdminPage {
 		int name = sc.nextInt();
 
 		String choice;
+		int first = 0;
 		do {
-			System.out.println("What do you want to edit? (1: Name, 2: PGrating, 3: description, 4: Director, 5: Cast, 6: Status, 7: Quit)");
+			if(first == 1){
+				System.out.println("What do you want to edit? (1: Name, 2: PGrating, 3: description, 4: Director, 5: Cast, 6: Status, 7: Quit)");
+			}
 			choice = sc.nextLine();
 			switch (choice) {
 				case "1":
 					System.out.println("Enter the new name of the movie");
 					String newName = sc.nextLine();
-					m.editMovieName(movies.get(name-1).getMovieName(), newName);
+					mDAO.editMovieName(movies.get(name-1).getMovieName(), newName);
 					movies.get(name-1).setMovieName(newName);
 					break;
 				case "2": System.out.println("Enter the new PGrating of the movie");
 					String newPGrating = sc.nextLine();
-					m.editMoviePGrating(movies.get(name-1).getMovieName(), newPGrating);
+					mDAO.editMoviePGrating(movies.get(name-1).getMovieName(), newPGrating);
 					break;
 				case "3":
 					System.out.println("Enter the new description of the movie");
 					String newSynopsis = sc.nextLine();
-					m.editMovieSynopsis(movies.get(name-1).getMovieName(), newSynopsis);
+					mDAO.editMovieSynopsis(movies.get(name-1).getMovieName(), newSynopsis);
 					break;
 				case "4":
 					System.out.println("Enter the new director of the movie");
 					String newDirector = sc.nextLine();
-					m.editMovieDirector(movies.get(name-1).getMovieName(), newDirector);
+					mDAO.editMovieDirector(movies.get(name-1).getMovieName(), newDirector);
 					break;
 				case "5":
 					System.out.println("Enter the new cast of the movie");
 					String newCast = sc.nextLine();
-					m.editMovieCast(movies.get(name-1).getMovieName(), newCast);
+					mDAO.editMovieCast(movies.get(name-1).getMovieName(), newCast);
 					break;
 				case "6":
 					System.out.println("Edit movie status in numbers ((1)Coming Soon, (2)Preview, (3)Now Showing, (4)End of Showing) :");
 					String newStatus = sc.nextLine();
 					if (newStatus.equals("4")) {
-						m.removeMovieFromCinema(movies.get(name-1).getMovieName());
+						mDAO.removeMovieFromCinema(movies.get(name-1).getMovieName());
 						choice = "7";
 						System.out.printf("\n");
 						System.out.printf("\t");
@@ -170,17 +178,20 @@ public class AdminPage {
 						System.out.printf("\u001B[0m");
 						System.out.printf("\n");
 					} else {
-						m.editMovieStatus(movies.get(name-1).getMovieName(), newStatus);
+						mDAO.editMovieStatus(movies.get(name-1).getMovieName(), newStatus);
 					}
 					break;
+
 			}
+			first = 1;
 		} while (!choice.equals("7"));
 	}
 
 	private void editMoviesShowTimes() {
 		TimeSlots ts = new TimeSlots();
+		TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
 		ArrayList<TimeSlots> allTimeSlots = new ArrayList<TimeSlots>();
-		allTimeSlots = ts.showTimeSlots();
+		allTimeSlots = tsDAO.getAllTimeSlot();
 		for (int i = 0; i < allTimeSlots.size(); i++) {
 			System.out.printf("\n");
 			System.out.printf("\t");
@@ -210,9 +221,9 @@ public class AdminPage {
 			String date = sc.next();
 			System.out.println("Enter the new time : ");
 			String time = sc.next();
-			ts.editTimeSlots(allTimeSlots.get(index).getCineplex(), allTimeSlots.get(index).getCinemaNum(), allTimeSlots.get(index).getMovieName(),allTimeSlots.get(index).getDate(),allTimeSlots.get(index).getTime(), date, time , allTimeSlots.get(index).getLayout());
+			tsDAO.editTimeSlots(allTimeSlots.get(index).getCineplex(), allTimeSlots.get(index).getCinemaNum(), allTimeSlots.get(index).getMovieName(),allTimeSlots.get(index).getDate(),allTimeSlots.get(index).getTime(), date, time , allTimeSlots.get(index).getLayout());
 		} else if (choice == 2) {
-			ts.removeTimeSlots(index);
+			tsDAO.removeTimeSlots(index);
 		}
 	}
 
@@ -226,7 +237,8 @@ public class AdminPage {
 		System.out.printf("\n\t------------------------------------");
 		System.out.printf("\n");
 
-		MoviesDAO mDAO = new MoviesDAO();
+		TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
+		MoviesDAO mDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
 		listMovies();
 		Scanner sc = new Scanner(System.in);
@@ -252,7 +264,7 @@ public class AdminPage {
 			String time = sc.nextLine();
 			String[][] layout = cinema.getCineLayout(cineplexNum, cinemaNum);
 			TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movies.get(movieName-1).getMovieName(), showtime, time , layout);
-			boolean work = t.addTimeSlot();
+			boolean work = tsDAO.addTimeSlot(t);
 			if (work){
 				System.out.println("Successfully added!");
 			}
@@ -272,7 +284,7 @@ public class AdminPage {
 	public void addMovies(){
 		Scanner sc = new Scanner(System.in);
 		String movieName;
-
+		MoviesDAO mDAO = new MoviesDaoImpl();
 		System.out.printf("\n");
 		System.out.printf("\t------------------------------------\n"); // \tab
 		System.out.printf("\t");
@@ -298,9 +310,11 @@ public class AdminPage {
 		String movieDuration = sc.nextLine();
 		System.out.printf("\t Movie Status in numbers ((1)Coming Soon, (2)Preview, (3)Now Showing, (4)End of Showing) : ");
 		String movieStatus = sc.nextLine();
+
 		Movies movie = new Movies(movieName,movieType,moviePGRating,movieDescription,movieDirectors,movieCast,movieDuration,movieStatus);
-		boolean work = movie.addMovie();
+		boolean work = mDAO.addMovie(movie);
 		if(work == true) {
+			System.out.printf("\n");
 			System.out.printf("\n");
 			System.out.printf("\t");
 			System.out.printf("\u001B[36m");

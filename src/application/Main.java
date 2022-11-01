@@ -2,7 +2,9 @@ package application;
 import java.util.Scanner;
 
 import controller.ClientPage;
-import model.Account;
+import data.AccountDAO;
+import data.impl.AccountDaoImpl;
+import data.impl.AdminDAOImpl;
 import model.Admin;
 import controller.AdminPage;
 
@@ -27,8 +29,8 @@ public class Main {
 		user = sc.next();
 		System.out.printf("\t Password : ");
 		pass = sc.next();
-		Account acc = new Account();
-		boolean work = acc.checkAccount(user,pass);
+		AccountDAO acc = new AccountDaoImpl();
+		boolean work = acc.checkAcc(user, pass);
 		if(work == true) {
 			System.out.println("\t Successfully Logged In!");
 			ClientPage cp = new ClientPage(user);
@@ -52,8 +54,8 @@ public class Main {
 		user = sc.next();
 		System.out.printf("\t Password : ");
 		pass = sc.next();
-		Admin acc = new Admin();
-		boolean work = acc.checkAccount(user,pass);
+		AccountDAO acc = new AdminDAOImpl();
+		boolean work = acc.checkAcc(user,pass);
 		if(work == true) {
 			System.out.println("\t Successfully Logged In!");
 			AdminPage ap = new AdminPage();
@@ -88,8 +90,8 @@ public class Main {
 		contact = sc.next();
 		System.out.printf("\t Email Address : ");
 		email = sc.next();
-		Account newAcc = new Account(user, cPass, contact , email);
-		boolean work = newAcc.createAccount();
+		AccountDAO acc = new AccountDaoImpl();
+		boolean work = acc.createAccount(user, cPass, contact , email);
 		if(work == false) {
 			System.out.println("Please Change UserName");
 		} else {

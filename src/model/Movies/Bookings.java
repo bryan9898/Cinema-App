@@ -1,6 +1,9 @@
 package model.Movies;
 
 import data.BookingDAO;
+import data.MoviesDAO;
+import data.impl.BookingDaoImpl;
+import data.impl.MoviesDaoImpl;
 import model.Account;
 import model.Cinema;
 import model.SystemSettings;
@@ -37,6 +40,42 @@ public class Bookings {
         this.allSeats = allSeats;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public String getBookingID() {
+        return id;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public String getCineplex() {
+        return cineplex;
+    }
+
+    public String getCinemaNum() {
+        return cinemaNum;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public Integer[][] getAllSeats() {
+        return allSeats;
+    }
+
     public boolean bookSeats(Account a, TimeSlots timeSlots, int seats, Integer[][] allSeats, int child, int senior, int student){
         SystemSettings systemSettings = new SystemSettings();
         Cinema cinema = new Cinema();
@@ -66,7 +105,7 @@ public class Bookings {
                 throw new RuntimeException(e);
             }
         }
-        Movies mv = new Movies();
+        MoviesDAO mv = new MoviesDaoImpl();
         if(mv.check3D(timeSlots.getMovieName())){
             System.out.println(timeSlots.getMovieName()+" is a 3D movie, surcharge of $"+systemSettings.getSurcharge3D()+" will be added to the ticket price");
             price += Double.parseDouble(systemSettings.getSurcharge3D());
@@ -119,7 +158,7 @@ public class Bookings {
         Scanner sc = new Scanner(System.in);
         String confirm = sc.nextLine();
         if(confirm.equalsIgnoreCase("Yes")){
-            BookingDAO bookingDAO = new BookingDAO();
+            BookingDAO bookingDAO = new BookingDaoImpl();
             Boolean bookingStatus = bookingDAO.bookSeats(id,a,timeSlots,allSeats,totalPrice);
             if (bookingStatus){
                 return true;
@@ -132,47 +171,9 @@ public class Bookings {
     }
 
     public ArrayList<Bookings> viewBookings(Account a) {
-        BookingDAO bookingDAO = new BookingDAO();
+        BookingDAO bookingDAO = new BookingDaoImpl();
         return bookingDAO.viewBookings(a);
 
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getBookingID() {
-        return id;
-    }
-
-    public String getMovieName() {
-        return movieName;
-    }
-
-    public String getCineplex() {
-        return cineplex;
-    }
-
-    public String getCinemaNum() {
-        return cinemaNum;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public Integer[][] getAllSeats() {
-        return allSeats;
-    }
-
-
 
 }

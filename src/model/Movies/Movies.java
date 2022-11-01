@@ -1,6 +1,7 @@
 package model.Movies;
 
 import data.MoviesDAO;
+import data.impl.MoviesDaoImpl;
 
 import java.util.ArrayList;
 
@@ -126,13 +127,8 @@ public class Movies {
 		System.out.println("Movie ShowStatus: "+ANSI_YELLOW+showStatusWord+ ANSI_RESET);
 	}
 
-	public ArrayList<Movies> getAllMovies() {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		return moviesDAO.getAllMovies();
-	}
-
 	public void listMovies() {
-		MoviesDAO mDAO = new MoviesDAO();
+		MoviesDAO mDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
 
 		System.out.printf("\n");
@@ -157,51 +153,8 @@ public class Movies {
 		System.out.println("\n");
 	}
 
-
-	//addMovie using MoviesDAO
-	public boolean addMovie() {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		return moviesDAO.addMovie(this);
-	}
-
-
-	public void editMovieName(String name, String newName) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesDAO.editMovieName(name, newName);
-	}
-
-	public void editMovieSynopsis(String name, String newSynopsis) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesDAO.editMovieSynopsis(name, newSynopsis);
-	}
-
-	public void editMoviePGrating(String name, String newPGrating) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesDAO.editMoviePGrating(name, newPGrating);
-	}
-
-	public void editMovieDirector(String name, String newDirector) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesDAO.editMovieDirector(name, newDirector);
-	}
-
-	public void editMovieCast(String name, String newCast) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesDAO.editMovieCast(name, newCast);
-	}
-
-	public void removeMovieFromCinema(String name) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesDAO.removeMovieFromCinema(name);
-	}
-
-	public void editMovieStatus(String name, String newStatus) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesDAO.editMovieStatus(name, newStatus);
-	}
-
 	public void searchMovie(String movieName) {
-		MoviesDAO moviesDAO = new MoviesDAO();
+		MoviesDAO moviesDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = moviesDAO.searchMovie(movieName);
 		for (Movies m : movies) {
 			System.out.println("--------------------------------------");
@@ -211,10 +164,7 @@ public class Movies {
 		System.out.println("\n");
 	}
 
-    public boolean check3D(String movieName) {
-		MoviesDAO moviesDAO = new MoviesDAO();
-		return moviesDAO.check3D(movieName);
-    }
+
 
     public String getMovieStatus() {
 		return showStatus;
