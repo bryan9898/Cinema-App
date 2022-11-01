@@ -107,6 +107,7 @@ public class ClientPage {
         System.out.printf("\n\t------------------------------------");
         System.out.printf("\n\t By User Ratings");
         System.out.printf("\n\t------------------------------------");
+        System.out.printf("\n");
         /*
         TopMovies topUserRating = new TopMovies();
         ArrayList<TopMovies> top5Ratings = b.top5MoviesByUser();
@@ -156,7 +157,6 @@ public class ClientPage {
             System.out.printf("\n\t------------------------------------");
             System.out.printf("\n");
         }
-
     }
 
     private void bookSeats(Account a) {
@@ -204,7 +204,7 @@ public class ClientPage {
             counter2++;
         }
         System.out.println("--------------------------------------");
-        System.out.println("0 means seat is available , X means seat is taken , [] means couple seats ");
+        System.out.println("0 means seat is available , X means seat is taken , [] means couple seats (Both seats will be selected) ");
         System.out.println("\n");
         System.out.println("Enter Time Slot Index: ");
         int index2 = sc.nextInt();
@@ -231,16 +231,29 @@ public class ClientPage {
                         }
                     }
                     if (seatBooked == 0) {
-                        allSeats[i][0] = row;
-                        allSeats[i][1] = seatInt;
+                        if(fullTimeSlots.get(index2).getSeats()[row][seatInt].equals("[")){
+                            allSeats[i][0] = row;
+                            allSeats[i][1] = seatInt;
+                            allSeats[i+1][0] = row;
+                            allSeats[i+1][1] = seatInt+1;
+                            i++;
+                        }else if(fullTimeSlots.get(index2).getSeats()[row][seatInt].equals("]")) {
+                            allSeats[i][0] = row;
+                            allSeats[i][1] = seatInt - 1;
+                            allSeats[i + 1][0] = row;
+                            allSeats[i + 1][1] = seatInt;
+                            i++;
+                        }else{
+                                allSeats[i][0] = row;
+                                allSeats[i][1] = seatInt;
+                        }
                     }
                 } else {
                     System.out.println("Seat unavailable");
                     i--;
                 }
             }catch (Exception e){
-                System.out.println(e);
-                System.out.println("Seat unavailable / fail");
+                System.out.println("Seat unavailable");
                 i--;
             }
         }

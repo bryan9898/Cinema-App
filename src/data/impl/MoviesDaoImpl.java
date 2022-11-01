@@ -4,12 +4,13 @@ import data.MoviesDAO;
 import model.Movies.Movies;
 import model.Movies.TopMovies;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -59,7 +60,9 @@ public class MoviesDaoImpl implements MoviesDAO {
                 String rating = fields[6];
                 String movieLength = fields[7];
                 String showStatus = fields[8];
-                Movies a = new Movies(movieName, movieType, moviePGRating, description, director, cast, movieLength,showStatus);
+                String EOS = fields[9];
+
+                Movies a = new Movies(movieName, movieType, moviePGRating, description, director, cast, movieLength,showStatus,EOS);
                 a.setRating(Double.parseDouble(rating));
                 MV.add(a);
             }
@@ -68,6 +71,37 @@ public class MoviesDaoImpl implements MoviesDAO {
             System.out.println("No record found!");
             //e.printStackTrace();
         }
+
+        for (int i = 0; i < MV.size(); i++) {
+            if (LocalDate.parse(MV.get(i).getEOS(), DateTimeFormatter.ofPattern("dd/MM/yyyy")).isBefore(LocalDate.now())) {
+                try {
+                    BufferedReader reader = new BufferedReader(new FileReader(dataFile));
+                    Path dPath = FileSystems.getDefault().getPath("Resources/Data/","myTempFile.txt");
+                    File tempFile = new File(dPath.toString());
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+                    String lineToRemove = MV.get(i).getMovieName()+";;"+MV.get(i).getType()+";;"+MV.get(i).getPGrating()+";;"+MV.get(i).getDescription()+";;"+MV.get(i).getDirector()+";;"+MV.get(i).getCast()+";;"+MV.get(i).getRating()+";;"+MV.get(i).getRuntime()+";;"+MV.get(i).getShowStatus()+";;"+MV.get(i).getEOS();
+                    String currentLine;
+                    int removed = 0;
+                    while((currentLine = reader.readLine()) != null) {
+                        // trim newline when comparing with lineToRemove
+                        String trimmedLine = currentLine.trim();
+                        if(trimmedLine.contains(lineToRemove) && removed == 0) {
+                            removed++;
+                            continue;
+                        }
+                        writer.write(currentLine + System.getProperty("line.separator"));
+                    }
+                    writer.close();
+                    reader.close();
+                    Files.move(dPath, dataFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    MV.remove(MV.get(i));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         return MV;
     }
 
@@ -80,7 +114,7 @@ public class MoviesDaoImpl implements MoviesDAO {
         try {
             FileWriter out = new FileWriter(dataFile);
             for (Movies a: movies) {
-                out.append(a.getMovieName()+";;"+a.getType()+";;"+a.getPGrating()+";;"+a.getDescription()+";;"+a.getDirector()+";;"+a.getCast()+";;"+a.getRating()+";;"+a.getRuntime()+";;"+a.getShowStatus()+"\r\n");
+                out.append(a.getMovieName()+";;"+a.getType()+";;"+a.getPGrating()+";;"+a.getDescription()+";;"+a.getDirector()+";;"+a.getCast()+";;"+a.getRating()+";;"+a.getRuntime()+";;"+a.getShowStatus()+";;"+a.getEOS()+"\r\n");
             }
             out.close();
         } catch (IOException e) {
@@ -188,6 +222,29 @@ public class MoviesDaoImpl implements MoviesDAO {
             }
         }
         return false;
+    }
+
+    @Override
+    public void editMovieEOS(String movieName, String newEOS) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(movieName)) {
+                a.setEOS(newEOS);
+                break;
+            }
+        }
+        synToFile(movies);
+    }
+
+    @Override
+    public String getEOS(String movieName) {
+        ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(movieName)) {
+               return a.getEOS();
+            }
+        }
+        return "null";
     }
 
     public ArrayList<TopMovies> top5MoviesByUser() {

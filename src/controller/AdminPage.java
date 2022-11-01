@@ -8,10 +8,13 @@ import data.impl.SystemSettingsDaoImpl;
 import data.impl.TimeSlotsDaoImpl;
 import model.Admin;
 import model.Cinema;
+import model.CinemaTable;
 import model.Movies.Movies;
 import model.Movies.TimeSlots;
 import model.SystemSettings;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -136,7 +139,7 @@ public class AdminPage {
 		int first = 0;
 		do {
 			if(first == 1){
-				System.out.println("What do you want to edit? (1: Name, 2: PGrating, 3: description, 4: Director, 5: Cast, 6: Status, 7: Quit)");
+				System.out.println("What do you want to edit? (1: Name, 2: PGrating, 3: description, 4: Director, 5: Cast, 6: Status, 7: Change End Of Showing Date , 8: Quit)");
 			}
 			choice = sc.nextLine();
 			switch (choice) {
@@ -181,10 +184,28 @@ public class AdminPage {
 						mDAO.editMovieStatus(movies.get(name-1).getMovieName(), newStatus);
 					}
 					break;
+				case "7":
+					System.out.println("Enter the new end of showing date of the movie (dd/mm/yyyy)");
+					String newEOS = sc.nextLine();
+					// if newEOS is today's date
+					if (newEOS.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))) {
+						mDAO.editMovieStatus(movies.get(name-1).getMovieName(), "4");
+						mDAO.removeMovieFromCinema(movies.get(name-1).getMovieName());
+						System.out.printf("\n");
+						System.out.printf("\t");
+						System.out.printf("\u001B[31m");
+						System.out.println("------Movie has been deleted!------");
+						System.out.printf("\u001B[0m");
+						System.out.printf("\n");
+						choice = "8";
+					} else {
+						mDAO.editMovieEOS(movies.get(name-1).getMovieName(), newEOS);
+					}
+					break;
 
 			}
 			first = 1;
-		} while (!choice.equals("7"));
+		} while (!choice.equals("8"));
 	}
 
 	private void editMoviesShowTimes() {
@@ -221,7 +242,14 @@ public class AdminPage {
 			String date = sc.next();
 			System.out.println("Enter the new time : ");
 			String time = sc.next();
-			tsDAO.editTimeSlots(allTimeSlots.get(index).getCineplex(), allTimeSlots.get(index).getCinemaNum(), allTimeSlots.get(index).getMovieName(),allTimeSlots.get(index).getDate(),allTimeSlots.get(index).getTime(), date, time , allTimeSlots.get(index).getLayout());
+			MoviesDAO mDAO = new MoviesDaoImpl();
+			String EOSchecker = mDAO.getEOS(allTimeSlots.get(index).getMovieName());
+			//if showtime is after EOS, then cannot add
+			if (EOSchecker.compareTo(date) < 0){
+				System.out.println("Movie has ended its run on " + EOSchecker + ". Cannot add showtime after that date.");
+			} else {
+				tsDAO.editTimeSlots(allTimeSlots.get(index).getCineplex(), allTimeSlots.get(index).getCinemaNum(), allTimeSlots.get(index).getMovieName(),allTimeSlots.get(index).getDate(),allTimeSlots.get(index).getTime(), date, time , allTimeSlots.get(index).getLayout());
+			}
 		} else if (choice == 2) {
 			tsDAO.removeTimeSlots(index);
 		}
@@ -257,20 +285,30 @@ public class AdminPage {
 			String cinemaNum = sc.nextLine();
 			Cinema cinema = new Cinema(cineplexNum, cinemaNum);
 			System.out.println("Cinema Layout : \n ");
+
 			cinema.printCinemaLayout();
 			System.out.println("Enter Date (DD/MM/YYYY): ");
 			String showtime = sc.nextLine();
 			System.out.println("Enter Time (00:00-23:59): ");
 			String time = sc.nextLine();
-			String[][] layout = cinema.getCineLayout(cineplexNum, cinemaNum);
-			TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movies.get(movieName-1).getMovieName(), showtime, time , layout);
-			boolean work = tsDAO.addTimeSlot(t);
-			if (work){
-				System.out.println("Successfully added!");
+
+			String EOSchecker = mDAO.getEOS(movies.get(movieName-1).getMovieName());
+			//if showtime is after EOS, then cannot add
+			if (EOSchecker.compareTo(showtime) < 0){
+				System.out.println("Movie has ended its run on " + EOSchecker + ". Failed to add Movie to Cinema.");
 			}
 			else {
-				System.out.println("Time slot already exists!");
+				String[][] layout = cinema.getCineLayout(cineplexNum, cinemaNum);
+				TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movies.get(movieName-1).getMovieName(), showtime, time , layout);
+				boolean work = tsDAO.addTimeSlot(t);
+				if (work){
+					System.out.println("Successfully added!");
+				}
+				else {
+					System.out.println("Time slot already exists!");
+				}
 			}
+
 		}
 
 
@@ -310,8 +348,10 @@ public class AdminPage {
 		String movieDuration = sc.nextLine();
 		System.out.printf("\t Movie Status in numbers ((1)Coming Soon, (2)Preview, (3)Now Showing, (4)End of Showing) : ");
 		String movieStatus = sc.nextLine();
+		System.out.printf("\t Movie End of showing date (dd/mm/yyyy): ");
+		String movieEOS = sc.nextLine();
 
-		Movies movie = new Movies(movieName,movieType,moviePGRating,movieDescription,movieDirectors,movieCast,movieDuration,movieStatus);
+		Movies movie = new Movies(movieName,movieType,moviePGRating,movieDescription,movieDirectors,movieCast,movieDuration,movieStatus,movieEOS);
 		boolean work = mDAO.addMovie(movie);
 		if(work == true) {
 			System.out.printf("\n");

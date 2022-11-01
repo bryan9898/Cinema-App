@@ -22,5 +22,7 @@ public interface MoviesDAO {
     public boolean check3D(String movieName);
 
 
+    public void editMovieEOS(String movieName, String newEOS);
 
+    public String getEOS(String movieName);
 }

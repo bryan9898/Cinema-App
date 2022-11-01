@@ -3,8 +3,10 @@ import java.util.Scanner;
 
 import controller.ClientPage;
 import data.AccountDAO;
+import data.MoviesDAO;
 import data.impl.AccountDaoImpl;
 import data.impl.AdminDAOImpl;
+import data.impl.MoviesDaoImpl;
 import model.Admin;
 import controller.AdminPage;
 
@@ -113,7 +115,7 @@ public class Main {
 
 		
 		System.out.println(company);
-		
+
 		int choice = 0;
 		Scanner sc = new Scanner(System.in);
 		

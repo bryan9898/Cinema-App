@@ -66,6 +66,81 @@ public class Cinema {
 		this.cinemaCode = cinemaCode;
 		this.layout = layout;
 	}
+
+	public void printType2() {
+		String[][] type2Full = {
+				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","/"},
+				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
+				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
+		};
+		System.out.printf("-----------------------------------------------      %n");
+		System.out.printf("                     Screen                          %n");
+		System.out.printf("-----------------------------------------------      %n");
+		CinemaTable st = new CinemaTable();
+		st.setHeaders(type2Full[0]);
+		for(int i = 1;i<type2Full.length;i++) {
+			st.addRow(type2Full[i]);
+		}
+		st.print();
+		System.out.printf("-----------------------------------------------      %n");
+		System.out.printf("                    Entrance                         %n");
+		System.out.printf("-----------------------------------------------      %n");
+	}
+	public void printType3() {
+		 String[][] type3Full = {
+				{"/","A","B","/","D","E","/","G","H"},
+				{"1","O","O","/","O","O","/","O","O"},
+				{"2","O","O","/","O","O","/","O","O"},
+				{"3","O","O","/","O","O","/","O","O"},
+				{"4","O","O","/","O","O","/","O","O"},
+				{"5","O","O","/","O","O","/","O","O"},
+		};
+		System.out.printf("Platinum Class%n");
+		System.out.printf("---------------------------     %n");
+		System.out.printf("           Screen               %n");
+		System.out.printf("---------------------------     %n");
+		CinemaTable st = new CinemaTable();
+		st.setHeaders(type3Full[0]);
+		for(int i = 1;i<type3Full.length;i++) {
+			st.addRow(type3Full[i]);
+		}
+		st.print();
+		System.out.printf("---------------------------     %n");
+		System.out.printf("          Entrance              %n");
+		System.out.printf("---------------------------     %n");
+	}
+
+	public void printType1() {
+		String[][] type1Full = {
+				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","/"},
+				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
+				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
+		};
+		System.out.printf("     -----------------------------------------------      %n");
+		System.out.printf("                          Screen                          %n");
+		System.out.printf("     -----------------------------------------------      %n");
+		CinemaTable st = new CinemaTable();
+		st.setHeaders(type1Full[0]);
+		for(int i = 1;i<type1Full.length;i++) {
+			st.addRow(type1Full[i]);
+		}
+		st.print();
+		System.out.printf("     -----------------------------------------------      %n");
+		System.out.printf("                         Entrance                         %n");
+		System.out.printf("     -----------------------------------------------      %n");
+	}
 	
 	public String getCineplexCode() {
 		return cineplexCode;
@@ -97,48 +172,15 @@ public class Cinema {
 
     	if(this.layout.equals("1")) {
 
-    		System.out.printf("     -----------------------------------------------      %n");
-    		System.out.printf("                          Screen                          %n");
-    		System.out.printf("     -----------------------------------------------      %n");
-    		CinemaTable st = new CinemaTable();
-    		st.setHeaders(type1[0]);
-    		for(int i = 1;i<type1.length;i++) {
-    			st.addRow(type1[i]);
-    		}
-            st.print();
-    		System.out.printf("     -----------------------------------------------      %n");
-    		System.out.printf("                         Entrance                         %n");
-    		System.out.printf("     -----------------------------------------------      %n");
-    	}else if(this.layout.equals("2")) {
+    		printType1();
+		}
+		else if(this.layout.equals("2")) {
+			printType2();
+		}
+		else if(this.layout.equals("3")) {
+			printType3();
+		}
 
-    		System.out.printf("-----------------------------------------------      %n");
-    		System.out.printf("                     Screen                          %n");
-    		System.out.printf("-----------------------------------------------      %n");
-    		CinemaTable st = new CinemaTable();
-    		st.setHeaders(type2[0]);
-    		for(int i = 1;i<type2.length;i++) {
-    			st.addRow(type2[i]);
-    		}
-    		st.print();
-    		System.out.printf("-----------------------------------------------      %n");
-    		System.out.printf("                    Entrance                         %n");
-    		System.out.printf("-----------------------------------------------      %n");
-    	}else if(this.layout.equals("3")) {
-
-    		System.out.printf("Platinum Class%n");
-    		System.out.printf("---------------------------     %n");
-    		System.out.printf("           Screen               %n");
-    		System.out.printf("---------------------------     %n");
-    		CinemaTable st = new CinemaTable();
-    		st.setHeaders(type3[0]);
-    		for(int i = 1;i<type3.length;i++) {
-    			st.addRow(type3[i]);
-    		}
-    		st.print();
-    		System.out.printf("---------------------------     %n");
-    		System.out.printf("          Entrance              %n");
-    		System.out.printf("---------------------------     %n");
-    	}
 	}
 
 	public int getNumOfCinema(int cineplex){

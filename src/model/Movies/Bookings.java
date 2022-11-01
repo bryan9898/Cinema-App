@@ -81,6 +81,7 @@ public class Bookings {
         Cinema cinema = new Cinema();
         int type = cinema.getType(timeSlots.getCineplex(),timeSlots.getCinemaNum());
         double price = 0.0;
+        double surcharge = 0.0;
         if(type == 3){ //Platinum price
             price = systemSettings.getPlatinumPrice();
         } else {
@@ -89,7 +90,7 @@ public class Bookings {
         Boolean checkHoliday = systemSettings.checkHoliday(timeSlots.getDate());
         if(checkHoliday){
             System.out.println(timeSlots.getDate()+" is a Public Holiday, surcharge of $"+systemSettings.getPublicHolidaySurcharge()+" will be added to the ticket price");
-            price += Double.parseDouble(systemSettings.getPublicHolidaySurcharge());
+            surcharge += Double.parseDouble(systemSettings.getPublicHolidaySurcharge());
         } else{
             Calendar c = Calendar.getInstance();
             SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
@@ -99,7 +100,7 @@ public class Bookings {
                 String finalDay = format2.format(dt1);
                 if (finalDay.equals("Saturday") || finalDay.equals("Sunday")) {
                     System.out.println(timeSlots.getDate()+" is a weekend, surcharge of $"+systemSettings.getWeekendSurcharge()+" will be added to the ticket price");
-                    price += Double.parseDouble(systemSettings.getWeekendSurcharge());
+                    surcharge += Double.parseDouble(systemSettings.getWeekendSurcharge());
                 }
             } catch (ParseException e) {
                 throw new RuntimeException(e);
@@ -108,14 +109,14 @@ public class Bookings {
         MoviesDAO mv = new MoviesDaoImpl();
         if(mv.check3D(timeSlots.getMovieName())){
             System.out.println(timeSlots.getMovieName()+" is a 3D movie, surcharge of $"+systemSettings.getSurcharge3D()+" will be added to the ticket price");
-            price += Double.parseDouble(systemSettings.getSurcharge3D());
+            surcharge += Double.parseDouble(systemSettings.getSurcharge3D());
         }
 
         double childPrice = Double.parseDouble(systemSettings.getChildPriceDiscount()) * child;
         double seniorPrice = Double.parseDouble(systemSettings.getSeniorPriceDiscount()) * senior;
         double studentPrice = Double.parseDouble(systemSettings.getStudentPriceDiscount()) * student;
 
-        double totalPrice = (price * seats)  - childPrice - seniorPrice - studentPrice;
+        double totalPrice = ((price + surcharge) * seats)  - childPrice - seniorPrice - studentPrice;
 
         System.out.printf("\n");
         System.out.printf("\n");
@@ -126,8 +127,15 @@ public class Bookings {
         System.out.printf("\u001B[0m");
         System.out.printf("\n\t------------------------------------");
         System.out.printf("\n");
-        UUID uuid= UUID.randomUUID();
-        String id = uuid.toString();
+
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH)+1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        int minute = cal.get(Calendar.MINUTE);
+        //int second = cal.get(Calendar.SECOND);
+        String id = timeSlots.getCineplex() + year + String.format("%02d", month) + String.format("%02d", day) + String.format("%02d", hour) + String.format("%02d", minute);
         System.out.printf("\u001B[36m"); System.out.printf("\tBooking ID: %s \n",id); System.out.printf("\u001B[0m");
         for(int i = 0; i < seats; i++){
             System.out.printf("\u001B[36m");
@@ -149,6 +157,7 @@ public class Bookings {
         }
         System.out.printf("\n\n");
         System.out.printf("\u001B[36m");
+        System.out.println("\t Total Surcharge: +$" + surcharge*seats);
         System.out.println("\t Total Price: $" + totalPrice);
         System.out.printf("\u001B[0m");
 

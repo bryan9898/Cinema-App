@@ -47,6 +47,7 @@ public class CinemaDaoImpl implements CinemaDAO {
 
     public String getLayout(String cineplexCode, String cinemaCode) {
         ArrayList<Cinema> cinemas = getLayouts();
+
         for (Cinema a:cinemas) {
             if (a.getCineplexCode().equals(cineplexCode) && a.getCinemaCode().equals(cinemaCode)) {
                 return a.getLayout();

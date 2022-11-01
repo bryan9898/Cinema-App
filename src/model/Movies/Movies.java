@@ -16,10 +16,11 @@ public class Movies {
 	private String Cast;
 	private double rating;
 	private String runtime; // in mins
+	private String EOS ;
 
 	private String showStatus;
 	
-	public Movies(String MovieName,String type,String PGrating,String Description,String Director, String Cast,String runtime,String showStatus) {
+	public Movies(String MovieName,String type,String PGrating,String Description,String Director, String Cast,String runtime,String showStatus,String EOS) {
 		this.MovieName=MovieName;
 		this.type=type;
 		this.PGrating=PGrating;
@@ -29,6 +30,7 @@ public class Movies {
 		this.rating = 0.0;
 		this.runtime=runtime;
 		this.showStatus = showStatus;
+		this.EOS = EOS;
 	}
 
 	public Movies() {
@@ -107,6 +109,8 @@ public class Movies {
 		return showStatus;
 	}
 
+	public String getEOS() {return EOS;}
+
 	public void printAll() {
 
 		System.out.println("Movie Name: "+ ANSI_YELLOW +MovieName + ANSI_RESET);
@@ -125,6 +129,7 @@ public class Movies {
 			case "4": showStatusWord = "End of Showing"; break;
 		}
 		System.out.println("Movie ShowStatus: "+ANSI_YELLOW+showStatusWord+ ANSI_RESET);
+		System.out.println("Movie EOS date: "+ANSI_YELLOW+EOS+ ANSI_RESET);
 	}
 
 	public void listMovies() {
@@ -169,4 +174,8 @@ public class Movies {
     public String getMovieStatus() {
 		return showStatus;
     }
+
+	public void setEOS(String newEOS) {
+		this.EOS = newEOS;
+	}
 }
