@@ -1,5 +1,7 @@
 package model.Movies;
 
+import java.util.ArrayList;
+
 import data.MoviesDAO;
 import data.ReviewsDAO;
 
@@ -63,6 +65,21 @@ public class Reviews {
 	public void addReview() {
 		ReviewsDAO reviewsDAO = new ReviewsDAO();
 		reviewsDAO.addReview(this);
+	}
+	
+	public double updateRating() {
+		double newRating=0;
+		int count=0;
+		ReviewsDAO reviewsDAO = new ReviewsDAO();
+		ArrayList<Reviews> x=reviewsDAO.getAllReviews();
+		for (Reviews a:x) {
+			if (a.getMovieName().equals(this.movieName)) {
+				count++;
+				newRating+=a.getRating();
+			}
+		}
+		newRating = newRating / count;
+		return newRating;
 	}
 	
 

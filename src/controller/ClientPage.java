@@ -64,13 +64,14 @@ public class ClientPage {
     	int index = sc.nextInt();
     	String movieName = movies.get(index-1).getMovieName();
 		System.out.println("Enter the rating:");
-		int rating = sc.nextInt();
+		double rating = sc.nextDouble();
 		System.out.println("Enter your review:");
 		Scanner sc1 = new Scanner(System.in);
 		String review = sc1.nextLine();
 		Reviews newReview = new Reviews(review, rating, movieName, a.getUsername());
 		newReview.printReview();
 		newReview.addReview();
+		mDAO.editRating(movieName, newReview.updateRating());
 	}
 
 	private void top5Movies() {

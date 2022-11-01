@@ -203,4 +203,15 @@ public class MoviesDAO {
         }
         return top5;
     }
+
+	public void editRating(String movieName, double rating) {
+		ArrayList<Movies> movies=getAllMovies();
+        for (Movies a:movies) {
+            if (a.getMovieName().equals(movieName)) {
+                a.setRating(rating);
+                break;
+            }
+        }
+        synToFile(movies);
+	}
 }

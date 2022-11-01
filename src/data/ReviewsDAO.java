@@ -23,10 +23,8 @@ public class ReviewsDAO {
 
 	public void addReview(Reviews reviews) {
         ArrayList<Reviews> x=getAllReviews();
-        for (Reviews a:x) {
-        	x.add(reviews);
-        	synToFile(x);
-        }
+        x.add(reviews);
+        synToFile(x);
 	}
 	
 	private void synToFile(ArrayList<Reviews> x) {
@@ -36,7 +34,7 @@ public class ReviewsDAO {
         try {
             FileWriter out = new FileWriter(dataFile);
             for (Reviews a: x) {
-                out.append(a.getMovieName()+";;"+a.getUsername()+";;"+a.getRating()+";;"+a.getReview()+"\r\n");
+                out.append(a.getMovieName()+";;"+a.getUsername()+";;"+String.valueOf(a.getRating())+";;"+a.getReview()+"\r\n");
             }
             out.close();
         } catch (IOException e) {
