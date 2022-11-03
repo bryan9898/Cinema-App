@@ -59,7 +59,7 @@ public class TopMovies extends Movies {
     }
 
 
-    public ArrayList<TopMovies> top5MoviesByUser() {
+    public ArrayList<Movies> top5MoviesByUser() {
         MoviesDAO moviesDAO = new MoviesDaoImpl();
         return moviesDAO.top5MoviesByUser();
     }

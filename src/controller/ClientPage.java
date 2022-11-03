@@ -108,21 +108,20 @@ public class ClientPage {
         System.out.printf("\n\t By User Ratings");
         System.out.printf("\n\t------------------------------------");
         System.out.printf("\n");
-        /*
+        
         TopMovies topUserRating = new TopMovies();
-        ArrayList<TopMovies> top5Ratings = b.top5MoviesByUser();
+        ArrayList<Movies> top5Ratings = topUserRating.top5MoviesByUser();
         int topCounterForRating = 1;
-        for (TopMovies t : top5Movies) {
+        for (Movies t : top5Ratings) {
             System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", topCounterForRating);
             System.out.printf("\u001B[33m");
             System.out.println("\t Movie Name: " + t.getMovieName());
-            System.out.println("\t Total Tickets Sold: " + t.getNumberOfTickets());
-            System.out.println("\t Total Revenue: " + t.getTotalSales());
+            System.out.println("\t Average Rating: " + t.getRating());
             System.out.printf("\n");
             System.out.printf("\t------------------------------------\n"); // \tab
             System.out.printf("\u001B[0m");
             topCounterForRating++;
-        } */
+        } 
 
     }
 

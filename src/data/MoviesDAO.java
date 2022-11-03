@@ -17,7 +17,7 @@ public interface MoviesDAO {
     public void editMovieStatus(String name, String newStatus);
     public ArrayList<Movies> searchMovie(String movieName);
     public ArrayList<Movies> getAllMovies();
-    public ArrayList<TopMovies> top5MoviesByUser();
+    public ArrayList<Movies> top5MoviesByUser();
     public void editRating(String movieName, double rating);
     public boolean check3D(String movieName);
 

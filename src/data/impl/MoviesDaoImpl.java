@@ -247,14 +247,21 @@ public class MoviesDaoImpl implements MoviesDAO {
         return "null";
     }
 
-    public ArrayList<TopMovies> top5MoviesByUser() {
+    public ArrayList<Movies> top5MoviesByUser() {
         ArrayList<Movies> movies=getAllMovies();
-        ArrayList<TopMovies> top5 = new ArrayList<TopMovies>();
-        for (Movies a:movies) {
-            if (a.getRating()!=0) {
-                TopMovies b = new TopMovies(a.getMovieName(), a.getRating());
-                top5.add(b);
+        ArrayList<Movies> top5 = new ArrayList<Movies>();
+        for (int i = 0; i < 5; i++) {
+            if(movies.size() == 0){
+                break;
             }
+            Movies max = movies.get(0);
+            for (Movies t : movies) {
+                if (t.getRating() > max.getRating()) {
+                    max = t;
+                }
+            }
+            movies.remove(max);
+            top5.add(max);
         }
         return top5;
     }
