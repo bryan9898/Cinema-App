@@ -57,9 +57,11 @@ public class Reviews {
 	}
 	
 	public void printReview() {
+		System.out.println("");
 		System.out.println("Movie: " + movieName);
 		System.out.println("Rating: " + rating);
 		System.out.println("Review: " + review);
+		System.out.println("");
 	}
 	
 	//data access
