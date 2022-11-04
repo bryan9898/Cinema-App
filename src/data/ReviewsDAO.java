@@ -14,6 +14,7 @@ import model.Movies.Reviews;
 public interface ReviewsDAO {
 
     public void addReview(Reviews reviews);
+    public void removeReview(Reviews reviews);
     public ArrayList<Reviews> getAllReviews();
 
 

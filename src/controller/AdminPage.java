@@ -1,15 +1,18 @@
 package controller;
 
 import data.MoviesDAO;
+import data.ReviewsDAO;
 import data.SystemSettingsDAO;
 import data.TimeSlotsDAO;
 import data.impl.MoviesDaoImpl;
+import data.impl.ReviewsDaoImpl;
 import data.impl.SystemSettingsDaoImpl;
 import data.impl.TimeSlotsDaoImpl;
 import model.Admin;
 import model.Cinema;
 import model.CinemaTable;
 import model.Movies.Movies;
+import model.Movies.Reviews;
 import model.Movies.TimeSlots;
 import model.Movies.TopMovies;
 import model.SystemSettings;
@@ -41,8 +44,9 @@ public class AdminPage {
 			System.out.println("4: Add Movies to Cinema");
 			System.out.println("5: Edit / Remove Movies Show Times");
 			System.out.println("6: Edit Movies <Search name>");
-			System.out.println("7: Top 5 Movies ranking");
-			System.out.println("8: Sign out");
+			System.out.println("7: Remove Reviews");
+			System.out.println("8: Top 5 Movies ranking");
+			System.out.println("9: Sign out");
 			choice = sc.nextInt();
 			switch (choice) {
 				 case 1: editSystemSettings(); break;
@@ -56,13 +60,62 @@ public class AdminPage {
 						break;
 				 case 6: editMovies();
 					 	break;
-				 case 7: top5Movies();
+				 case 7: removeReviews();
 					 break;
-				 case 8:System.out.println("Signing Out...");
+				 case 8: top5Movies();
+					 break;
+				 case 9:System.out.println("Signing Out...");
 						System.out.printf("\n");
 						break;
 			}
-		}while(choice != 8);
+		}while(choice != 9);
+	}
+
+	private void removeReviews() {
+		ReviewsDAO rDAO = new ReviewsDaoImpl();
+		MoviesDAO mDAO = new MoviesDaoImpl();
+		ArrayList<Movies> movies = mDAO.getAllMovies();
+		ArrayList<Reviews> reviews = rDAO.getAllReviews();
+		ArrayList<Reviews> rList = new ArrayList<Reviews>();
+		System.out.println("1: Delete by movie");
+		System.out.println("2: Delete by user");
+		Scanner sc = new Scanner(System.in);
+		int choice = sc.nextInt();
+		if(choice!=1 && choice !=2) {
+			System.out.println("Wrong choice!");
+			return;
+		}
+		
+		switch(choice) {
+		case 1:
+			listMovies();
+			System.out.println("Which movie is the review from? (Enter index)");
+			int choice1 = sc.nextInt();
+			String movieName = movies.get(choice1 - 1).getMovieName();
+			System.out.println("Movie name is " + movieName);
+			int count=1;
+			for(Reviews r: reviews) {
+				if(r.getMovieName().equals(movieName)) {
+					rList.add(r);
+					System.out.println("Index:" + count);
+					count++;
+					r.printReview();
+				}
+			}
+			System.out.println("Which review to remove? (Enter index)");
+			int choice2 = sc.nextInt();
+			rList.get(choice2 - 1).removeReview();
+			if(rList.size()!=0) {
+				mDAO.editRating(movieName, rList.get(0).updateRating());
+			}
+			break;
+		case 2:
+			break;
+		default:
+			break;
+		}
+		
+		
 	}
 
 	private void top5Movies() {

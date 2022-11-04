@@ -20,6 +20,19 @@ public class ReviewsDaoImpl implements ReviewsDAO {
         Path dPath = FileSystems.getDefault().getPath("Resources/Data/",Reviews_File);
         dataFile = new File(dPath.toString());
     }
+    
+    public void removeReview(Reviews reviews) {
+    	ArrayList<Reviews> x = getAllReviews();
+    	int count=0;
+    	for(Reviews r:x) {
+    		if(r.getMovieName().equals(reviews.getMovieName()) && r.getReview().equals(reviews.getReview()) && r.getRating()==reviews.getRating() && r.getUsername().equals(reviews.getUsername())) {
+    			break;
+    		}
+    		count++;
+    	}
+    	x.remove(count);
+    	synToFile(x);
+    }
 
     public void addReview(Reviews reviews) {
         ArrayList<Reviews> x=getAllReviews();

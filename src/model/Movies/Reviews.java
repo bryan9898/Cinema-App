@@ -57,7 +57,6 @@ public class Reviews {
 	}
 	
 	public void printReview() {
-		System.out.println("");
 		System.out.println("User: "+ username);
 		System.out.println("Movie: " + movieName);
 		System.out.println("Rating: " + rating);
@@ -69,6 +68,11 @@ public class Reviews {
 	public void addReview() {
 		ReviewsDAO reviewsDAO = new ReviewsDaoImpl();
 		reviewsDAO.addReview(this);
+	}
+	
+	public void removeReview() {
+		ReviewsDAO reviewsDAO = new ReviewsDaoImpl();
+		reviewsDAO.removeReview(this);
 	}
 	
 	public double updateRating() {
