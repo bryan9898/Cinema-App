@@ -124,17 +124,24 @@ public class Main {
 			System.out.println("2: Admin Login");
 			System.out.println("3: Register");
 			System.out.println("4: Quit");
-			choice = sc.nextInt();
-			switch (choice) {
-			 case 1: login();
-			 		break;
-			 case 2:AdminLogin();
-			 		break;
-			 case 3: register();
+			try {
+				choice = sc.nextInt();
+				switch (choice) {
+				 case 1: login();
+				 		break;
+				 case 2:AdminLogin();
+				 		break;
+				 case 3: register();
+					    break;
+				 case 4: System.out.println("Quiting...");
 				    break;
-			 case 4: System.out.println("Quiting...");
-			    break;
-			}
+				}
+			} catch(Exception e) {
+            	sc.nextLine();
+            	choice = 0;
+            	System.out.println("Wrong Input!");
+            	System.out.println("");
+            } 
 		}while(choice != 4);
 	}
 

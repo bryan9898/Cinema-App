@@ -47,27 +47,34 @@ public class AdminPage {
 			System.out.println("7: Remove Reviews");
 			System.out.println("8: Top 5 Movies ranking");
 			System.out.println("9: Sign out");
-			choice = sc.nextInt();
-			switch (choice) {
-				 case 1: editSystemSettings(); break;
-				 case 2: listMovies();
-						break;
-				 case 3: addMovies();
-						break;
-				 case 4: addMoviesToCinema();
-						break;
-				 case 5: editMoviesShowTimes();
-						break;
-				 case 6: editMovies();
-					 	break;
-				 case 7: removeReviews();
-					 break;
-				 case 8: top5Movies();
-					 break;
-				 case 9:System.out.println("Signing Out...");
-						System.out.printf("\n");
-						break;
-			}
+			try {
+				choice = sc.nextInt();
+				switch (choice) {
+					 case 1: editSystemSettings(); break;
+					 case 2: listMovies();
+							break;
+					 case 3: addMovies();
+							break;
+					 case 4: addMoviesToCinema();
+							break;
+					 case 5: editMoviesShowTimes();
+							break;
+					 case 6: editMovies();
+						 	break;
+					 case 7: removeReviews();
+						 break;
+					 case 8: top5Movies();
+						 break;
+					 case 9:System.out.println("Signing Out...");
+							System.out.printf("\n");
+							break;
+				}
+			} catch(Exception e) {
+            	sc.nextLine();
+            	choice = 0;
+            	System.out.println("Wrong Input!");
+            	System.out.println("");
+            } 
 		}while(choice != 9);
 	}
 
@@ -80,42 +87,41 @@ public class AdminPage {
 		System.out.println("1: Delete by movie");
 		System.out.println("2: Delete by user");
 		Scanner sc = new Scanner(System.in);
-		int choice = sc.nextInt();
-		if(choice!=1 && choice !=2) {
-			System.out.println("Wrong choice!");
-			return;
-		}
-		
-		switch(choice) {
-		case 1:
-			listMovies();
-			System.out.println("Which movie is the review from? (Enter index)");
-			int choice1 = sc.nextInt();
-			String movieName = movies.get(choice1 - 1).getMovieName();
-			System.out.println("Movie name is " + movieName);
-			int count=1;
-			for(Reviews r: reviews) {
-				if(r.getMovieName().equals(movieName)) {
-					rList.add(r);
-					System.out.println("Index:" + count);
-					count++;
-					r.printReview();
+		try {
+			int choice = sc.nextInt();
+			switch(choice) {
+			case 1:
+				listMovies();
+				System.out.println("Which movie is the review from? (Enter index)");
+				int choice1 = sc.nextInt();
+				String movieName = movies.get(choice1 - 1).getMovieName();
+				System.out.println("Movie name is " + movieName);
+				int count=1;
+				for(Reviews r: reviews) {
+					if(r.getMovieName().equals(movieName)) {
+						rList.add(r);
+						System.out.println("Index:" + count);
+						count++;
+						r.printReview();
+					}
 				}
+				System.out.println("Which review to remove? (Enter index)");
+				int choice2 = sc.nextInt();
+				rList.get(choice2 - 1).removeReview();
+				if(rList.size()!=0) {
+					mDAO.editRating(movieName, rList.get(0).updateRating());
+				}
+				break;
+			case 2:
+				break;
+			default:
+				break;
 			}
-			System.out.println("Which review to remove? (Enter index)");
-			int choice2 = sc.nextInt();
-			rList.get(choice2 - 1).removeReview();
-			if(rList.size()!=0) {
-				mDAO.editRating(movieName, rList.get(0).updateRating());
-			}
-			break;
-		case 2:
-			break;
-		default:
-			break;
-		}
-		
-		
+		} catch(Exception e) {
+        	sc.nextLine();
+        	System.out.println("Wrong Input!");
+        	System.out.println("");
+        } 
 	}
 
 	private void top5Movies() {
@@ -398,6 +404,11 @@ public class AdminPage {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Movie index to add / edit to cinema showtimes: ");
 		int movieName = sc.nextInt();
+		if(movieName >= movies.size()) {
+			System.out.println("No movie found!");
+			System.out.println("");
+			return;
+		}
 		System.out.println("Enter Cineplex Num (1)NTU (2)SEK (3)BIS: ");
 		int cineplexNum = sc.nextInt();
 		Cinema c = new Cinema();

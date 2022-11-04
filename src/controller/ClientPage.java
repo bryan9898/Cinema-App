@@ -44,8 +44,9 @@ public class ClientPage {
             System.out.println("6: Add Review");
             System.out.println("7: View Reviews for Movie");
             System.out.println("8: Sign out");
-            choice = sc.nextInt();
-            switch (choice) {
+            try {
+            	choice = sc.nextInt();
+            	switch (choice) {
                 case 1: listMovies(); break;
                 case 2: searchMovie(); break;
                 case 3: bookSeats(a); break;
@@ -59,7 +60,13 @@ public class ClientPage {
                     System.out.printf("\n");
                     break;
                 default: break;
-            }
+            	}
+            } catch(Exception e) {
+            	sc.nextLine();
+            	choice = 0;
+            	System.out.println("Wrong Input!");
+            	System.out.println("");
+            } 
         }while(choice != 8);
     }
 
