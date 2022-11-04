@@ -3,6 +3,7 @@ package controller;
 import data.TimeSlotsDAO;
 import data.impl.MoviesDaoImpl;
 import data.impl.TimeSlotsDaoImpl;
+import data.impl.ReviewsDaoImpl;
 import model.Account;
 import model.Movies.Bookings;
 import model.Movies.Movies;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import data.MoviesDAO;
+import data.ReviewsDAO;
 
 public class ClientPage {
 
@@ -40,7 +42,8 @@ public class ClientPage {
             System.out.println("4: View all Bookings");
             System.out.println("5: Top 5 Movies ranking");
             System.out.println("6: Add Review");
-            System.out.println("7: Sign out");
+            System.out.println("7: View Reviews for Movie");
+            System.out.println("8: Sign out");
             choice = sc.nextInt();
             switch (choice) {
                 case 1: listMovies(); break;
@@ -50,15 +53,34 @@ public class ClientPage {
                 case 5: top5Movies(); break;
                 case 6: addReview(a);
                     break;
-                case 7:System.out.println("Signing Out...");
+                case 7: viewReview();
+                	break;
+                case 8:System.out.println("Signing Out...");
                     System.out.printf("\n");
                     break;
                 default: break;
             }
-        }while(choice != 7);
+        }while(choice != 8);
     }
 
-    private void addReview(Account a) {
+    private void viewReview() {
+		MoviesDAO mDAO = new MoviesDaoImpl();
+		ReviewsDAO rDAO = new ReviewsDaoImpl();
+		ArrayList<Movies> movies = mDAO.getAllMovies();
+		ArrayList<Reviews> reviews = rDAO.getAllReviews();
+    	this.listMovies();
+    	System.out.println("Which movie would you like to see reviews? (Enter index)");
+    	Scanner sc = new Scanner(System.in);
+    	int index = sc.nextInt();
+    	String movieName = movies.get(index-1).getMovieName();
+    	for (Reviews r : reviews) {
+    		if(r.getMovieName().equals(movieName)) {
+    			r.printReview();
+    		}
+    	}
+	}
+
+	private void addReview(Account a) {
     	MoviesDAO mDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
     	this.listMovies();
