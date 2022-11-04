@@ -12,6 +12,8 @@ import model.Movies.TimeSlots;
 import model.Movies.TopMovies;
 
 import java.awt.print.Book;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -254,7 +256,16 @@ public class ClientPage {
 
         TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
         ArrayList<TimeSlots> fullTimeSlots = new ArrayList<TimeSlots>();
-
+        //delete all time slots that show is over
+        ArrayList<TimeSlots> allTimeSlots = tsDAO.getAllTimeSlot();
+        for (int i = 0; i < allTimeSlots.size(); i++) {
+            //if timeslot's date and passed, delete it
+            LocalDateTime ldt = LocalDateTime.parse(allTimeSlots.get(i).getDate() + " " + allTimeSlots.get(i).getTime(), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+            if (ldt.isBefore(LocalDateTime.now())) {
+                tsDAO.removeTimeSlots(i);
+                continue;
+            }
+        }
 
         fullTimeSlots = tsDAO.getTimeSlots(movies.get(index).getMovieName());
         int counter2 = 0;

@@ -18,6 +18,7 @@ import model.Movies.TopMovies;
 import model.SystemSettings;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -312,6 +313,7 @@ public class AdminPage {
 						System.out.println("------Movie has been deleted!------");
 						System.out.printf("\u001B[0m");
 						System.out.printf("\n");
+						choice = "8";
 					} else {
 						mDAO.editMovieStatus(movies.get(name-1).getMovieName(), newStatus);
 					}
@@ -319,9 +321,9 @@ public class AdminPage {
 				case "7":
 					System.out.println("Enter the new end of showing date of the movie (dd/mm/yyyy)");
 					String newEOS = sc.nextLine();
-					// if newEOS is today's date
-					if (newEOS.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))) {
-						mDAO.editMovieStatus(movies.get(name-1).getMovieName(), "4");
+					// if newEOS is before today's date
+					LocalDate ld = LocalDate.parse(newEOS, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					if (ld.isBefore(LocalDate.now())) {
 						mDAO.removeMovieFromCinema(movies.get(name-1).getMovieName());
 						System.out.printf("\n");
 						System.out.printf("\t");
@@ -346,6 +348,12 @@ public class AdminPage {
 		ArrayList<TimeSlots> allTimeSlots = new ArrayList<TimeSlots>();
 		allTimeSlots = tsDAO.getAllTimeSlot();
 		for (int i = 0; i < allTimeSlots.size(); i++) {
+			//if timeslot's date and passed, delete it
+			LocalDateTime ldt = LocalDateTime.parse(allTimeSlots.get(i).getDate() + " " + allTimeSlots.get(i).getTime(), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+			if (ldt.isBefore(LocalDateTime.now())) {
+				tsDAO.removeTimeSlots(i);
+				continue;
+			}
 			System.out.printf("\n");
 			System.out.printf("\t");
 			System.out.printf("\u001B[47m" + "\u001B[30m");
@@ -404,7 +412,7 @@ public class AdminPage {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter Movie index to add / edit to cinema showtimes: ");
 		int movieName = sc.nextInt();
-		if(movieName >= movies.size()) {
+		if(movieName >= movies.size()+1) {
 			System.out.println("No movie found!");
 			System.out.println("");
 			return;

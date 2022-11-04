@@ -126,4 +126,6 @@ public class TimeSlots {
     public String[][] getSeats() {
         return layout;
     }
+
+
 }

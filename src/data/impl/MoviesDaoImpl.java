@@ -1,7 +1,9 @@
 package data.impl;
 
 import data.MoviesDAO;
+import data.TimeSlotsDAO;
 import model.Movies.Movies;
+import model.Movies.TimeSlots;
 import model.Movies.TopMovies;
 
 import java.io.*;
@@ -95,6 +97,18 @@ public class MoviesDaoImpl implements MoviesDAO {
                     writer.close();
                     reader.close();
                     Files.move(dPath, dataFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+
+                    System.out.println(MV.get(i).getMovieName());
+                    TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
+                    int counter = 0;
+                    for (TimeSlots ts:tsDAO.getAllTimeSlot()) {
+                        if (ts.getMovieName().equals(MV.get(i).getMovieName())) {
+                            tsDAO.removeTimeSlots(counter);
+                        }
+                        counter++;
+                    }
+
                     MV.remove(MV.get(i));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -186,6 +200,14 @@ public class MoviesDaoImpl implements MoviesDAO {
                 movies.remove(a);
                 break;
             }
+        }
+        TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
+        int counter = 0;
+        for (TimeSlots ts:tsDAO.getAllTimeSlot()) {
+            if (ts.getMovieName().equals(name)) {
+                tsDAO.removeTimeSlots(counter);
+            }
+            counter++;
         }
         synToFile(movies);
     }
