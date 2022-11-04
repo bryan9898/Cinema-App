@@ -255,8 +255,19 @@ public class MoviesDaoImpl implements MoviesDAO {
                 break;
             }
             Movies max = movies.get(0);
+            while(max.getRating()==0) {
+            	movies.remove(max);
+            	if(movies.size()==0) {
+            		break;
+            	}
+            	max=movies.get(0);
+            }
+            if(movies.size() == 0){
+                break;
+            }
+            
             for (Movies t : movies) {
-                if (t.getRating() > max.getRating()) {
+                if (t.getRating() > max.getRating() && t.getRating()!=0.0) {
                     max = t;
                 }
             }

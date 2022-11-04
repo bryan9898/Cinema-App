@@ -68,6 +68,7 @@ public class ClientPage {
 		ReviewsDAO rDAO = new ReviewsDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
 		ArrayList<Reviews> reviews = rDAO.getAllReviews();
+		boolean check=true;
     	this.listMovies();
     	System.out.println("Which movie would you like to see reviews? (Enter index)");
     	Scanner sc = new Scanner(System.in);
@@ -76,7 +77,13 @@ public class ClientPage {
     	for (Reviews r : reviews) {
     		if(r.getMovieName().equals(movieName)) {
     			r.printReview();
+    			check=false;
     		}
+    	}
+    	if(check) {
+    		System.out.println("");
+    		System.out.println("There are no reviews yet");
+    		System.out.println("");
     	}
 	}
 
@@ -88,8 +95,14 @@ public class ClientPage {
     	Scanner sc = new Scanner(System.in);
     	int index = sc.nextInt();
     	String movieName = movies.get(index-1).getMovieName();
-		System.out.println("Enter the rating:");
+		System.out.println("Enter the rating (from 1.0 to 5.0):");
 		double rating = sc.nextDouble();
+		if(rating<1) {
+			rating = 1;
+		}
+		if(rating>5) {
+			rating = 5;
+		}
 		System.out.println("Enter your review:");
 		Scanner sc1 = new Scanner(System.in);
 		String review = sc1.nextLine();
@@ -100,51 +113,71 @@ public class ClientPage {
 	}
 
 	private void top5Movies() {
+		System.out.println("");
+		System.out.println("1: Top 5 by Sales");
+		System.out.println("2: Top 5 by Ratings");
+		Scanner sc = new Scanner(System.in);
+		int choice = sc.nextInt();
+		if(choice!=1 && choice!=2) {
+			System.out.println("");
+			System.out.println("Wrong option!");
+			System.out.println("");
+			return;
+		}
+		
         System.out.printf("\n");
         System.out.printf("\t------------------------------------\n"); // \tab
         System.out.printf("\t");
         System.out.printf("\u001B[47m" + "\u001B[30m");
         System.out.printf("          Top 5 Movies            ");
         System.out.printf("\u001B[0m");
-        System.out.printf("\n\t------------------------------------");
-        System.out.printf("\n\t By Ticket Sales");
-        System.out.printf("\n\t------------------------------------");
-        System.out.printf("\n");
-
-        TopMovies b = new TopMovies();
-        ArrayList<TopMovies> top5Movies = b.top5MoviesBySales();
-        int counter = 1;
-        for (TopMovies t : top5Movies) {
-            System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", counter);
-            System.out.printf("\u001B[33m");
-            System.out.println("\t Movie Name: " + t.getMovieName());
-            System.out.println("\t Total Tickets Sold: " + t.getNumberOfTickets());
-            System.out.println("\t Total Revenue: " + t.getTotalSales());
-            System.out.printf("\n");
-            System.out.printf("\t------------------------------------\n"); // \tab
-            System.out.printf("\u001B[0m");
-            counter++;
-        }
-
-        System.out.printf("\n\t------------------------------------");
-        System.out.printf("\n\t By User Ratings");
-        System.out.printf("\n\t------------------------------------");
-        System.out.printf("\n");
         
-        TopMovies topUserRating = new TopMovies();
-        ArrayList<Movies> top5Ratings = topUserRating.top5MoviesByUser();
-        int topCounterForRating = 1;
-        for (Movies t : top5Ratings) {
-            System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", topCounterForRating);
-            System.out.printf("\u001B[33m");
-            System.out.println("\t Movie Name: " + t.getMovieName());
-            System.out.println("\t Average Rating: " + t.getRating());
+        switch(choice) {
+        case 1:
+        	System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n\t By Ticket Sales");
+            System.out.printf("\n\t------------------------------------");
             System.out.printf("\n");
-            System.out.printf("\t------------------------------------\n"); // \tab
-            System.out.printf("\u001B[0m");
-            topCounterForRating++;
-        } 
 
+            TopMovies b = new TopMovies();
+            ArrayList<TopMovies> top5Movies = b.top5MoviesBySales();
+            int counter = 1;
+            for (TopMovies t : top5Movies) {
+                System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", counter);
+                System.out.printf("\u001B[33m");
+                System.out.println("\t Movie Name: " + t.getMovieName());
+                System.out.println("\t Total Tickets Sold: " + t.getNumberOfTickets());
+                System.out.println("\t Total Revenue: " + t.getTotalSales());
+                System.out.printf("\n");
+                System.out.printf("\t------------------------------------\n"); // \tab
+                System.out.printf("\u001B[0m");
+                counter++;
+            }
+            break;
+        case 2: 
+        	System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n\t By User Ratings");
+            System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n");
+            
+            TopMovies topUserRating = new TopMovies();
+            ArrayList<Movies> top5Ratings = topUserRating.top5MoviesByUser();
+            int topCounterForRating = 1;
+            for (Movies t : top5Ratings) {
+                System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", topCounterForRating);
+                System.out.printf("\u001B[33m");
+                System.out.println("\t Movie Name: " + t.getMovieName());
+                System.out.println("\t Average Rating: " + t.getRating());
+                System.out.printf("\n");
+                System.out.printf("\t------------------------------------\n"); // \tab
+                System.out.printf("\u001B[0m");
+                topCounterForRating++;
+            } 
+            break;
+        default: 
+        	break;
+        }
+        System.out.println("");
     }
 
     private void viewBookings(Account a) {

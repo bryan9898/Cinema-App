@@ -11,6 +11,7 @@ import model.Cinema;
 import model.CinemaTable;
 import model.Movies.Movies;
 import model.Movies.TimeSlots;
+import model.Movies.TopMovies;
 import model.SystemSettings;
 
 import java.time.LocalDate;
@@ -40,7 +41,8 @@ public class AdminPage {
 			System.out.println("4: Add Movies to Cinema");
 			System.out.println("5: Edit / Remove Movies Show Times");
 			System.out.println("6: Edit Movies <Search name>");
-			System.out.println("7: Sign out");
+			System.out.println("7: Top 5 Movies ranking");
+			System.out.println("8: Sign out");
 			choice = sc.nextInt();
 			switch (choice) {
 				 case 1: editSystemSettings(); break;
@@ -54,11 +56,82 @@ public class AdminPage {
 						break;
 				 case 6: editMovies();
 					 	break;
-				 case 7:System.out.println("Signing Out...");
+				 case 7: top5Movies();
+					 break;
+				 case 8:System.out.println("Signing Out...");
 						System.out.printf("\n");
 						break;
 			}
-		}while(choice != 7);
+		}while(choice != 8);
+	}
+
+	private void top5Movies() {
+		System.out.println("");
+		System.out.println("1: Top 5 by Sales");
+		System.out.println("2: Top 5 by Ratings");
+		Scanner sc = new Scanner(System.in);
+		int choice = sc.nextInt();
+		if(choice!=1 && choice!=2) {
+			System.out.println("");
+			System.out.println("Wrong option!");
+			System.out.println("");
+			return;
+		}
+		
+        System.out.printf("\n");
+        System.out.printf("\t------------------------------------\n"); // \tab
+        System.out.printf("\t");
+        System.out.printf("\u001B[47m" + "\u001B[30m");
+        System.out.printf("          Top 5 Movies            ");
+        System.out.printf("\u001B[0m");
+        
+        switch(choice) {
+        case 1:
+        	System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n\t By Ticket Sales");
+            System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n");
+
+            TopMovies b = new TopMovies();
+            ArrayList<TopMovies> top5Movies = b.top5MoviesBySales();
+            int counter = 1;
+            for (TopMovies t : top5Movies) {
+                System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", counter);
+                System.out.printf("\u001B[33m");
+                System.out.println("\t Movie Name: " + t.getMovieName());
+                System.out.println("\t Total Tickets Sold: " + t.getNumberOfTickets());
+                System.out.println("\t Total Revenue: " + t.getTotalSales());
+                System.out.printf("\n");
+                System.out.printf("\t------------------------------------\n"); // \tab
+                System.out.printf("\u001B[0m");
+                counter++;
+            }
+            break;
+        case 2: 
+        	System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n\t By User Ratings");
+            System.out.printf("\n\t------------------------------------");
+            System.out.printf("\n");
+            
+            TopMovies topUserRating = new TopMovies();
+            ArrayList<Movies> top5Ratings = topUserRating.top5MoviesByUser();
+            int topCounterForRating = 1;
+            for (Movies t : top5Ratings) {
+                System.out.printf("\t \u001B[47m Top %d: \u001B[0m \n", topCounterForRating);
+                System.out.printf("\u001B[33m");
+                System.out.println("\t Movie Name: " + t.getMovieName());
+                System.out.println("\t Average Rating: " + t.getRating());
+                System.out.printf("\n");
+                System.out.printf("\t------------------------------------\n"); // \tab
+                System.out.printf("\u001B[0m");
+                topCounterForRating++;
+            } 
+            break;
+        default: 
+        	break;
+        }
+        System.out.println("");
+		
 	}
 
 	private void editSystemSettings() {

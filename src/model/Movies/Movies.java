@@ -119,7 +119,12 @@ public class Movies {
 		System.out.println("Movie Description: "+ANSI_YELLOW+Description+ ANSI_RESET);
 		System.out.println("Movie Director: "+ANSI_YELLOW+Director+ ANSI_RESET);
 		System.out.println("Movie Cast: "+ANSI_YELLOW+Cast+ ANSI_RESET);
-		System.out.println("Movie Rating: "+ANSI_YELLOW+rating+ ANSI_RESET);
+		if(rating == 0) {
+			System.out.println("Movie Rating: "+ANSI_YELLOW+"N.A"+ ANSI_RESET);
+		}
+		else {
+			System.out.println("Movie Rating: "+ANSI_YELLOW+rating+ ANSI_RESET);
+		}
 		System.out.println("Movie Runtime: "+ANSI_YELLOW+runtime+ ANSI_RESET);
 		String showStatusWord = "";
 		switch (showStatus) {
