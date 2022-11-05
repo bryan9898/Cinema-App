@@ -82,14 +82,16 @@ public class Bookings {
         int type = cinema.getType(timeSlots.getCineplex(),timeSlots.getCinemaNum());
         double price = 0.0;
         double surcharge = 0.0;
+        System.out.printf("\n");
         if(type == 3){ //Platinum price
             price = systemSettings.getPlatinumPrice();
         } else {
             price = systemSettings.getTicketPrice();
         }
         Boolean checkHoliday = systemSettings.checkHoliday(timeSlots.getDate());
+        System.out.printf("\u001B[31m");
         if(checkHoliday){
-            System.out.println(timeSlots.getDate()+" is a Public Holiday, surcharge of $"+systemSettings.getPublicHolidaySurcharge()+" will be added to the ticket price");
+            System.out.println(timeSlots.getDate()+" is a Public Holiday, surcharge of $"+systemSettings.getPublicHolidaySurcharge()+" will be added to each ticket price");
             surcharge += Double.parseDouble(systemSettings.getPublicHolidaySurcharge());
         } else{
             Calendar c = Calendar.getInstance();
@@ -99,7 +101,7 @@ public class Bookings {
                 DateFormat format2 = new SimpleDateFormat("EEEE");
                 String finalDay = format2.format(dt1);
                 if (finalDay.equals("Saturday") || finalDay.equals("Sunday")) {
-                    System.out.println(timeSlots.getDate()+" is a weekend, surcharge of $"+systemSettings.getWeekendSurcharge()+" will be added to the ticket price");
+                    System.out.println(timeSlots.getDate()+" is a weekend, surcharge of $"+systemSettings.getWeekendSurcharge()+" will be added to each ticket price");
                     surcharge += Double.parseDouble(systemSettings.getWeekendSurcharge());
                 }
             } catch (ParseException e) {
@@ -108,10 +110,16 @@ public class Bookings {
         }
         MoviesDAO mv = new MoviesDaoImpl();
         if(mv.check3D(timeSlots.getMovieName())){
-            System.out.println(timeSlots.getMovieName()+" is a 3D movie, surcharge of $"+systemSettings.getSurcharge3D()+" will be added to the ticket price");
+            System.out.println(timeSlots.getMovieName()+" is a 3D movie, surcharge of $"+systemSettings.getSurcharge3D()+" will be added to each ticket price");
             surcharge += Double.parseDouble(systemSettings.getSurcharge3D());
         }
 
+        //if time is after 6pm, surcharge will be added to the ticket price
+        if(Integer.parseInt(timeSlots.getTime().substring(0,2)) >= 18){
+            System.out.println("The movie is showing after 6pm, surcharge of $"+systemSettings.getAfter6pmSurcharge()+" will be added to each ticket price");
+            surcharge += Double.parseDouble(systemSettings.getAfter6pmSurcharge());
+        }
+        System.out.printf("\u001B[0m");
         double childPrice = Double.parseDouble(systemSettings.getChildPriceDiscount()) * child;
         double seniorPrice = Double.parseDouble(systemSettings.getSeniorPriceDiscount()) * senior;
         double studentPrice = Double.parseDouble(systemSettings.getStudentPriceDiscount()) * student;
@@ -142,15 +150,15 @@ public class Bookings {
             char rowLetter = (char) (allSeats[i][1] + 64);
             System.out.println("\t Seat "+(i+1)+": $"+price + " (Row "+allSeats[i][0]+", Column "+rowLetter+")");
             if(child > 0){
-                System.out.println("\t 1 Child Discount: -$"+childPrice);
+                System.out.println("\t 1 Child Discount: -$"+systemSettings.getChildPriceDiscount());
                 child--;
             } else
             if(senior > 0){
-                System.out.println("\t 1 Senior Discount: -$"+seniorPrice);
+                System.out.println("\t 1 Senior Discount: -$"+systemSettings.getSeniorPriceDiscount());
                 senior--;
             } else
             if(student > 0){
-                System.out.println("\t 1 student Discount: -$"+studentPrice);
+                System.out.println("\t 1 student Discount: -$"+systemSettings.getStudentPriceDiscount());
                 student--;
             }
             System.out.printf("\u001B[0m");

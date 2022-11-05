@@ -385,7 +385,9 @@ public class AdminPage {
 			MoviesDAO mDAO = new MoviesDaoImpl();
 			String EOSchecker = mDAO.getEOS(allTimeSlots.get(index).getMovieName());
 			//if showtime is after EOS, then cannot add
-			if (EOSchecker.compareTo(date) < 0){
+			LocalDate ldEOS = LocalDate.parse(EOSchecker, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			LocalDate ldShowtime = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			if (ldEOS.isBefore(ldShowtime)) {
 				System.out.println("Movie has ended its run on " + EOSchecker + ". Cannot add showtime after that date.");
 			} else {
 				tsDAO.editTimeSlots(allTimeSlots.get(index).getCineplex(), allTimeSlots.get(index).getCinemaNum(), allTimeSlots.get(index).getMovieName(),allTimeSlots.get(index).getDate(),allTimeSlots.get(index).getTime(), date, time , allTimeSlots.get(index).getLayout());
@@ -433,18 +435,20 @@ public class AdminPage {
 
 			cinema.printCinemaLayout();
 			System.out.println("Enter Date (DD/MM/YYYY): ");
-			String showtime = sc.nextLine();
+			String showDate = sc.nextLine();
 			System.out.println("Enter Time (00:00-23:59): ");
 			String time = sc.nextLine();
 
 			String EOSchecker = mDAO.getEOS(movies.get(movieName-1).getMovieName());
 			//if showtime is after EOS, then cannot add
-			if (EOSchecker.compareTo(showtime) < 0){
-				System.out.println("Movie has ended its run on " + EOSchecker + ". Failed to add Movie to Cinema.");
+			LocalDate ldEOS = LocalDate.parse(EOSchecker, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			LocalDate ldShowtime = LocalDate.parse(showDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			if (ldEOS.isBefore(ldShowtime)) {
+				System.out.println("Movie has ended its run on " + EOSchecker + ". Cannot add showtime after that date.");
 			}
 			else {
 				String[][] layout = cinema.getCineLayout(cineplexNum, cinemaNum);
-				TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movies.get(movieName-1).getMovieName(), showtime, time , layout);
+				TimeSlots t = new TimeSlots(cineplexNum, cinemaNum, movies.get(movieName-1).getMovieName(), showDate, time , layout);
 				boolean work = tsDAO.addTimeSlot(t);
 				if (work){
 					System.out.println("Successfully added!");

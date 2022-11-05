@@ -13,6 +13,9 @@ public class SystemSettings {
     private String ChildPriceDiscount = "4.0";
     private String PublicHolidaySurcharge = "5.0";
     private String Surcharge3D = "2.0";
+
+    private String After6pmSurcharge = "2.0";
+
     private String platinumPrice;
 
     String Holidays;
@@ -77,4 +80,9 @@ public class SystemSettings {
     public String getChildPriceDiscount() {return ChildPriceDiscount;}
 
     public String getStudentPriceDiscount() {return StudentPriceDiscount;}
+
+    public String getAfter6pmSurcharge() {
+        return After6pmSurcharge;
+    }
+
 }
