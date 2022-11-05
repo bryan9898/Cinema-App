@@ -37,10 +37,17 @@ public class Main {
 			System.out.println("\t Successfully Logged In!");
 			ClientPage cp = new ClientPage(user);
 		} else {
-			System.out.println("\t Wrong Username or Password");
+			AccountDAO adminAcc = new AdminDAOImpl();
+			boolean AdminLogin = adminAcc.checkAcc(user,pass);
+			if(AdminLogin == true) {
+				System.out.println("\t Successfully Logged In!");
+				AdminPage ap = new AdminPage();
+			} else {
+				System.out.println("\t Wrong Username or Password");
+			}
 		}
 	}
-	
+	/*
 	public static void AdminLogin(){
 		Scanner sc = new Scanner(System.in);
 		String user;
@@ -64,7 +71,7 @@ public class Main {
 		} else {
 			System.out.println("\t Wrong Username or Password");
 		}
-	}
+	} */
 	
 	public static void register(){
 		Scanner sc = new Scanner(System.in);
@@ -121,19 +128,16 @@ public class Main {
 		
 		do {
 			System.out.println("1: Login");
-			System.out.println("2: Admin Login");
-			System.out.println("3: Register");
-			System.out.println("4: Quit");
+			System.out.println("2: Register");
+			System.out.println("3: Quit");
 			try {
 				choice = sc.nextInt();
 				switch (choice) {
 				 case 1: login();
 				 		break;
-				 case 2:AdminLogin();
-				 		break;
-				 case 3: register();
+				 case 2: register();
 					    break;
-				 case 4: System.out.println("Quiting...");
+				 case 3: System.out.println("Quiting...");
 				    break;
 				}
 			} catch(Exception e) {
@@ -142,7 +146,7 @@ public class Main {
             	System.out.println("Wrong Input!");
             	System.out.println("");
             } 
-		}while(choice != 4);
+		}while(choice != 3);
 	}
 
 }
