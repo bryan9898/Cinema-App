@@ -40,25 +40,27 @@ public class ClientPage {
         do {
             System.out.println("1: List Movies");
             System.out.println("2: Search Movie");
-            System.out.println("3: Book seats");
-            System.out.println("4: View all Bookings");
-            System.out.println("5: Top 5 Movies ranking");
-            System.out.println("6: Add Review");
-            System.out.println("7: View Reviews for Movie");
-            System.out.println("8: Sign out");
+            System.out.println("3: Book seats By Movie");
+            System.out.println("4: Book seats By Cinema");
+            System.out.println("5: View all Bookings");
+            System.out.println("6: Top 5 Movies ranking");
+            System.out.println("7: Add Review");
+            System.out.println("8: View Reviews for Movie");
+            System.out.println("9: Sign out");
             try {
             	choice = sc.nextInt();
             	switch (choice) {
                 case 1: listMovies(); break;
                 case 2: searchMovie(); break;
                 case 3: bookSeats(a); break;
-                case 4: viewBookings(a); break;
-                case 5: top5Movies(); break;
-                case 6: addReview(a);
+                case 4: bookSeatsByCinema(a); break;
+                case 5: viewBookings(a); break;
+                case 6: top5Movies(); break;
+                case 7: addReview(a);
                     break;
-                case 7: viewReview();
+                case 8: viewReview();
                 	break;
-                case 8:System.out.println("Signing Out...");
+                case 9:System.out.println("Signing Out...");
                     System.out.printf("\n");
                     break;
                 default: break;
@@ -69,7 +71,140 @@ public class ClientPage {
             	System.out.println("Wrong Input!");
             	System.out.println("");
             } 
-        }while(choice != 8);
+        }while(choice != 9);
+    }
+
+    private void bookSeatsByCinema(Account a) {
+        System.out.println("Choose Cinema (1 for NTU , 2 for SEK , 3 for BIS):");
+        Scanner sc = new Scanner(System.in);
+        int choice = sc.nextInt();
+        String cinemaCode = "";
+        switch (choice) {
+            case 1: cinemaCode = "NTU"; break;
+            case 2: cinemaCode = "SEK"; break;
+            case 3: cinemaCode = "BIS"; break;
+            default: break;
+        }
+        System.out.println("Choose Movie:");
+        TimeSlotsDAO timeSlotsDAO = new TimeSlotsDaoImpl();
+        ArrayList<TimeSlots> timeSlots = timeSlotsDAO.getTimeSlotsByCinema(cinemaCode);
+
+        for (int i = 0; i < timeSlots.size(); i++) {
+            //if timeslot's date and passed, delete it
+            LocalDateTime ldt = LocalDateTime.parse(timeSlots.get(i).getDate() + " " + timeSlots.get(i).getTime(), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+            if (ldt.isBefore(LocalDateTime.now())) {
+                timeSlotsDAO.removeTimeSlots(i);
+                continue;
+            }
+        }
+
+        //get unique movie names
+        ArrayList<String> movieNames = new ArrayList<>();
+        for (TimeSlots ts : timeSlots) {
+            if (!movieNames.contains(ts.getMovieName())) {
+                movieNames.add(ts.getMovieName());
+            }
+        }
+        //movie objects
+        ArrayList <Movies> movies = new ArrayList<>();
+        MoviesDAO moviesDAO = new MoviesDaoImpl();
+        int counter = 0;
+        for (String movieName : movieNames) {
+            movies.add(moviesDAO.getMovie(movieName));
+            System.out.println("--------------------------------------");
+            System.out.printf("%d: ", counter);
+            movies.get(counter).printAll();
+            counter++;
+        }
+        System.out.println("--------------------------------------");
+        int movieChoice = sc.nextInt();
+        String movieName = movieNames.get(movieChoice);
+        //print timeslot for movie
+        int counter2 = 0;
+        ArrayList<TimeSlots> timeSlotsByCinema = new ArrayList<TimeSlots>();
+        for (TimeSlots ts : timeSlots) {
+            if (ts.getMovieName().equals(movieName)) {
+                timeSlotsByCinema.add(ts);
+                System.out.println("--------------------------------------");
+                System.out.printf("%d: ", counter2);
+                ts.printAll();
+                counter2++;
+            }
+        }
+
+        System.out.println("--------------------------------------");
+        System.out.println("0 means seat is available , X means seat is taken , [] means couple seats (Both seats will be selected) ");
+        System.out.println("\n");
+        System.out.println("Enter Time Slot Index: ");
+        int index2 = sc.nextInt();
+        System.out.println("Enter Number of Seats: ");
+        int seats = sc.nextInt();
+        int row = 0, seatInt = 0 ;
+        Integer[][] allSeats = new Integer[seats][2];
+        for (int i = 0; i < seats; i++) {
+            System.out.println("Enter Seat Number (A/B/C): ");
+            String seat = sc.next();
+            System.out.println("Enter Row Number (1/2/3): ");
+            row = sc.nextInt();
+            seat = seat.replaceAll("\\s","");
+            seatInt = Integer.valueOf(seat.toUpperCase().charAt(0))- 64;
+            //check if seat already taken
+            try {
+                if (timeSlotsByCinema.get(index2).getSeats()[row][seatInt].equals("O") || timeSlotsByCinema.get(index2).getSeats()[row][seatInt].equals("[") || timeSlotsByCinema.get(index2).getSeats()[row][seatInt].equals("]")) {
+                    int seatBooked = 0;
+                    for (int j = 0; j < i; j++) {
+                        if (allSeats[j][0] == row && allSeats[j][1] == seatInt) {
+                            System.out.println("You already booked this seat");
+                            i--;
+                            seatBooked = 1;
+                        }
+                    }
+                    if (seatBooked == 0) {
+                        if(timeSlotsByCinema.get(index2).getSeats()[row][seatInt].equals("[")){
+                            allSeats[i][0] = row;
+                            allSeats[i][1] = seatInt;
+                            allSeats[i+1][0] = row;
+                            allSeats[i+1][1] = seatInt+1;
+                            i++;
+                        }else if(timeSlotsByCinema.get(index2).getSeats()[row][seatInt].equals("]")) {
+                            allSeats[i][0] = row;
+                            allSeats[i][1] = seatInt - 1;
+                            allSeats[i + 1][0] = row;
+                            allSeats[i + 1][1] = seatInt;
+                            i++;
+                        }else{
+                            allSeats[i][0] = row;
+                            allSeats[i][1] = seatInt;
+                        }
+                    }
+                } else {
+                    System.out.println("Seat unavailable");
+                    i--;
+                }
+            }catch (Exception e){
+                System.out.println("Seat unavailable");
+                i--;
+            }
+        }
+
+        System.out.println("Any Child (0-12) Discount? Input 0 if none :  ");
+        int child = sc.nextInt();
+        System.out.println("Any Senior (60+) Discount? Input 0 if none :  ");
+        int senior = sc.nextInt();
+        System.out.println("Any Student Discount? Input 0 if none :  ");
+        int student = sc.nextInt();
+        Bookings b = new Bookings();
+        boolean success = b.bookSeats(a,timeSlotsByCinema.get(index2),seats,allSeats,child,senior,student);
+        if (success) {
+            for (int i = 0; i < seats; i++) {
+                timeSlotsByCinema.get(index2).setSeats(allSeats[i][0],allSeats[i][1]);
+            }
+            timeSlotsDAO.updateTimeSlots(timeSlotsByCinema.get(index2));
+            System.out.println("Booking Successful!");
+        } else {
+            System.out.println("Booking Failed!");
+        }
+
     }
 
     private void viewReview() {

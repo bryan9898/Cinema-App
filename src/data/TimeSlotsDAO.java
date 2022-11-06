@@ -15,4 +15,7 @@ public interface TimeSlotsDAO {
     public void updateTimeSlots(TimeSlots timeSlots );
 
 
+    void updateMovieName(String movieName, String newName);
+
+    ArrayList<TimeSlots> getTimeSlotsByCinema(String cinemaCode);
 }

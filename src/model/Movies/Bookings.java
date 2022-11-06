@@ -40,6 +40,8 @@ public class Bookings {
         this.allSeats = allSeats;
     }
 
+    public String getId() {return id;}
+    public void setMovieName(String movieName) {this.movieName = movieName;}
     public String getUsername() {
         return username;
     }
@@ -192,5 +194,7 @@ public class Bookings {
         return bookingDAO.viewBookings(a);
 
     }
+
+
 
 }

@@ -25,4 +25,6 @@ public interface MoviesDAO {
     public void editMovieEOS(String movieName, String newEOS);
 
     public String getEOS(String movieName);
+
+    Movies getMovie(String movieName);
 }

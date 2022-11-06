@@ -1,13 +1,7 @@
 package controller;
 
-import data.MoviesDAO;
-import data.ReviewsDAO;
-import data.SystemSettingsDAO;
-import data.TimeSlotsDAO;
-import data.impl.MoviesDaoImpl;
-import data.impl.ReviewsDaoImpl;
-import data.impl.SystemSettingsDaoImpl;
-import data.impl.TimeSlotsDaoImpl;
+import data.*;
+import data.impl.*;
 import model.Admin;
 import model.Cinema;
 import model.CinemaTable;
@@ -17,13 +11,14 @@ import model.Movies.TimeSlots;
 import model.Movies.TopMovies;
 import model.SystemSettings;
 
+import java.awt.print.Book;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AdminPage {
+public class AdminPage<ReviewDAO> {
 	
 	public AdminPage(){
 		System.out.printf("\n");
@@ -280,6 +275,13 @@ public class AdminPage {
 					System.out.println("Enter the new name of the movie");
 					String newName = sc.nextLine();
 					mDAO.editMovieName(movies.get(name-1).getMovieName(), newName);
+					//update name for booking , review and timeslots
+					BookingDAO bDAO = new BookingDaoImpl();
+					bDAO.updateMovieName(movies.get(name-1).getMovieName(), newName);
+					ReviewsDAO rDAO = new ReviewsDaoImpl();
+					rDAO.updateMovieName(movies.get(name-1).getMovieName(), newName);
+					TimeSlotsDAO tDAO = new TimeSlotsDaoImpl();
+					tDAO.updateMovieName(movies.get(name-1).getMovieName(), newName);
 					movies.get(name-1).setMovieName(newName);
 					break;
 				case "2": System.out.println("Enter the new PGrating of the movie");

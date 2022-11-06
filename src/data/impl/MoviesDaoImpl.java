@@ -4,7 +4,7 @@ import data.MoviesDAO;
 import data.TimeSlotsDAO;
 import model.Movies.Movies;
 import model.Movies.TimeSlots;
-import model.Movies.TopMovies;
+
 
 import java.io.*;
 import java.nio.file.FileSystems;
@@ -18,21 +18,21 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class MoviesDaoImpl implements MoviesDAO {
-    private static final String Account_File="Movies.txt";
+    private static final String Account_File = "Movies.txt";
     private File dataFile;
 
 
     public MoviesDaoImpl() {
-        Path dPath = FileSystems.getDefault().getPath("Resources/Data/",Account_File);
+        Path dPath = FileSystems.getDefault().getPath("Resources/Data/", Account_File);
         dataFile = new File(dPath.toString());
     }
 
     public boolean addMovie(Movies movie) {
-        boolean existing=false;
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
-            if (a.getMovieName().equals(movie.getMovieName())){
-                existing=true;
+        boolean existing = false;
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
+            if (a.getMovieName().equals(movie.getMovieName())) {
+                existing = true;
                 break;
             }
         }
@@ -51,8 +51,8 @@ public class MoviesDaoImpl implements MoviesDAO {
         try {
             in = new Scanner(dataFile);
             while (in.hasNextLine()) {
-                record=in.nextLine();
-                fields=record.split(";;");
+                record = in.nextLine();
+                fields = record.split(";;");
                 String movieName = fields[0];
                 String movieType = fields[1];
                 String moviePGRating = fields[2];
@@ -64,7 +64,7 @@ public class MoviesDaoImpl implements MoviesDAO {
                 String showStatus = fields[8];
                 String EOS = fields[9];
 
-                Movies a = new Movies(movieName, movieType, moviePGRating, description, director, cast, movieLength,showStatus,EOS);
+                Movies a = new Movies(movieName, movieType, moviePGRating, description, director, cast, movieLength, showStatus, EOS);
                 a.setRating(Double.parseDouble(rating));
                 MV.add(a);
             }
@@ -78,17 +78,17 @@ public class MoviesDaoImpl implements MoviesDAO {
             if (LocalDate.parse(MV.get(i).getEOS(), DateTimeFormatter.ofPattern("dd/MM/yyyy")).isBefore(LocalDate.now())) {
                 try {
                     BufferedReader reader = new BufferedReader(new FileReader(dataFile));
-                    Path dPath = FileSystems.getDefault().getPath("Resources/Data/","myTempFile.txt");
+                    Path dPath = FileSystems.getDefault().getPath("Resources/Data/", "myTempFile.txt");
                     File tempFile = new File(dPath.toString());
                     BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
 
-                    String lineToRemove = MV.get(i).getMovieName()+";;"+MV.get(i).getType()+";;"+MV.get(i).getPGrating()+";;"+MV.get(i).getDescription()+";;"+MV.get(i).getDirector()+";;"+MV.get(i).getCast()+";;"+MV.get(i).getRating()+";;"+MV.get(i).getRuntime()+";;"+MV.get(i).getShowStatus()+";;"+MV.get(i).getEOS();
+                    String lineToRemove = MV.get(i).getMovieName() + ";;" + MV.get(i).getType() + ";;" + MV.get(i).getPGrating() + ";;" + MV.get(i).getDescription() + ";;" + MV.get(i).getDirector() + ";;" + MV.get(i).getCast() + ";;" + MV.get(i).getRating() + ";;" + MV.get(i).getRuntime() + ";;" + MV.get(i).getShowStatus() + ";;" + MV.get(i).getEOS();
                     String currentLine;
                     int removed = 0;
-                    while((currentLine = reader.readLine()) != null) {
+                    while ((currentLine = reader.readLine()) != null) {
                         // trim newline when comparing with lineToRemove
                         String trimmedLine = currentLine.trim();
-                        if(trimmedLine.contains(lineToRemove) && removed == 0) {
+                        if (trimmedLine.contains(lineToRemove) && removed == 0) {
                             removed++;
                             continue;
                         }
@@ -102,7 +102,7 @@ public class MoviesDaoImpl implements MoviesDAO {
                     System.out.println(MV.get(i).getMovieName());
                     TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
                     int counter = 0;
-                    for (TimeSlots ts:tsDAO.getAllTimeSlot()) {
+                    for (TimeSlots ts : tsDAO.getAllTimeSlot()) {
                         if (ts.getMovieName().equals(MV.get(i).getMovieName())) {
                             tsDAO.removeTimeSlots(counter);
                         }
@@ -120,15 +120,14 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
 
-
     private void synToFile(ArrayList<Movies> movies) {
-        if (movies==null)
+        if (movies == null)
             return;
 
         try {
             FileWriter out = new FileWriter(dataFile);
-            for (Movies a: movies) {
-                out.append(a.getMovieName()+";;"+a.getType()+";;"+a.getPGrating()+";;"+a.getDescription()+";;"+a.getDirector()+";;"+a.getCast()+";;"+a.getRating()+";;"+a.getRuntime()+";;"+a.getShowStatus()+";;"+a.getEOS()+"\r\n");
+            for (Movies a : movies) {
+                out.append(a.getMovieName() + ";;" + a.getType() + ";;" + a.getPGrating() + ";;" + a.getDescription() + ";;" + a.getDirector() + ";;" + a.getCast() + ";;" + a.getRating() + ";;" + a.getRuntime() + ";;" + a.getShowStatus() + ";;" + a.getEOS() + "\r\n");
             }
             out.close();
         } catch (IOException e) {
@@ -139,8 +138,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void editMovieName(String name, String newName) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(name)) {
                 a.setMovieName(newName);
                 break;
@@ -150,8 +149,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void editMovieSynopsis(String name, String newSynopsis) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(name)) {
                 a.setDescription(newSynopsis);
                 break;
@@ -161,8 +160,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void editMoviePGrating(String name, String newPGrating) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(name)) {
                 a.setPGrating(newPGrating);
                 break;
@@ -172,8 +171,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void editMovieDirector(String name, String newDirector) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(name)) {
                 a.setDirector(newDirector);
                 break;
@@ -183,8 +182,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void editMovieCast(String name, String newCast) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(name)) {
                 a.setCast(newCast);
                 break;
@@ -194,8 +193,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void removeMovieFromCinema(String name) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(name)) {
                 movies.remove(a);
                 break;
@@ -203,7 +202,7 @@ public class MoviesDaoImpl implements MoviesDAO {
         }
         TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
         int counter = 0;
-        for (TimeSlots ts:tsDAO.getAllTimeSlot()) {
+        for (TimeSlots ts : tsDAO.getAllTimeSlot()) {
             if (ts.getMovieName().equals(name)) {
                 tsDAO.removeTimeSlots(counter);
             }
@@ -213,8 +212,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void editMovieStatus(String name, String newStatus) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(name)) {
                 a.setShowStatus(newStatus);
                 break;
@@ -224,10 +223,10 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public ArrayList<Movies> searchMovie(String movieName) {
-        ArrayList<Movies> movies=getAllMovies();
+        ArrayList<Movies> movies = getAllMovies();
         ArrayList<Movies> MV = new ArrayList<Movies>();
-        for (Movies a:movies) {
-            if ( Pattern.compile(Pattern.quote(movieName), Pattern.CASE_INSENSITIVE).matcher(a.getMovieName()).find()) {
+        for (Movies a : movies) {
+            if (Pattern.compile(Pattern.quote(movieName), Pattern.CASE_INSENSITIVE).matcher(a.getMovieName()).find()) {
                 MV.add(a);
             }
         }
@@ -235,8 +234,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public boolean check3D(String movieName) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(movieName)) {
                 if (a.getType().equals("3D")) {
                     return true;
@@ -248,8 +247,8 @@ public class MoviesDaoImpl implements MoviesDAO {
 
     @Override
     public void editMovieEOS(String movieName, String newEOS) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(movieName)) {
                 a.setEOS(newEOS);
                 break;
@@ -260,36 +259,36 @@ public class MoviesDaoImpl implements MoviesDAO {
 
     @Override
     public String getEOS(String movieName) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(movieName)) {
-               return a.getEOS();
+                return a.getEOS();
             }
         }
         return "null";
     }
 
     public ArrayList<Movies> top5MoviesByUser() {
-        ArrayList<Movies> movies=getAllMovies();
+        ArrayList<Movies> movies = getAllMovies();
         ArrayList<Movies> top5 = new ArrayList<Movies>();
         for (int i = 0; i < 5; i++) {
-            if(movies.size() == 0){
+            if (movies.size() == 0) {
                 break;
             }
             Movies max = movies.get(0);
-            while(max.getRating()==0) {
-            	movies.remove(max);
-            	if(movies.size()==0) {
-            		break;
-            	}
-            	max=movies.get(0);
+            while (max.getRating() == 0) {
+                movies.remove(max);
+                if (movies.size() == 0) {
+                    break;
+                }
+                max = movies.get(0);
             }
-            if(movies.size() == 0){
+            if (movies.size() == 0) {
                 break;
             }
-            
+
             for (Movies t : movies) {
-                if (t.getRating() > max.getRating() && t.getRating()!=0.0) {
+                if (t.getRating() > max.getRating() && t.getRating() != 0.0) {
                     max = t;
                 }
             }
@@ -300,8 +299,8 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
     public void editRating(String movieName, double rating) {
-        ArrayList<Movies> movies=getAllMovies();
-        for (Movies a:movies) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
             if (a.getMovieName().equals(movieName)) {
                 a.setRating(rating);
                 break;
@@ -309,4 +308,15 @@ public class MoviesDaoImpl implements MoviesDAO {
         }
         synToFile(movies);
     }
+
+    public Movies getMovie(String movieName) {
+        ArrayList<Movies> movies = getAllMovies();
+        for (Movies a : movies) {
+            if (a.getMovieName().equals(movieName)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
 }

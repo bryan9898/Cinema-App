@@ -126,4 +126,31 @@ public class BookingDaoImpl implements BookingDAO {
         return top5;
     }
 
+    public void updateMovieName(String movieName, String newName) {
+        ArrayList<Bookings> bookings = getAllBookings();
+        for (Bookings b : bookings) {
+            if (b.getMovieName().equals(movieName)) {
+                b.setMovieName(newName);
+            }
+        }
+        try {
+            FileWriter fw = new FileWriter(dataFile, false);
+            for (Bookings b : bookings) {
+                String record = b.getId() + ";" + b.getUsername() + ";" + b.getCineplex() + ";" + b.getCinemaNum() + ";" + b.getMovieName() + ";" + b.getDate() + ";" + b.getTime() + ";" + b.getTotalPrice() + ";";
+                for (int i = 0; i < b.getAllSeats().length; i++) {
+                    for (int j = 0; j < b.getAllSeats()[i].length; j++) {
+                        record += b.getAllSeats()[i][j] + ",";
+                    }
+                }
+                record = record.substring(0, record.length() - 1);
+                record += "\n";
+                fw.write(record);
+            }
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
 }

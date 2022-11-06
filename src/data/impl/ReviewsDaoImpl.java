@@ -82,4 +82,14 @@ public class ReviewsDaoImpl implements ReviewsDAO {
         }
         return reviews;
     }
+
+    public void updateMovieName(String movieName, String newName){
+        ArrayList<Reviews> reviews = getAllReviews();
+        for (Reviews r: reviews) {
+            if (r.getMovieName().equals(movieName)) {
+                r.setMovieName(newName);
+            }
+        }
+        synToFile(reviews);
+    }
 }

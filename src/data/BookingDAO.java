@@ -17,4 +17,5 @@ public interface BookingDAO {
 
     public ArrayList<TopMovies> top5MoviesBySales();
 
+    void updateMovieName(String movieName, String newName);
 }

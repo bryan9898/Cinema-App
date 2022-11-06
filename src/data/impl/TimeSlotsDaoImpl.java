@@ -185,4 +185,26 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
             e.printStackTrace();
         }
     }
+
+    public void updateMovieName(String movieName, String newName){
+        ArrayList<TimeSlots> ts = getAllTimeSlot();
+        for (TimeSlots a:ts) {
+            if (a.getMovieName().equals(movieName)) {
+                a.setMovieName(newName);
+                synToFile(ts);
+            }
+        }
+    }
+
+    public ArrayList<TimeSlots> getTimeSlotsByCinema(String cinemaCode){
+        ArrayList<TimeSlots> ts = getAllTimeSlot();
+        ArrayList<TimeSlots> result = new ArrayList<TimeSlots>();
+        for (TimeSlots a:ts) {
+            if (a.getCineplex().equals(cinemaCode)) {
+                result.add(a);
+            }
+        }
+        return result;
+    }
+
 }

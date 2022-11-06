@@ -18,4 +18,5 @@ public interface ReviewsDAO {
     public ArrayList<Reviews> getAllReviews();
 
 
+    void updateMovieName(String movieName, String newName);
 }

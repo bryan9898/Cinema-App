@@ -1,6 +1,6 @@
 Spiderman 2;;123;;4.5;;Nice
-Spiderman;;123;;3.5;;Good movie overall
-Dc League Of Super-Pets;;123;;4.5;;Fun movie
+Spider-Man;;123;;3.5;;Good movie overall
+Dc League best Super-Pets;;123;;4.5;;Fun movie
 Black Adam;;123;;5.0;;Very exciting
 Black Adam;;123;;1.0;;Boring
 Marvel Studios' Black Panther: Wakanda Forever;;123;;5.0;;Looking forward and never disappoints
