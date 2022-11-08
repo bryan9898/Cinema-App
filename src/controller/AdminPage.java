@@ -20,7 +20,7 @@ import java.util.Scanner;
 
 public class AdminPage<ReviewDAO> {
 	
-	public AdminPage(){
+	public AdminPage(Admin admin){
 		System.out.printf("\n");
 		System.out.printf("\n");
 		System.out.printf("\t------------------------------------\n"); // \tab

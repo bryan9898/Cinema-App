@@ -7,7 +7,7 @@ import data.AccountDAO;
 	 @version 1.0
 	 @since 06 Nov 2022
  */
-public class Account {
+public abstract class Account {
 	/**
 	 * The username of the account.
 	 */
@@ -32,15 +32,7 @@ public class Account {
 	 * @param username This is the user's username.
 	 * @param password This is the user's password.
 	 */
-	public Account(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
-	}
-	
-	public Account() {
-		
-	}	
+
 
 	/**
 	 * Gets the Password of the account.

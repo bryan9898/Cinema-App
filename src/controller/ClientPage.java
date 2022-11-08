@@ -19,22 +19,22 @@ import java.util.Scanner;
 
 import data.MoviesDAO;
 import data.ReviewsDAO;
+import model.User;
 
 public class ClientPage {
 
-    public ClientPage(String user){
+    public ClientPage(User a){
         System.out.printf("\n");
         System.out.printf("\n");
         System.out.printf("\t------------------------------------\n"); // \tab
         System.out.printf("\t");
         System.out.printf("\u001B[46m" + "\u001B[30m");
-        System.out.printf("           Welcome "+ user + "!           ");
+        System.out.printf("           Welcome "+ a.getUsername() + "!           ");
         System.out.printf("\u001B[0m");
         System.out.printf("\n\t------------------------------------");
         System.out.printf("\n");
         int choice = 0;
-        Account a = new Account();
-        a.setUsername(user);
+
         Scanner sc = new Scanner(System.in);
 
         do {

@@ -9,6 +9,7 @@ import data.impl.AdminDAOImpl;
 import data.impl.MoviesDaoImpl;
 import model.Admin;
 import controller.AdminPage;
+import model.User;
 
 
 //MOvie Booking and LIsting Management Application
@@ -35,13 +36,15 @@ public class Main {
 		boolean work = acc.checkAcc(user, pass);
 		if(work == true) {
 			System.out.println("\t Successfully Logged In!");
-			ClientPage cp = new ClientPage(user);
+			User user1 = new User(user, pass);
+			ClientPage cp = new ClientPage(user1);
 		} else {
 			AccountDAO adminAcc = new AdminDAOImpl();
 			boolean AdminLogin = adminAcc.checkAcc(user,pass);
 			if(AdminLogin == true) {
 				System.out.println("\t Successfully Logged In!");
-				AdminPage ap = new AdminPage();
+				Admin admin1 = new Admin(user, pass);
+				AdminPage ap = new AdminPage(admin1);
 			} else {
 				System.out.println("\t Wrong Username or Password");
 			}
