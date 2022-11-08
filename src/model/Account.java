@@ -22,13 +22,7 @@ public class Account {
 	/**
 	 * The Contact information of the user.
 	 */
-	@Required
-	protected String contact;
-	/**
-	 * The email of the associated account.
-	 */
-	@Required
-	protected String email;
+
 
 	/**
 	 * Creates a new Account with the given username.
@@ -37,15 +31,11 @@ public class Account {
 	 * The email will be the email of the account.
 	 * @param username This is the user's username.
 	 * @param password This is the user's password.
-	 * @param contact This is the user's contact information , which should be a phone number.
-	 * @param email This is the user's email.
 	 */
-	public Account(String username, String password,String contact,String email) {
+	public Account(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.contact = contact;
-		this.email = email;
 	}
 	
 	public Account() {
@@ -66,22 +56,6 @@ public class Account {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	/**
-	 * Gets the Contact of the account.
-	 * @return contact The Contact of the account.
-	 */
-	public String getContact() {
-		return contact;
-	}
-
-	/**
-	 * Gets the Email of the account.
-	 * @return email The Email associated to the account.
-	 */
-	public String getEmail() {
-		return email;
 	}
 
 

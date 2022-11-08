@@ -19,5 +19,6 @@ public class Admin extends Account {
 		super.password = password;
 	}
 
+
 	
 }

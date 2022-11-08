@@ -34,7 +34,7 @@ public class ClientPage {
         System.out.printf("\n");
         int choice = 0;
         Account a = new Account();
-        a.setSession(user);
+        a.setUsername(user);
         Scanner sc = new Scanner(System.in);
 
         do {

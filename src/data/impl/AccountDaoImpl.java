@@ -2,6 +2,7 @@ package data.impl;
 
 import data.AccountDAO;
 import model.Account;
+import model.User;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,8 +45,8 @@ public class AccountDaoImpl implements AccountDAO {
 
     public boolean createAccount(String user, String cPass, String contact, String email) {
         boolean existing=false;
-        ArrayList<Account> accounts=getAllAccounts();
-        Account newAccount=new Account(user,cPass,contact,email);
+        ArrayList<User> accounts=getAllAccounts();
+        User newAccount=new User(user,cPass,contact,email);
         for (Account a:accounts) {
             if (a.getUsername().equals(newAccount.getUsername())){
                 existing=true;
@@ -62,11 +63,11 @@ public class AccountDaoImpl implements AccountDAO {
         return !existing;
     }
 
-    private ArrayList<Account> getAllAccounts() {
+    private ArrayList<User> getAllAccounts() {
         Scanner in;
         String record = null;
         String[] fields;
-        ArrayList<Account> accounts = new ArrayList<Account>();
+        ArrayList<User> accounts = new ArrayList<User>();
         try {
             in = new Scanner(dataFile);
             while (in.hasNextLine()) {
@@ -76,7 +77,7 @@ public class AccountDaoImpl implements AccountDAO {
                 String password = fields[1];
                 String contact = fields[2];
                 String email = fields[3];
-                Account a = new Account(username,password,contact,email);
+                User a = new User(username,password,contact,email);
                 accounts.add(a);
             }
             in.close();
@@ -88,10 +89,10 @@ public class AccountDaoImpl implements AccountDAO {
     }
 
 
-    public Account getAccount(String name) {
-        ArrayList<Account> accounts=getAllAccounts();
-        Account account=null;
-        for (Account a:accounts) {
+    public User getAccount(String name) {
+        ArrayList<User> accounts=getAllAccounts();
+        User account=null;
+        for (User a:accounts) {
             if (a.getUsername().equals(name)){
                 account=a;
                 break;
@@ -101,8 +102,8 @@ public class AccountDaoImpl implements AccountDAO {
     }
 
     public boolean checkAcc(String user, String pass) {
-        ArrayList<Account> accounts=getAllAccounts();
-        for (Account a:accounts) {
+        ArrayList<User> accounts=getAllAccounts();
+        for (User a:accounts) {
             if (a.getUsername().equals(user)){
                 String check = pass;
                 check = getHash(check);
@@ -117,13 +118,13 @@ public class AccountDaoImpl implements AccountDAO {
     }
 
 
-    private void synToFile(ArrayList<Account> accountList) {
+    private void synToFile(ArrayList<User> accountList) {
         if (accountList==null)
             return;
 
         try {
             FileWriter out = new FileWriter(dataFile);
-            for (Account a: accountList) {
+            for (User a: accountList) {
                 out.append(a.getUsername()+";"+a.getPassword()+";"+a.getContact()+";"+a.getEmail()+"\r\n");
             }
             out.close();
