@@ -74,7 +74,7 @@ public class ClientPage {
         }while(choice != 9);
     }
 
-    private void bookSeatsByCinema(Account a) {
+    private void bookSeatsByCinema(User a) {
         System.out.println("Choose Cinema (1 for NTU , 2 for SEK , 3 for BIS):");
         Scanner sc = new Scanner(System.in);
         int choice = sc.nextInt();
@@ -324,7 +324,7 @@ public class ClientPage {
         System.out.println("");
     }
 
-    private void viewBookings(Account a) {
+    private void viewBookings(User a) {
         System.out.printf("\n");
         System.out.printf("\t------------------------------------\n"); // \tab
         System.out.printf("\t");
@@ -357,7 +357,7 @@ public class ClientPage {
         }
     }
 
-    private void bookSeats(Account a) {
+    private void bookSeats(User a) {
         MoviesDAO movieDAO = new MoviesDaoImpl();
         ArrayList<Movies> movies = movieDAO.getAllMovies();
         System.out.printf("\n");

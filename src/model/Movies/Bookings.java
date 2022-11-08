@@ -6,7 +6,11 @@ import data.impl.BookingDaoImpl;
 import data.impl.MoviesDaoImpl;
 import model.Account;
 import model.Cinema;
+import model.Price.PlatinumPrice;
+import model.Price.Price;
+import model.Price.StandardPrice;
 import model.SystemSettings;
+import model.User;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -78,23 +82,25 @@ public class Bookings {
         return allSeats;
     }
 
-    public boolean bookSeats(Account a, TimeSlots timeSlots, int seats, Integer[][] allSeats, int child, int senior, int student){
+    public boolean bookSeats(User a, TimeSlots timeSlots, int seats, Integer[][] allSeats, int child, int senior, int student){
         SystemSettings systemSettings = new SystemSettings();
         Cinema cinema = new Cinema();
+        StandardPrice sp = new StandardPrice();
+        PlatinumPrice pp = new PlatinumPrice();
         int type = cinema.getType(timeSlots.getCineplex(),timeSlots.getCinemaNum());
         double price = 0.0;
         double surcharge = 0.0;
         System.out.printf("\n");
         if(type == 3){ //Platinum price
-            price = systemSettings.getPlatinumPrice();
+            price = pp.getTicketPrice();
         } else {
-            price = systemSettings.getTicketPrice();
+            price = sp.getTicketPrice();
         }
         Boolean checkHoliday = systemSettings.checkHoliday(timeSlots.getDate());
         System.out.printf("\u001B[31m");
         if(checkHoliday){
-            System.out.println(timeSlots.getDate()+" is a Public Holiday, surcharge of $"+systemSettings.getPublicHolidaySurcharge()+" will be added to each ticket price");
-            surcharge += Double.parseDouble(systemSettings.getPublicHolidaySurcharge());
+            System.out.println(timeSlots.getDate()+" is a Public Holiday, surcharge of $"+sp.getPublicHolidaySurcharge()+" will be added to each ticket price");
+            surcharge += Double.parseDouble(sp.getPublicHolidaySurcharge());
         } else{
             Calendar c = Calendar.getInstance();
             SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
@@ -103,8 +109,8 @@ public class Bookings {
                 DateFormat format2 = new SimpleDateFormat("EEEE");
                 String finalDay = format2.format(dt1);
                 if (finalDay.equals("Saturday") || finalDay.equals("Sunday")) {
-                    System.out.println(timeSlots.getDate()+" is a weekend, surcharge of $"+systemSettings.getWeekendSurcharge()+" will be added to each ticket price");
-                    surcharge += Double.parseDouble(systemSettings.getWeekendSurcharge());
+                    System.out.println(timeSlots.getDate()+" is a weekend, surcharge of $"+sp.getWeekendSurcharge()+" will be added to each ticket price");
+                    surcharge += Double.parseDouble(sp.getWeekendSurcharge());
                 }
             } catch (ParseException e) {
                 throw new RuntimeException(e);
@@ -112,19 +118,19 @@ public class Bookings {
         }
         MoviesDAO mv = new MoviesDaoImpl();
         if(mv.check3D(timeSlots.getMovieName())){
-            System.out.println(timeSlots.getMovieName()+" is a 3D movie, surcharge of $"+systemSettings.getSurcharge3D()+" will be added to each ticket price");
-            surcharge += Double.parseDouble(systemSettings.getSurcharge3D());
+            System.out.println(timeSlots.getMovieName()+" is a 3D movie, surcharge of $"+sp.getSurcharge3D()+" will be added to each ticket price");
+            surcharge += Double.parseDouble(sp.getSurcharge3D());
         }
 
         //if time is after 6pm, surcharge will be added to the ticket price
         if(Integer.parseInt(timeSlots.getTime().substring(0,2)) >= 18){
-            System.out.println("The movie is showing after 6pm, surcharge of $"+systemSettings.getAfter6pmSurcharge()+" will be added to each ticket price");
-            surcharge += Double.parseDouble(systemSettings.getAfter6pmSurcharge());
+            System.out.println("The movie is showing after 6pm, surcharge of $"+sp.getAfter6pmSurcharge()+" will be added to each ticket price");
+            surcharge += Double.parseDouble(sp.getAfter6pmSurcharge());
         }
         System.out.printf("\u001B[0m");
-        double childPrice = Double.parseDouble(systemSettings.getChildPriceDiscount()) * child;
-        double seniorPrice = Double.parseDouble(systemSettings.getSeniorPriceDiscount()) * senior;
-        double studentPrice = Double.parseDouble(systemSettings.getStudentPriceDiscount()) * student;
+        double childPrice = Double.parseDouble(sp.getChildPriceDiscount()) * child;
+        double seniorPrice = Double.parseDouble(sp.getSeniorPriceDiscount()) * senior;
+        double studentPrice = Double.parseDouble(sp.getStudentPriceDiscount()) * student;
 
         double totalPrice = ((price + surcharge) * seats)  - childPrice - seniorPrice - studentPrice;
 
@@ -152,15 +158,15 @@ public class Bookings {
             char rowLetter = (char) (allSeats[i][1] + 64);
             System.out.println("\t Seat "+(i+1)+": $"+price + " (Row "+allSeats[i][0]+", Column "+rowLetter+")");
             if(child > 0){
-                System.out.println("\t 1 Child Discount: -$"+systemSettings.getChildPriceDiscount());
+                System.out.println("\t 1 Child Discount: -$"+sp.getChildPriceDiscount());
                 child--;
             } else
             if(senior > 0){
-                System.out.println("\t 1 Senior Discount: -$"+systemSettings.getSeniorPriceDiscount());
+                System.out.println("\t 1 Senior Discount: -$"+sp.getSeniorPriceDiscount());
                 senior--;
             } else
             if(student > 0){
-                System.out.println("\t 1 student Discount: -$"+systemSettings.getStudentPriceDiscount());
+                System.out.println("\t 1 student Discount: -$"+sp.getStudentPriceDiscount());
                 student--;
             }
             System.out.printf("\u001B[0m");
@@ -189,7 +195,7 @@ public class Bookings {
         }
     }
 
-    public ArrayList<Bookings> viewBookings(Account a) {
+    public ArrayList<Bookings> viewBookings(User a) {
         BookingDAO bookingDAO = new BookingDaoImpl();
         return bookingDAO.viewBookings(a);
 
