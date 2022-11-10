@@ -36,14 +36,14 @@ public class Main {
 		boolean work = acc.checkAcc(user, pass);
 		if(work == true) {
 			System.out.println("\t Successfully Logged In!");
-			User user1 = new User(user, pass);
+			User user1 = new User(user.toLowerCase(), pass);
 			ClientPage cp = new ClientPage(user1);
 		} else {
 			AccountDAO adminAcc = new AdminDAOImpl();
 			boolean AdminLogin = adminAcc.checkAcc(user,pass);
 			if(AdminLogin == true) {
 				System.out.println("\t Successfully Logged In!");
-				Admin admin1 = new Admin(user, pass);
+				Admin admin1 = new Admin(user.toLowerCase(), pass);
 				AdminPage ap = new AdminPage(admin1);
 			} else {
 				System.out.println("\t Wrong Username or Password");
@@ -94,7 +94,7 @@ public class Main {
 		System.out.printf("\n");
 		System.out.printf("\t User Name : ");
 		user = sc.next();
-		System.out.printf("\t Password : ");
+		System.out.printf("\t Password (At least 8 characters long with a special character): ");
 		pass = sc.next();
 		System.out.printf("\t Confirm Password : ");
 		cPass = sc.next();
@@ -102,13 +102,56 @@ public class Main {
 		contact = sc.next();
 		System.out.printf("\t Email Address : ");
 		email = sc.next();
-		AccountDAO acc = new AccountDaoImpl();
-		boolean work = acc.createAccount(user, cPass, contact , email);
-		if(work == false) {
-			System.out.println("Please Change UserName");
-		} else {
-			System.out.println("Account Created!");
+
+		System.out.printf("\u001B[31m");
+		int fail = 0;
+		if(!pass.equals(cPass)) {
+			System.out.println("\n\t Passwords do not match!");
+			fail= 1;
 		}
+
+		//check for strong password
+		if(pass.length() < 8) {
+			System.out.println("\n\t Password must be at least 8 characters long!");
+			fail = 1;
+		}
+
+		//check for special characters
+		if(!pass.matches(".*[!@#$%^&*()_+].*")) {
+			System.out.println("\n\t Password must contain at least one special character!");
+			fail = 1;
+		}
+
+		//phone number matches 8 digits and starts with 6 or 8 or 9
+		if(!contact.matches("(6|8|9)[0-9]{7}")) {
+			System.out.println("\n\t Invalid Phone Number!");
+			fail = 1;
+		}
+
+		//email address matches the regex
+		if(!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+			System.out.println("\n\t Invalid Email Address!");
+			fail = 1;
+		}
+		System.out.printf("\u001B[0m");
+		if(fail == 1){
+			System.out.printf("\u001B[31m");
+			System.out.println("\n\t Failed to create account");
+			System.out.printf("\u001B[0m");
+		} else {
+			AccountDAO acc = new AccountDaoImpl();
+			boolean work = acc.createAccount(user.toLowerCase(), cPass, contact , email);
+			if(work == true) {
+				System.out.printf("\u001B[36m");
+				System.out.println("\n\tAccount Created!");
+				System.out.printf("\u001B[0m");
+			} else {
+				System.out.printf("\u001B[31m");
+				System.out.println("\n\t Please Change UserName");
+				System.out.printf("\u001B[0m");
+			}
+		}
+
 		
 	}
 

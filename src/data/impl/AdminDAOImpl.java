@@ -79,7 +79,7 @@ public class AdminDAOImpl implements AccountDAO {
     public boolean checkAcc(String user, String pass) {
         ArrayList<Admin> accounts=getAllAdminAcc();
         for (Admin a:accounts) {
-            if (a.getUsername().equals(user)){
+            if (a.getUsername().equalsIgnoreCase(user)){
                 String check = pass;
                 check = getHash(check);
                 if(a.getPassword().equals(check)){
