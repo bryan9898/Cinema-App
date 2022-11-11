@@ -17,16 +17,58 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Bookings {
+/**
+ * Represents a Cinema registered in the system.
+ * Makes a new Booking with booking id, cineplex, cinema code, movie name, date, time, total price, seats chosen, username.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 
+public class Bookings {
+	
+	/**
+	 * The id for the booking.
+	 */
     private String id;
+    
+    /**
+	 * Name of the cineplex.
+	 */
     private  String cineplex;
+    
+    /**
+	 * Code number for the cinema.
+	 */
     private String cinemaNum;
+    
+    /**
+	 * Name of the movie.
+	 */
     private  String movieName;
+    
+    /**
+	 * Date of the booking.
+	 */
     private  String date;
+    
+    /**
+	 * Time of the booking.
+	 */
     private  String time;
+    
+    /**
+	 * Total price for the booking.
+	 */
     private  double totalPrice;
+    
+    /**
+	 * 2D array for all the seats selected.
+	 */
     private Integer[][] allSeats;
+    
+    /**
+	 * Username of user making the booking.
+	 */
     private String username;
 
     public Bookings() {
@@ -44,14 +86,16 @@ public class Bookings {
         this.allSeats = allSeats;
     }
 
-    public String getId() {return id;}
-    public void setMovieName(String movieName) {this.movieName = movieName;}
+    public String getId() {
+    	return id;
+    }
+    
+    public void setMovieName(String movieName) {
+    	this.movieName = movieName;
+    }
+    
     public String getUsername() {
         return username;
-    }
-
-    public String getBookingID() {
-        return id;
     }
 
     public String getMovieName() {

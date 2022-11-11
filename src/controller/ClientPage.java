@@ -340,7 +340,7 @@ public class ClientPage {
         for (Bookings booking : bookings) {
             System.out.printf("\n");
             System.out.printf("\u001B[36m");
-            System.out.println("\tBooking ID: " + booking.getBookingID());
+            System.out.println("\tBooking ID: " + booking.getId());
             System.out.println("\tMovie Name: " + booking.getMovieName());
             System.out.println("\tCineplex: " +booking.getCineplex());
             System.out.println("\tCinema Number: " +booking.getCinemaNum());
