@@ -41,7 +41,11 @@ public class Cinema {
 
 	}
 
-
+	/**
+	 * creates a new cinema Object with the given cineplex code, cinema code.
+	 * @param cineplexCode This is the cineplex code of the cinema.
+	 * @param cinemaCode This is the cinema code of the cinema.
+	 */
 	public Cinema(int cineplexCode, String cinemaCode) {
 		super();
 		switch (cineplexCode) {
@@ -53,7 +57,14 @@ public class Cinema {
 		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		this.layout  = cinemaDAO.getLayout(this.cineplexCode, this.cinemaCode);
 	}
-	
+
+
+	/**
+	 * creates a new cinema Object with the given cineplex code, cinema code.
+	 * @param cineplexCode This is the cineplex code of the cinema.
+	 * @param cinemaCode This is the cinema code of the cinema.
+	 * @param layout This is the layout of the cinema.
+	 */
 	public Cinema(String cineplexCode, String cinemaCode,String layout) {
 		super();
 		this.cineplexCode = cineplexCode;
@@ -61,6 +72,9 @@ public class Cinema {
 		this.layout = layout;
 	}
 
+	/**
+	 * Prints Layout type 2 of the cinema.
+	 */
 	public void printType2() {
 		String[][] type2Full = getLayoutIn2DArray("2");
 		System.out.printf("-----------------------------------------------      %n");
@@ -76,6 +90,10 @@ public class Cinema {
 		System.out.printf("                    Entrance                         %n");
 		System.out.printf("-----------------------------------------------      %n");
 	}
+
+	/**
+	 * Prints Layout type 3 of the cinema.
+	 */
 	public void printType3() {
 		String[][] type3Full = getLayoutIn2DArray("3");
 		System.out.printf("Platinum Class%n");
@@ -93,6 +111,9 @@ public class Cinema {
 		System.out.printf("---------------------------     %n");
 	}
 
+	/**
+	 * Prints Layout type 1 of the cinema.
+	 */
 	public void printType1() {
 		String[][] type1Full = getLayoutIn2DArray("1");
 		System.out.printf("     -----------------------------------------------      %n");
@@ -108,31 +129,58 @@ public class Cinema {
 		System.out.printf("                         Entrance                         %n");
 		System.out.printf("     -----------------------------------------------      %n");
 	}
-	
+
+	/**
+	 * gets the cineplex code of the cinema.
+	 * @return cineplex code of the cinema.
+	 */
 	public String getCineplexCode() {
 		return cineplexCode;
 	}
 
+	/**
+	 * sets the cineplex code of the cinema.
+	 * @param cineplexCode This is the cineplex code of the cinema to set to.
+	 */
 	public void setCineplexCode(String cineplexCode) {
 		this.cineplexCode = cineplexCode;
 	}
 
+	/**
+	 * gets the cinema code of the cinema.
+	 * @return cinema code of the cinema.
+	 */
 	public String getCinemaCode() {
 		return cinemaCode;
 	}
 
+	/**
+	 * sets the cinema code of the cinema.
+	 * @param cinemaCode This is the cinema code of the cinema to set to.
+	 */
 	public void setCinemaCode(String cinemaCode) {
 		this.cinemaCode = cinemaCode;
 	}
 
+	/**
+	 * gets the layout of the cinema.
+	 * @return layout of the cinema.
+	 */
 	public  String getLayout() {
 		return layout;
 	}
 
+	/**
+	 * sets the layout of the cinema.
+	 * @param layout of the cinema.
+	 */
 	public void setLayout(String layout) {
 		this.layout = layout;
 	}
 
+	/**
+	 * Prints the layout of the cinema.
+	 */
 	public void printCinemaLayout(){
         //st.setRightAlign(true);
         //st.setShowVerticalLines(true);
@@ -150,6 +198,11 @@ public class Cinema {
 
 	}
 
+	/**
+	 * gets the number of cinemas the cineplex has.
+	 * @param cineplex This is the cineplex code of the cinema.
+	 * @return number of cinemas the cineplex has.
+	 */
 	public int getNumOfCinema(int cineplex){
 		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		switch (cineplex) {
@@ -161,6 +214,12 @@ public class Cinema {
 	}
 
 
+	/**
+	 * gets the layout of the cinema in 2D array.
+	 * @param cineplex This is the cineplex code of the cinema.
+	 * @param cinemaNum This is the cinema code of the cinema.
+	 * @return layout of the cinema in 2D array.
+	 */
 	public String[][] getCineLayout(int cineplex, String cinemaNum) {
 
 		CinemaDAO cinemaDAO = new CinemaDaoImpl();
@@ -181,6 +240,12 @@ public class Cinema {
 		return null;
 	}
 
+	/**
+	 * gets the layout of the cinema in 2D array.
+	 * @param cineplex is the cineplex code
+	 * @param cinemaNum is the cinema code
+	 * @return layout of the cinema in 2D array.
+	 */
 	public String[][] getCineLayout(String cineplex, String cinemaNum) {
 
 
@@ -197,6 +262,12 @@ public class Cinema {
 		return null;
 	}
 
+	/**
+	 * Get the type of layout of the cinema.
+	 * @param cineplex This is the cineplex code of the cinema.
+	 * @param cinemaNum This is the cinema code of the cinema.
+	 * @return layout of the cinema in 2D array.
+	 */
 	public int getType(String cineplex, String cinemaNum) {
 		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		String layout = null;
@@ -211,7 +282,11 @@ public class Cinema {
 		return 0;
 	}
 
-
+	/**
+	 * gets the layout of the cinema in 2D array.
+	 * @param layout This is the type of the cinema.
+	 * @return layout of the cinema in 2D array.
+	 */
 	public String[][] getLayoutIn2DArray(String layout) {
 		String[][] type1 = {
 				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","N","O","P","Q","/"},

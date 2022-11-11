@@ -116,9 +116,9 @@ public class Main {
 			fail = 1;
 		}
 
-		//check for special characters
+		//check for special character
 		if(!pass.matches(".*[!@#$%^&*()_+].*")) {
-			System.out.println("\n\t Password must contain at least one special character!");
+			System.out.println("\n\t Password must contain a special character!");
 			fail = 1;
 		}
 
