@@ -71,9 +71,24 @@ public class Bookings {
 	 */
     private String username;
 
+    /**
+	 * Default constructor for the Bookings class.
+	 */
     public Bookings() {
     }
 
+    /**
+	 * creates a new bookings Object with the given id, username, cineplex, cineplex number, movie name, date, time, total price and seats selected.
+	 * @param id The id for the booking.
+	 * @param username Username of user making the booking.
+	 * @param cineplex Name of the cineplex.
+	 * @param cinemaNum Code number for the cinema.
+	 * @param movieName Name of the movie.
+	 * @param date Date of the booking.
+	 * @param time Time of the booking.
+	 * @param totalPrice Total price for the booking.
+	 * @param allSeats 2D array for all the seats selected.
+	 */
     public Bookings(String id, String username, String cineplex, String cinemaNum, String movieName, String date, String time, double totalPrice, Integer[][] allSeats) {
         this.id = id;
         this.username = username;
@@ -86,46 +101,97 @@ public class Bookings {
         this.allSeats = allSeats;
     }
 
+    /**
+     * gets the id of the booking.
+     * @return id of the booking.
+     */
     public String getId() {
     	return id;
     }
     
+    /**
+     * sets the movie name for the booking.
+     * @param movieName the movie name for the booking.
+     */
     public void setMovieName(String movieName) {
     	this.movieName = movieName;
     }
     
+    /**
+     * gets the username of the user booking.
+     * @return username of the user booking.
+     */
     public String getUsername() {
         return username;
     }
 
+    /**
+     * gets the movie name for the booking.
+     * @return movie name for the booking.
+     */
     public String getMovieName() {
         return movieName;
     }
 
+    /**
+     * gets the cineplex name for the booking.
+     * @return cineplex name for the booking.
+     */
     public String getCineplex() {
         return cineplex;
     }
 
+    /**
+     * gets the cinema number for the booking.
+     * @return the cinema number for the booking.
+     */
     public String getCinemaNum() {
         return cinemaNum;
     }
 
+    /**
+     * gets the date for the booking.
+     * @return the date for the booking.
+     */
     public String getDate() {
         return date;
     }
 
+    /**
+     * gets the time for the booking.
+     * @return the time for the booking.
+     */
     public String getTime() {
         return time;
     }
 
+    /**
+     * gets the total price for the booking.
+     * @return the total price for the booking.
+     */
     public double getTotalPrice() {
         return totalPrice;
     }
 
+    /**
+     * gets the 2D array of all the seats chosen.
+     * @return the 2D array of all the seats chosen.
+     */
     public Integer[][] getAllSeats() {
         return allSeats;
     }
 
+    /**
+     * Books seats for the user.
+     * @param a User that is doing the booking.
+     * @param timeSlots The timeslot for the booking.
+     * @param seats Number of seats selected for the booking.
+     * @param allSeats 2D array for all the seats selected.
+     * @param child Number of child discount.
+     * @param senior Number of senior discount.
+     * @param student Number of student discount.
+     * @return True if the booking is successful.
+     */
     public boolean bookSeats(User a, TimeSlots timeSlots, int seats, Integer[][] allSeats, int child, int senior, int student){
         SystemSettings systemSettings = new SystemSettings();
         Cinema cinema = new Cinema();
@@ -239,6 +305,11 @@ public class Bookings {
         }
     }
 
+    /**
+     * Returns an array list of booking by the user.
+     * @param a user for the bookings.
+     * @return array list of booking by the user.
+     */
     public ArrayList<Bookings> viewBookings(User a) {
         BookingDAO bookingDAO = new BookingDaoImpl();
         return bookingDAO.viewBookings(a);
