@@ -26,9 +26,11 @@ public class PlatinumPrice extends Price {
         return systemSettingsDAO.getPlatinumPrice();
     }
 
-    @Override
+
     /**
      * Updates the price of the ticket.
+     * @param price The price of the ticket.
+     * @return true if the price is updated else false
      */
     public boolean updateTicketPrice(String price) {
         this.ticketPrice = Double.parseDouble(price);

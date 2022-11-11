@@ -17,16 +17,35 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * This class represents the movies data access object.
+ * The movies data access object is used to access the movies data.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 public class MoviesDaoImpl implements MoviesDAO {
+    /**
+     * The movies file path.
+     */
     private static final String Account_File = "Movies.txt";
+    /**
+     * The File object to access the movies file.
+     */
     private File dataFile;
 
-
+    /**
+     * The constructor to make a movies data access object.
+     */
     public MoviesDaoImpl() {
         Path dPath = FileSystems.getDefault().getPath("Resources/Data/", Account_File);
         dataFile = new File(dPath.toString());
     }
 
+    /**
+     * This method is to add a movies into the movies file.
+     * @param movie The movies to add
+     * @return true if the movies is added else false
+     */
     public boolean addMovie(Movies movie) {
         boolean existing = false;
         ArrayList<Movies> movies = getAllMovies();
@@ -43,6 +62,10 @@ public class MoviesDaoImpl implements MoviesDAO {
         return !existing;
     }
 
+    /**
+     * This method is to get all the movies from the movies file.
+     * @return the list of objects of movies
+     */
     public ArrayList<Movies> getAllMovies() {
         Scanner in;
         String record = null;
@@ -120,6 +143,10 @@ public class MoviesDaoImpl implements MoviesDAO {
     }
 
 
+    /**
+     * This method is to save the movies list into the movies file.
+     * @param movies The list of movies
+     */
     private void synToFile(ArrayList<Movies> movies) {
         if (movies == null)
             return;
@@ -137,6 +164,11 @@ public class MoviesDaoImpl implements MoviesDAO {
 
     }
 
+    /**
+     * This method is to edit movie name in the movies file.
+     * @param name The name of the movie to edit
+     * @param newName The new movie name
+     */
     public void editMovieName(String name, String newName) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -148,6 +180,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to edit movie Synopsis in the movies file.
+     * @param name The name of the movie to edit
+     * @param newSynopsis The new movie Synopsis
+     */
     public void editMovieSynopsis(String name, String newSynopsis) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -159,6 +196,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to edit movie PGrating in the movies file.
+     * @param name The name of the movie to edit
+     * @param newPGrating The new movie PGrating
+     */
     public void editMoviePGrating(String name, String newPGrating) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -170,6 +212,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to edit movie Director in the movies file.
+     * @param name The name of the movie to edit
+     * @param newDirector The new movie Director
+     */
     public void editMovieDirector(String name, String newDirector) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -181,6 +228,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to edit movie Cast in the movies file.
+     * @param name The name of the movie to edit
+     * @param newCast The new movie Cast
+     */
     public void editMovieCast(String name, String newCast) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -192,6 +244,10 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to remove a movie from the movies file.
+     * @param name The name of the movie to edit
+     */
     public void removeMovieFromCinema(String name) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -211,6 +267,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to edit movie Status in the movies file.
+     * @param name The name of the movie to edit
+     * @param newStatus The new movie status
+     */
     public void editMovieStatus(String name, String newStatus) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -222,6 +283,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to search movie by name in the movies file.
+     * @param movieName The name of the movie to edit
+     * @return A list of movie objects
+     */
     public ArrayList<Movies> searchMovie(String movieName) {
         ArrayList<Movies> movies = getAllMovies();
         ArrayList<Movies> MV = new ArrayList<Movies>();
@@ -233,6 +299,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         return MV;
     }
 
+    /**
+     * This method is to check if the movie is a 3D movie
+     * @param movieName The name of the movie to check
+     * @return true if the movie is a 3D movie, false otherwise
+     */
     public boolean check3D(String movieName) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -245,6 +316,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         return false;
     }
 
+    /**
+     * This method is to edit movie End of Showing in the movies file.
+     * @param movieName The name of the movie to edit
+     * @param newEOS The movie's new EOS
+     */
     @Override
     public void editMovieEOS(String movieName, String newEOS) {
         ArrayList<Movies> movies = getAllMovies();
@@ -257,6 +333,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to get the movie's End of Showing
+     * @param movieName The name of the movie to edit
+     * @return The movie's EOS
+     */
     @Override
     public String getEOS(String movieName) {
         ArrayList<Movies> movies = getAllMovies();
@@ -268,6 +349,10 @@ public class MoviesDaoImpl implements MoviesDAO {
         return "null";
     }
 
+    /**
+     * This method is to get top 5 movies by ratings
+     * @return A list of movie objects
+     */
     public ArrayList<Movies> top5MoviesByUser() {
         ArrayList<Movies> movies = getAllMovies();
         ArrayList<Movies> top5 = new ArrayList<Movies>();
@@ -298,6 +383,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         return top5;
     }
 
+    /**
+     * This method is to edit movie rating in the movies file.
+     * @param movieName The name of the movie to edit
+     * @param rating The movie's new rating
+     */
     public void editRating(String movieName, double rating) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {
@@ -309,6 +399,11 @@ public class MoviesDaoImpl implements MoviesDAO {
         synToFile(movies);
     }
 
+    /**
+     * This method is to get the movie's object
+     * @param movieName The name of the movie to get
+     * @return The movie's object
+     */
     public Movies getMovie(String movieName) {
         ArrayList<Movies> movies = getAllMovies();
         for (Movies a : movies) {

@@ -27,7 +27,6 @@ public interface AccountDAO {
 	 * @param pass The account to be checked
 	 * @return true if the account exists, false otherwise
 	 */
-
 	boolean checkAcc(String user, String pass);
 
 	/**

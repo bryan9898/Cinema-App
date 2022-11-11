@@ -33,14 +33,18 @@ public class Admin extends Account {
 		return super.password;
 	}
 
-
+	/**
+	 * This method is the constructor for the Admin class.
+	 */
 	public Admin() {
 
 	}
 
 
 	/**
-	 * Creates a new Admin Class with the given username, password
+	 * This method is the constructor for the Admin class with parameters.s
+	 * @param username This is the user's username.
+	 * @param password This is the user's password.
 	 */
 	public Admin(String username, String password) {
 		super.username = username;

@@ -12,17 +12,35 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class represents the admin data access object.
+ * The admin data access object is used to access the admin data.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 public class AdminDAOImpl implements AccountDAO {
-
+    /**
+     * The admin file path.
+     */
     private static final String Account_File="admin.txt";
+    /**
+     * The File object to access the admin file.
+     */
     private static File dataFile;
 
-
+    /**
+     * The constructor to make a admin data access object.
+     */
     public AdminDAOImpl() {
         Path dPath = FileSystems.getDefault().getPath("Resources/Data/",Account_File);
         dataFile = new File(dPath.toString());
     }
 
+    /**
+     * This method is to calculate the hash value of a string using the SHA-256 algorithm.
+     * @param base The string to hash
+     * @return The hash value of the string
+     */
     private static String getHash(final String base) {
         try{
             final MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -40,6 +58,10 @@ public class AdminDAOImpl implements AccountDAO {
         }
     }
 
+    /**
+     * This method is to get all the admin data from the admin file.
+     * @return The list of admin accounts
+     */
     private static ArrayList<Admin> getAllAdminAcc() {
         Scanner in;
         String record = null;
@@ -63,19 +85,12 @@ public class AdminDAOImpl implements AccountDAO {
         return accounts;
     }
 
-    public Admin getAccount(String name) {
-        ArrayList<Admin> accounts=getAllAdminAcc();
-        Admin account=null;
-        for (Admin a:accounts) {
-            if (a.getUsername().equals(name)){
-                account=a;
-                break;
-            }
-        }
-        return account;
-    }
-
-
+    /**
+     * This method is to check if the admin account exists in the admin file.
+     * @param user The username of the admin account
+     * @param pass The password of the admin account
+     * @return True if the admin account exists, false otherwise
+     */
     public boolean checkAcc(String user, String pass) {
         ArrayList<Admin> accounts=getAllAdminAcc();
         for (Admin a:accounts) {
@@ -92,6 +107,14 @@ public class AdminDAOImpl implements AccountDAO {
         return false;
     }
 
+    /**
+     * This method is to add a new admin account to the admin file in the future (Future feature).
+     * @param user The username of the admin account
+     * @param cPass The password of the admin account
+     * @param contact The contact number of the admin account
+     * @param email The email of the admin account
+     * @return True if the admin account is added successfully, false otherwise
+     */
     @Override
     public boolean createAccount(String user, String cPass, String contact, String email) {
         return false;

@@ -11,17 +11,37 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class represents the system settings data access object.
+ * The system settings data access object is used to access the system settings data.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 public class SystemSettingsDaoImpl implements SystemSettingsDAO {
 
+    /**
+     * The system settings file path.
+     */
     private static final String Account_File="SystemSettings.txt";
+    /**
+     * The File object to access the system settings file.
+     */
     private static File dataFile;
 
+    /**
+     * The constructor to make a system settings data access object.
+     */
     public SystemSettingsDaoImpl() {
         Path dPath = FileSystems.getDefault().getPath("Resources/Data/",Account_File);
         dataFile = new File(dPath.toString());
     }
 
 
+    /**
+     * This method is to add new holidays into the system settings file.
+     * @param date The holiday date to add (Format: dd/mm/yyyy)
+     * @return true if the holiday is added else false
+     */
     public boolean addHoliday(String date) {
         boolean existing=false;
         ArrayList<String> holidays=getAllHolidays();
@@ -38,6 +58,10 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         return !existing;
     }
 
+    /**
+     * This method is to save the holidays object into the system settings file.
+     * @param holidays The holidays object to save
+     */
     private void synToFile(ArrayList<String> holidays) {
         if(holidays.size()==0) {
             dataFile.delete();
@@ -58,6 +82,10 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         }
     }
 
+    /**
+     * This method is to get all prices of tickets from the system settings file.
+     * @return an array list of prices
+     */
     private ArrayList<String> getAllPrices() {
         Scanner in;
         String record = null;
@@ -85,6 +113,10 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         return prices;
     }
 
+    /**
+     * This method is to get all holidays from the system settings file.
+     * @return an array list of holidays
+     */
     private ArrayList<String> getAllHolidays() {
         Scanner in;
         String record = null;
@@ -103,7 +135,11 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         return holidays;
     }
 
-
+    /**
+     * This method is to remove holidays from the system settings file.
+     * @param date The holiday date to remove (Format: dd/mm/yyyy)
+     * @return true if the holiday is removed else false
+     */
     public boolean removeHoliday(String date) {
         boolean existing=false;
         ArrayList<String> holidays=getAllHolidays();
@@ -119,6 +155,11 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
     }
 
 
+    /**
+     * This method is to get update the price of tickets in the system settings file.
+     * @param price The price of tickets to update (in double format)
+     * @return true if the price is updated else false
+     */
     public boolean updateTicketPrice(String price) {
         Scanner sc = null;
         ArrayList<String> prices=getAllPrices();
@@ -148,6 +189,11 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         return true;
     }
 
+    /**
+     * This method is to update the price of Platinum tickets in the system settings file.
+     * @param price The price of a platinum ticket to update (in double format)
+     * @return true if the price is updated else false
+     */
     public boolean updatePlatinumPrice(String price) {
         Scanner sc = null;
         ArrayList<String> prices=getAllPrices();
@@ -177,6 +223,9 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         return true;
     }
 
+    /**
+     * This method is to print all holidays from the system settings file.
+     */
     public void printPublicHolidays() {
         ArrayList<String> holidays=getAllHolidays();
         System.out.printf("\u001B[47m" + "\u001B[30m");
@@ -191,11 +240,21 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         System.out.printf("\n");
     }
 
+    /**
+     * This method is to get the price of tickets from the system settings file.
+     * @return the price of tickets (in double format)
+     */
     public double getTicketPrice() {
         ArrayList<String> prices=getAllPrices();
         return Double.parseDouble(prices.get(0));
     }
 
+    /**
+     * This method is to check if a date is a holiday from the system settings file.
+     * @param date The date to check (Format: dd/mm/yyyy)
+     * (Note: The date must be in the format dd/mm/yyyy)
+     * @return true if the date is a holiday else false
+     */
     public Boolean checkHoliday(String date) {
         ArrayList<String> holidays=getAllHolidays();
         for (String a:holidays) {
@@ -206,6 +265,10 @@ public class SystemSettingsDaoImpl implements SystemSettingsDAO {
         return false;
     }
 
+    /**
+     * This method is to get the price of Platinum tickets from the system settings file.
+     * @return the price of Platinum ticket (in double format)
+     */
     public double getPlatinumPrice() {
         ArrayList<String> prices=getAllPrices();
         return Double.parseDouble(prices.get(1));

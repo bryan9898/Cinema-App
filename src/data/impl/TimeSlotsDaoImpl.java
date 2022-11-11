@@ -13,17 +13,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * This class represents the time slots data access object.
+ * The time slots data access object is used to access the time slots data.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 public class TimeSlotsDaoImpl implements TimeSlotsDAO {
 
+    /**
+     * The time slots file path.
+     */
     private static final String Account_File="MovieTimeSlots.txt";
+    /**
+     * The File object to access the time slots file.
+     */
     private File dataFile;
 
+    /**
+     * The constructor to make a time slots data access object.
+     */
     public TimeSlotsDaoImpl() {
         Path dPath = FileSystems.getDefault().getPath("Resources/Data/",Account_File);
         dataFile = new File(dPath.toString());
     }
 
-
+    /**
+     * This method is to add new time slots into the time slots file.
+     * @param ts The time slots to add
+     * @return true if the time slots is added else false
+     */
     public boolean addTimeSlot(TimeSlots ts){
         boolean existing=false;
         ArrayList<TimeSlots> timeslots=getAllTimeSlot();
@@ -40,6 +59,10 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
         return !existing;
     }
 
+    /**
+     * This method is to get all the time slots from the time slots file.
+     * @return The array list of time slots
+     */
     public ArrayList<TimeSlots> getAllTimeSlot() {
         Scanner in;
         String record = null;
@@ -86,7 +109,10 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
         return ts;
     }
 
-
+    /**
+     * This method is to save the time slots array list into the time slots file.
+     * @param ts The time slots array list to save
+     */
     private void synToFile(ArrayList<TimeSlots> ts) {
         if (ts==null)
             return;
@@ -112,6 +138,17 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
 
     }
 
+    /**
+     * This method is to edit the time slots in the time slots file.
+     * @param cineplex The cineplex of the time slots to edit
+     * @param cinemaNum The cinema number of the time slots to edit
+     * @param movieName The movie name of the time slots to edit
+     * @param previousDate The date of the time slots to edit
+     * @param previousTime The time of the time slots to edit
+     * @param date The new date of the time slots
+     * @param time The new time of the time slots
+     * @param layout The layout of the time slots
+     */
     public void editTimeSlots(String cineplex, String cinemaNum, String movieName, String previousDate, String previousTime, String date, String time, String[][] layout) {
         ArrayList<TimeSlots> ts = getAllTimeSlot();
         for (TimeSlots a:ts) {
@@ -125,13 +162,21 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
         }
     }
 
+    /**
+     * This method is to delete the time slots in the time slots file.
+     * @param index The index of the time slots to delete
+     */
     public void removeTimeSlots(int index) {
         ArrayList<TimeSlots> ts = getAllTimeSlot();
         ts.remove(index);
         synToFile(ts);
     }
 
-
+    /**
+     * This method is to get all the time slots from the time slots file.
+     * @param movieName The movie name of the time slots to get
+     * @return The array list of time slots
+     */
     public ArrayList<TimeSlots> getTimeSlots(String movieName) {
         ArrayList<TimeSlots> ts = getAllTimeSlot();
         ArrayList<TimeSlots> result = new ArrayList<TimeSlots>();
@@ -143,6 +188,10 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
         return result;
     }
 
+    /**
+     * This method is to update the time slots in the time slots file.
+     * @param timeSlots The time slots to update
+     */
     public void updateTimeSlots(TimeSlots timeSlots ) {
         try {
             FileWriter out = new FileWriter(dataFile, true);
@@ -186,6 +235,11 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
         }
     }
 
+    /**
+     * This method is to update the Movie Name in the time slots file.
+     * @param movieName The old movie name to be updated
+     * @param newName The new movie name to update to
+     */
     public void updateMovieName(String movieName, String newName){
         ArrayList<TimeSlots> ts = getAllTimeSlot();
         for (TimeSlots a:ts) {
@@ -196,6 +250,11 @@ public class TimeSlotsDaoImpl implements TimeSlotsDAO {
         }
     }
 
+    /**
+     * This method is to get the time slots from the time slots file based on the cineplex
+     * @param cinemaCode The cineplex code of the time slots to get
+     * @return The array list of time slots associated with the cineplex code
+     */
     public ArrayList<TimeSlots> getTimeSlotsByCinema(String cinemaCode){
         ArrayList<TimeSlots> ts = getAllTimeSlot();
         ArrayList<TimeSlots> result = new ArrayList<TimeSlots>();

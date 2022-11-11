@@ -13,7 +13,7 @@ public class StandardPrice extends Price {
         SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
         return systemSettingsDAO.getTicketPrice();
     }
-    @Override
+
     public boolean updateTicketPrice(String price) {
         this.ticketPrice = Double.parseDouble(price);
         SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();

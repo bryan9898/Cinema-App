@@ -56,14 +56,6 @@ public abstract class Price {
         return 0;
     }
 
-    /**
-     * Updates the price of the ticket.
-     * @param price New price of the ticket.
-     * @return false
-     */
-    public boolean updateTicketPrice(String price){
-        return false;
-    };
 
     public String getPublicHolidaySurcharge() {
         return PublicHolidaySurcharge;
