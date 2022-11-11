@@ -5,21 +5,86 @@ import data.impl.MoviesDaoImpl;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a movie registered in the system.
+ * Makes a new Movies class with movie name, movie type, PG rating, movie description, director, cast names, rating of movie, runtime, end of showing date and the status of the show.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 public class Movies {
+	
+	/**
+	 * This line adds colour to the console.
+	 */
 	private static final String ANSI_RESET = "\u001B[0m";
+	
+	/**
+	 * This line adds colour to the console.
+	 */
 	private static final String ANSI_YELLOW = "\u001B[33m";
+	
+	/**
+	 * Name of the movie.
+	 */
 	private String MovieName;
+	
+	/**
+	 * Type of the movie. i.e. blockbuster or 3D.
+	 */
 	private String type;
+	
+	/**
+	 * PG rating for the movie.
+	 */
 	private String PGrating;
+	
+	/**
+	 * Description for the movie.
+	 */
 	private String Description;
+	
+	/**
+	 * Director for the movie.
+	 */
 	private String Director;
+	
+	/**
+	 * Names for the cast.
+	 */
 	private String Cast;
+	
+	/**
+	 * Rating for the movie based on the reviews.
+	 */
 	private double rating;
+	
+	/**
+	 * Runtime for the movie.
+	 */
 	private String runtime; // in mins
+	
+	/**
+	 * Date for the end of showing
+	 */
 	private String EOS ;
 
+	/**
+	 * Show status for the movie.
+	 */
 	private String showStatus;
 	
+	/**
+	 * Creates a Movie class with the given parameters.
+	 * @param MovieName Name of the movie.
+	 * @param type Type of the movie. i.e. blockbuster or 3D.
+	 * @param PGrating PG rating for the movie.
+	 * @param Description Description for the movie.
+	 * @param Director Director for the movie.
+	 * @param Cast Names for the cast.
+	 * @param runtime Runtime for the movie.
+	 * @param showStatus Show status for the movie.
+	 * @param EOS Date for the end of showing
+	 */
 	public Movies(String MovieName,String type,String PGrating,String Description,String Director, String Cast,String runtime,String showStatus,String EOS) {
 		this.MovieName=MovieName;
 		this.type=type;
@@ -33,84 +98,168 @@ public class Movies {
 		this.EOS = EOS;
 	}
 
+	/**
+	 * Default constructor for the Movies class.
+	 */
 	public Movies() {
 
 	}
 
+	/**
+	 * Sets the movie name.
+	 * @param movieName
+	 */
 	public void setMovieName(String movieName) {
 		MovieName = movieName;
 	}
 
+	/**
+	 * Sets the movie type.
+	 * @param type
+	 */
 	public void setType(String type) {
 		this.type = type;
 	}
 
+	/**
+	 * Sets the PG rating for the movie.
+	 * @param PGrating
+	 */
 	public void setPGrating(String PGrating) {
 		this.PGrating = PGrating;
 	}
 
+	/**
+	 * Sets the description for the movie.
+	 * @param description
+	 */
 	public void setDescription(String description) {
 		Description = description;
 	}
 
+	/**
+	 * Sets the director name for the movie.
+	 * @param director
+	 */
 	public void setDirector(String director) {
 		Director = director;
 	}
 
+	/**
+	 * Sets the cast names for the movie.
+	 * @param cast
+	 */
 	public void setCast(String cast) {
 		Cast = cast;
 	}
 
+	/**
+	 * Sets the runtime for the movie.
+	 * @param runtime
+	 */
 	public void setRuntime(String runtime) {
 		this.runtime = runtime;
 	}
 
+	/**
+	 * Sets the show status for the movie.
+	 * @param showStatus
+	 */
 	public void setShowStatus(String showStatus) {
 		this.showStatus = showStatus;
 	}
 
+	/**
+	 * Sets the rating for the movie.
+	 * @param rating
+	 */
 	public void setRating(double rating) {
 		this.rating= rating;
 	}
 
+	/**
+	 * Gets the movie name.
+	 * @return
+	 */
 	public String getMovieName() {
 		return MovieName;
 	}
 
+	/**
+	 * Gets the type of movie.
+	 * @return
+	 */
 	public String getType() {
 		return type;
 	}
 
+	/**
+	 * Gets the PG rating for the movie.
+	 * @return
+	 */
 	public String getPGrating() {
 		return PGrating;
 	}
 
+	/**
+	 * Gets the description for the movie.
+	 * @return
+	 */
 	public String getDescription() {
 		return Description;
 	}
 
+	/**
+	 * Gets the director name.
+	 * @return
+	 */
 	public String getDirector() {
 		return Director;
 	}
 
+	/**
+	 * Gets the cast names.
+	 * @return
+	 */
 	public String getCast() {
 		return Cast;
 	}
 
+	/**
+	 * Gets the rating for the movies.
+	 * @return
+	 */
 	public double getRating() {
 		return rating;
 	}
 
+	/**
+	 * Gets the runtime for the movie.
+	 * @return
+	 */
 	public String getRuntime() {
 		return runtime;
 	}
 
+	/**
+	 * Gets the show status for the movie.
+	 * @return
+	 */
 	public String getShowStatus() {
 		return showStatus;
 	}
 
-	public String getEOS() {return EOS;}
+	/**
+	 * Gets the end of showing date.
+	 * @return
+	 */
+	public String getEOS() {
+		return EOS;
+	}
 
+	/**
+	 * Prints all the parameters in the Movie class.
+	 */
 	public void printAll() {
 
 		System.out.println("Movie Name: "+ ANSI_YELLOW +MovieName + ANSI_RESET);
@@ -137,6 +286,9 @@ public class Movies {
 		System.out.println("Movie EOS date: "+ANSI_YELLOW+EOS+ ANSI_RESET);
 	}
 
+	/**
+	 * Lists out all the movies initialized in the system.
+	 */
 	public void listMovies() {
 		MoviesDAO mDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
@@ -163,6 +315,10 @@ public class Movies {
 		System.out.println("\n");
 	}
 
+	/**
+	 * Searches for movies based on the keywords and prints them out.
+	 * @param movieName keyword for the search.
+	 */
 	public void searchMovie(String movieName) {
 		MoviesDAO moviesDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = moviesDAO.searchMovie(movieName);
@@ -174,12 +330,18 @@ public class Movies {
 		System.out.println("\n");
 	}
 
-
-
+	/**
+	 * Gets status of the movie.
+	 * @return status of the movie.
+	 */
     public String getMovieStatus() {
 		return showStatus;
     }
 
+    /**
+     * Sets the end of showing date for the movie.
+     * @param newEOS
+     */
 	public void setEOS(String newEOS) {
 		this.EOS = newEOS;
 	}
