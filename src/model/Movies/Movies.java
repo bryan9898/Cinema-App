@@ -107,7 +107,7 @@ public class Movies {
 
 	/**
 	 * Sets the movie name.
-	 * @param movieName
+	 * @param movieName name of the movie.
 	 */
 	public void setMovieName(String movieName) {
 		MovieName = movieName;
@@ -115,7 +115,7 @@ public class Movies {
 
 	/**
 	 * Sets the movie type.
-	 * @param type
+	 * @param type Type of the movie.
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -123,7 +123,7 @@ public class Movies {
 
 	/**
 	 * Sets the PG rating for the movie.
-	 * @param PGrating
+	 * @param PGrating PG rating for the movie.
 	 */
 	public void setPGrating(String PGrating) {
 		this.PGrating = PGrating;
@@ -131,7 +131,7 @@ public class Movies {
 
 	/**
 	 * Sets the description for the movie.
-	 * @param description
+	 * @param description Description for the movie.
 	 */
 	public void setDescription(String description) {
 		Description = description;
@@ -139,7 +139,7 @@ public class Movies {
 
 	/**
 	 * Sets the director name for the movie.
-	 * @param director
+	 * @param director Director name for the movie.
 	 */
 	public void setDirector(String director) {
 		Director = director;
@@ -147,7 +147,7 @@ public class Movies {
 
 	/**
 	 * Sets the cast names for the movie.
-	 * @param cast
+	 * @param cast Cast names for the movie.
 	 */
 	public void setCast(String cast) {
 		Cast = cast;
@@ -155,7 +155,7 @@ public class Movies {
 
 	/**
 	 * Sets the runtime for the movie.
-	 * @param runtime
+	 * @param runtime Runtime for the movie.
 	 */
 	public void setRuntime(String runtime) {
 		this.runtime = runtime;
@@ -163,7 +163,7 @@ public class Movies {
 
 	/**
 	 * Sets the show status for the movie.
-	 * @param showStatus
+	 * @param showStatus Show Status for the movie.
 	 */
 	public void setShowStatus(String showStatus) {
 		this.showStatus = showStatus;
@@ -171,7 +171,7 @@ public class Movies {
 
 	/**
 	 * Sets the rating for the movie.
-	 * @param rating
+	 * @param rating Rating for the movies.
 	 */
 	public void setRating(double rating) {
 		this.rating= rating;
@@ -179,7 +179,7 @@ public class Movies {
 
 	/**
 	 * Gets the movie name.
-	 * @return
+	 * @return movie name.
 	 */
 	public String getMovieName() {
 		return MovieName;
@@ -187,7 +187,7 @@ public class Movies {
 
 	/**
 	 * Gets the type of movie.
-	 * @return
+	 * @return type of the moive.
 	 */
 	public String getType() {
 		return type;
@@ -195,7 +195,7 @@ public class Movies {
 
 	/**
 	 * Gets the PG rating for the movie.
-	 * @return
+	 * @return PG rating for the movie.
 	 */
 	public String getPGrating() {
 		return PGrating;
@@ -203,7 +203,7 @@ public class Movies {
 
 	/**
 	 * Gets the description for the movie.
-	 * @return
+	 * @return description for the movie.
 	 */
 	public String getDescription() {
 		return Description;
@@ -211,7 +211,7 @@ public class Movies {
 
 	/**
 	 * Gets the director name.
-	 * @return
+	 * @return directors name.
 	 */
 	public String getDirector() {
 		return Director;
@@ -219,7 +219,7 @@ public class Movies {
 
 	/**
 	 * Gets the cast names.
-	 * @return
+	 * @return names of the cast.
 	 */
 	public String getCast() {
 		return Cast;
@@ -227,7 +227,7 @@ public class Movies {
 
 	/**
 	 * Gets the rating for the movies.
-	 * @return
+	 * @return rating for the movies.
 	 */
 	public double getRating() {
 		return rating;
@@ -235,7 +235,7 @@ public class Movies {
 
 	/**
 	 * Gets the runtime for the movie.
-	 * @return
+	 * @return runtime for the movie.
 	 */
 	public String getRuntime() {
 		return runtime;
@@ -243,7 +243,7 @@ public class Movies {
 
 	/**
 	 * Gets the show status for the movie.
-	 * @return
+	 * @return show status for the movie.
 	 */
 	public String getShowStatus() {
 		return showStatus;
@@ -251,7 +251,7 @@ public class Movies {
 
 	/**
 	 * Gets the end of showing date.
-	 * @return
+	 * @return end of showing date.
 	 */
 	public String getEOS() {
 		return EOS;
@@ -340,7 +340,7 @@ public class Movies {
 
     /**
      * Sets the end of showing date for the movie.
-     * @param newEOS
+     * @param newEOS new end of showing date
      */
 	public void setEOS(String newEOS) {
 		this.EOS = newEOS;
