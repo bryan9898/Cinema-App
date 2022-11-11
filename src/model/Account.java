@@ -7,7 +7,19 @@ import data.AccountDAO;
 	 @version 1.0
 	 @since 06 Nov 2022
  */
+
+
 public abstract class Account {
+
+	/**
+	 * Creates a new Account with the given username.
+	 * The password will be hashed.
+	 * The contact information will be a phone number.
+	 * The email will be the email of the account.
+	 * @param username This is the user's username.
+	 * @param password This is the user's password.
+	 */
+
 	/**
 	 * The username of the account.
 	 */
@@ -19,20 +31,6 @@ public abstract class Account {
 	 */
 	@Required
 	protected String password;
-	/**
-	 * The Contact information of the user.
-	 */
-
-
-	/**
-	 * Creates a new Account with the given username.
-	 * The password will be hashed.
-	 * The contact information will be a phone number.
-	 * The email will be the email of the account.
-	 * @param username This is the user's username.
-	 * @param password This is the user's password.
-	 */
-
 
 	/**
 	 * Gets the Password of the account.
@@ -61,6 +59,7 @@ public abstract class Account {
 
 	/**
 	 * Sets the Username of the account.
+	 * @param user The Username of the account.
 	 */
 	public void setUsername(String user) {
 		this.username = user;

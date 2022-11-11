@@ -4,49 +4,43 @@ import data.AccountDAO;
 import data.CinemaDAO;
 import data.impl.CinemaDaoImpl;
 
-public class Cinema {
-	private String cineplexCode;
-	private String cinemaCode;
-	private String layout;
+import java.util.Arrays;
 
-	private static String[][] type1 = {
-			{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","N","O","P","Q","/"},
-			{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-			{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-			{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-			{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-			{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-			{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-			{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"},
-			{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"},
-			{"9","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"}
-	};
-	
-	private static String[][] type2 = {
-			{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","/"},
-			{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-			{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-			{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-			{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-			{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-			{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-			{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-			{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-	};
-	
-	//platinum class
-	private static String[][] type3 = {
-			{"/","A","B","/","D","E","/","G","H"},
-			{"1","O","O","/","O","O","/","O","O"},
-			{"2","O","O","/","O","O","/","O","O"},
-			{"3","O","O","/","O","O","/","O","O"},
-			{"4","O","O","/","O","O","/","O","O"},
-			{"5","O","O","/","O","O","/","O","O"},
-	};
+
+/**
+ * Represents a Cinema registered in the system.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
+public class Cinema {
+
+	/**
+	 * Makes a new Cinema with cineplex code, cinema code and cinema layout.
+	 * @param cineplexCode This is the cineplex code of the cinema.
+	 * @param cinemaCode This is the cinema code of the cinema.
+	 *The cineplex code + Cinema code is unique for each cinema.
+	 * @param layout is the layout of the cinema.
+	 */
+
+	/**
+	 * The cineplex code of the cinema.
+	 */
+	private String cineplexCode;
+
+	/**
+	 * The cinema code of the cinema.
+	 */
+	private String cinemaCode;
+
+	/**
+	 * The layout of the cinema.
+	 */
+	private String layout;
 
 	public Cinema(){
 
 	}
+
 
 	public Cinema(int cineplexCode, String cinemaCode) {
 		super();
@@ -68,17 +62,7 @@ public class Cinema {
 	}
 
 	public void printType2() {
-		String[][] type2Full = {
-				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","/"},
-				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-		};
+		String[][] type2Full = getLayoutIn2DArray("2");
 		System.out.printf("-----------------------------------------------      %n");
 		System.out.printf("                     Screen                          %n");
 		System.out.printf("-----------------------------------------------      %n");
@@ -93,14 +77,7 @@ public class Cinema {
 		System.out.printf("-----------------------------------------------      %n");
 	}
 	public void printType3() {
-		 String[][] type3Full = {
-				{"/","A","B","/","D","E","/","G","H"},
-				{"1","O","O","/","O","O","/","O","O"},
-				{"2","O","O","/","O","O","/","O","O"},
-				{"3","O","O","/","O","O","/","O","O"},
-				{"4","O","O","/","O","O","/","O","O"},
-				{"5","O","O","/","O","O","/","O","O"},
-		};
+		String[][] type3Full = getLayoutIn2DArray("3");
 		System.out.printf("Platinum Class%n");
 		System.out.printf("---------------------------     %n");
 		System.out.printf("           Screen               %n");
@@ -117,17 +94,7 @@ public class Cinema {
 	}
 
 	public void printType1() {
-		String[][] type1Full = {
-				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","/"},
-				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-		};
+		String[][] type1Full = getLayoutIn2DArray("1");
 		System.out.printf("     -----------------------------------------------      %n");
 		System.out.printf("                          Screen                          %n");
 		System.out.printf("     -----------------------------------------------      %n");
@@ -195,6 +162,7 @@ public class Cinema {
 
 
 	public String[][] getCineLayout(int cineplex, String cinemaNum) {
+
 		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		String layout = null;
 		if(cineplex == 1) {
@@ -204,62 +172,27 @@ public class Cinema {
 		else if(cineplex == 3) {
 			layout = cinemaDAO.getLayout("BIS", cinemaNum);}
 		if(layout.equals("1")) {
-			return type1;
+			return getLayoutIn2DArray("1");
 		}else if(layout.equals("2")) {
-			return type2;
+			return getLayoutIn2DArray("2");
 		}else if(layout.equals("3")) {
-			return type3;
+			return getLayoutIn2DArray("3");
 		}
 		return null;
 	}
 
 	public String[][] getCineLayout(String cineplex, String cinemaNum) {
 
-		String[][] type1copy = {
-				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","N","O","P","Q","/"},
-				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
-				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"},
-				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"},
-				{"9","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"}
-		};
-
-		String[][] type2copy = {
-				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","/"},
-				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
-				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
-		};
-
-		//platinum class
-		String[][] type3copy = {
-				{"/","A","B","/","D","E","/","G","H"},
-				{"1","O","O","/","O","O","/","O","O"},
-				{"2","O","O","/","O","O","/","O","O"},
-				{"3","O","O","/","O","O","/","O","O"},
-				{"4","O","O","/","O","O","/","O","O"},
-				{"5","O","O","/","O","O","/","O","O"},
-		};
-
 
 		CinemaDAO cinemaDAO = new CinemaDaoImpl();
 		String layout = null;
 		layout = cinemaDAO.getLayout(cineplex, cinemaNum);
 		if(layout.equals("1")) {
-			return type1copy;
+			return getLayoutIn2DArray("1");
 		}else if(layout.equals("2")) {
-			return type2copy;
+			return getLayoutIn2DArray("2");
 		}else if(layout.equals("3")) {
-			return type3copy;
+			return getLayoutIn2DArray("3");
 		}
 		return null;
 	}
@@ -277,4 +210,52 @@ public class Cinema {
 		}
 		return 0;
 	}
+
+
+	public String[][] getLayoutIn2DArray(String layout) {
+		String[][] type1 = {
+				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","N","O","P","Q","/"},
+				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
+				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
+				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
+				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
+				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
+				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","O","O","O","O","/"},
+				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"},
+				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"},
+				{"9","[","]","[","]","[","]","[","]","/","[","]","[","]","[","]","[","]","/"}
+		};
+
+		String[][] type2 = {
+				{"/","A","B","C","D","E","F","G","H","/","J","K","L","M","/"},
+				{"1","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"2","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"3","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"4","/","/","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"5","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"6","O","O","O","O","O","O","O","O","/","O","O","O","O","/"},
+				{"7","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
+				{"8","[","]","[","]","[","]","[","]","/","[","]","[","]","/"},
+		};
+
+		//platinum class
+		String[][] type3 = {
+				{"/","A","B","/","D","E","/","G","H"},
+				{"1","O","O","/","O","O","/","O","O"},
+				{"2","O","O","/","O","O","/","O","O"},
+				{"3","O","O","/","O","O","/","O","O"},
+				{"4","O","O","/","O","O","/","O","O"},
+				{"5","O","O","/","O","O","/","O","O"},
+		};
+
+		if(layout.equals("1")) {
+			return type1;
+		}else if(layout.equals("2")) {
+			return type2;
+		}else if(layout.equals("3")) {
+			return type3;
+		}
+		return null;
+	}
+
 }
