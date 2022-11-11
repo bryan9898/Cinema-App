@@ -140,6 +140,7 @@ public class ClientPage {
         System.out.println("Enter Number of Seats: ");
         int seats = sc.nextInt();
         int row = 0, seatInt = 0 ;
+
         Integer[][] allSeats = new Integer[seats][2];
         for (int i = 0; i < seats; i++) {
             System.out.println("Enter Seat Number (A/B/C): ");
@@ -173,8 +174,30 @@ public class ClientPage {
                             allSeats[i + 1][1] = seatInt;
                             i++;
                         }else{
-                            allSeats[i][0] = row;
-                            allSeats[i][1] = seatInt;
+                            // check if there is a single unoccupied seat between two selected seats
+                            for (int j = 0; j < i; j++) {
+                                if (allSeats[j][0] == row && allSeats[j][1] == seatInt - 2 && !timeSlotsByCinema.get(index2).getSeats()[row][seatInt-1].equals("/") || allSeats[j][0] == row && allSeats[j][1] == seatInt + 2 && !timeSlotsByCinema.get(index2).getSeats()[row][seatInt-1].equals("/")) {
+                                    seatBooked = 1;
+                                }
+                            }
+                            int seatBooked2 = 0;
+                            if(seatBooked == 1) {
+                                for (int j = 0; j < i; j++) {
+                                    if (allSeats[j][0] == row && allSeats[j][1] == seatInt - 1 || allSeats[j][0] == row && allSeats[j][1] == seatInt + 1) {
+                                        seatBooked2 = 1;
+                                    }
+                                }
+                                if (seatBooked2 == 1) {
+                                    allSeats[i][0] = row;
+                                    allSeats[i][1] = seatInt;
+                                } else {
+                                    System.out.println("There is a single unoccupied seat between two selected seats!");
+                                    i--;
+                                }
+                            } else {
+                                allSeats[i][0] = row;
+                                allSeats[i][1] = seatInt;
+                            }
                         }
                     }
                 } else {
@@ -451,8 +474,30 @@ public class ClientPage {
                             allSeats[i + 1][1] = seatInt;
                             i++;
                         }else{
+                            // check if there is a single unoccupied seat between two selected seats selected by user
+                            for (int j = 0; j < i; j++) {
+                                if (allSeats[j][0] == row && allSeats[j][1] == seatInt - 2 && !fullTimeSlots.get(index2).getSeats()[row][seatInt-1].equals("/") || allSeats[j][0] == row && allSeats[j][1] == seatInt + 2 && !fullTimeSlots.get(index2).getSeats()[row][seatInt-1].equals("/")) {
+                                    seatBooked = 1;
+                                }
+                            }
+                            int seatBooked2 = 0;
+                            if(seatBooked == 1) {
+                                for (int j = 0; j < i; j++) {
+                                    if (allSeats[j][0] == row && allSeats[j][1] == seatInt - 1 || allSeats[j][0] == row && allSeats[j][1] == seatInt + 1) {
+                                        seatBooked2 = 1;
+                                    }
+                                }
+                                if (seatBooked2 == 1) {
+                                    allSeats[i][0] = row;
+                                    allSeats[i][1] = seatInt;
+                                } else {
+                                    System.out.println("There is a single unoccupied seat between two selected seats!");
+                                    i--;
+                                }
+                            } else {
                                 allSeats[i][0] = row;
                                 allSeats[i][1] = seatInt;
+                            }
                         }
                     }
                 } else {
