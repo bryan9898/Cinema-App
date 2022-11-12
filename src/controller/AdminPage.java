@@ -216,7 +216,7 @@ public class AdminPage<ReviewDAO> {
 				case 1: ss.printPublicHolidays();
 					break;
 				case 2:
-					System.out.println("Enter Date of public holiday: ");
+					System.out.println("Enter Date of public holiday (dd/mm/yyyy): ");
 					String date = sc.next();
 					//check if date is a valid date
 					try {
@@ -229,7 +229,7 @@ public class AdminPage<ReviewDAO> {
 					if (work) {System.out.println("Holiday added successfully");} else {System.out.println("Holiday already added");}
 					break;
 				case 3:
-					System.out.println("Enter Date to be removed: ");
+					System.out.println("Enter Date to be removed (dd/mm/yyyy): ");
 					String rm = sc.next();
 					try {
 						LocalDate ld = LocalDate.parse(rm, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
