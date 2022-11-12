@@ -110,6 +110,24 @@ public class AdminPage<ReviewDAO> {
 				}
 				break;
 			case 2:
+				System.out.println("Which user is the review from?");
+				String user = sc.next();
+				int count1=1;
+				for(Reviews r: reviews) {
+					if(r.getUsername().equals(user)) {
+						rList.add(r);
+						System.out.println("Index:" + count1);
+						count1++;
+						r.printReview();
+					}
+				}
+				System.out.println("Which review to remove? (Enter index)");
+				int choice3 = sc.nextInt();
+				movieName = rList.get(choice3 - 1).getMovieName();
+				rList.get(choice3 - 1).removeReview();
+				if(rList.size()!=0) {
+					mDAO.editRating(movieName, rList.get(0).updateRating());
+				}
 				break;
 			default:
 				break;
