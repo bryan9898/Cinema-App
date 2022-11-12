@@ -4,7 +4,7 @@ import data.SystemSettingsDAO;
 import data.impl.SystemSettingsDaoImpl;
 
 /**
- * Represents a movie registered in the system.
+ * Represents the price of platinum tickets registered in the system.
  * Makes a new PlatinumPrice class.
  * @version 1.0
  * @since 06 Nov 2022
@@ -19,7 +19,8 @@ public class PlatinumPrice extends Price {
     }
 
     /**
-     * Gets the price of the ticket.
+     * Gets the price of the platinum price tickets.
+     * @return price of platinum price tickets.
      */
     public double getTicketPrice() {
         SystemSettingsDAO systemSettingsDAO = new SystemSettingsDaoImpl();
