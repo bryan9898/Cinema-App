@@ -15,8 +15,23 @@ import model.User;
 //MOvie Booking and LIsting Management Application
 // If using eclipse, install ANSI Escape in Console plugin in eclipse marketplace
 
+/**
+ * Main class for the UI.
+ * Makes a new Main class for main page of the UI.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 public class Main {
 	
+	/**
+	 * Default Constructor for Main class.
+	 */
+	Main(){
+		
+	}
+	/**
+	 * Log in page when console is initialized.
+	 */
 	public static void login(){
 		Scanner sc = new Scanner(System.in);
 		String user;
@@ -76,6 +91,9 @@ public class Main {
 		}
 	} */
 	
+	/**
+	 * Function to register an account for user.
+	 */
 	public static void register(){
 		Scanner sc = new Scanner(System.in);
 		String user;
@@ -155,6 +173,10 @@ public class Main {
 		
 	}
 
+	/**
+	 * Main function of the code.
+	 * @param args To initialize main function.
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		

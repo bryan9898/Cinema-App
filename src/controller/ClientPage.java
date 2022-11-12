@@ -21,8 +21,18 @@ import data.MoviesDAO;
 import data.ReviewsDAO;
 import model.User;
 
+/**
+ * Class for the client side.
+ * Makes a new ClientPage class for client side functions.
+ * @version 1.0
+ * @since 06 Nov 2022
+ */
 public class ClientPage {
 
+	/**
+	 * Construct a ClientPage class and initializes the client side display on console.
+	 * @param a User class that successfully logged in.
+	 */
     public ClientPage(User a){
         System.out.printf("\n");
         System.out.printf("\n");
@@ -74,6 +84,10 @@ public class ClientPage {
         }while(choice != 9);
     }
 
+    /**
+     * Function to allow users to book seats by Cinema.
+     * @param a User that logged in.
+     */
     private void bookSeatsByCinema(User a) {
         System.out.println("Choose Cinema (1 for NTU , 2 for SEK , 3 for BIS):");
         Scanner sc = new Scanner(System.in);
@@ -230,6 +244,9 @@ public class ClientPage {
 
     }
 
+    /**
+     * Function to view reviews.
+     */
     private void viewReview() {
 		MoviesDAO mDAO = new MoviesDaoImpl();
 		ReviewsDAO rDAO = new ReviewsDaoImpl();
@@ -254,6 +271,10 @@ public class ClientPage {
     	}
 	}
 
+    /**
+     * Function to add review.
+     * @param a User that is logged in.
+     */
 	private void addReview(Account a) {
     	MoviesDAO mDAO = new MoviesDaoImpl();
 		ArrayList<Movies> movies = mDAO.getAllMovies();
@@ -279,6 +300,9 @@ public class ClientPage {
 		mDAO.editRating(movieName, newReview.updateRating());
 	}
 
+	/**
+	 * Function to display top 5 movies either by sales or ratings.
+	 */
 	private void top5Movies() {
 		System.out.println("");
 		System.out.println("1: Top 5 by Sales");
@@ -347,6 +371,10 @@ public class ClientPage {
         System.out.println("");
     }
 
+	/**
+	 * Function to view all boooking made by user.
+	 * @param a User that logged in.
+	 */
     private void viewBookings(User a) {
         System.out.printf("\n");
         System.out.printf("\t------------------------------------\n"); // \tab
@@ -380,6 +408,10 @@ public class ClientPage {
         }
     }
 
+    /**
+     * Function to book seats for user.
+     * @param a User that logged in.
+     */
     private void bookSeats(User a) {
         MoviesDAO movieDAO = new MoviesDaoImpl();
         ArrayList<Movies> movies = movieDAO.getAllMovies();
@@ -530,6 +562,9 @@ public class ClientPage {
 
     }
 
+    /**
+     * Function to search for a particualr movie name.
+     */
     private void searchMovie() {
         System.out.println("Enter Movie Name");
         Scanner sc = new Scanner(System.in);
@@ -538,6 +573,9 @@ public class ClientPage {
         movie.searchMovie(movieName);
     }
 
+    /**
+     * Function to list all the movies.
+     */
     public void listMovies(){
         Movies m = new Movies();
         m.listMovies();

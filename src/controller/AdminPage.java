@@ -19,8 +19,19 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class for the admin side.
+ * Makes a new AdminPage class for admin side functions.
+ * @version 1.0
+ * @since 06 Nov 2022
+ * @param <ReviewDAO> Access to reviews.
+ */
 public class AdminPage<ReviewDAO> {
 	
+	/**
+	 * Construct a AdminPage class and initializes the admin side display on console.
+	 * @param admin Admin class that successfully logged in.
+	 */
 	public AdminPage(Admin admin){
 		System.out.printf("\n");
 		System.out.printf("\n");
@@ -75,6 +86,9 @@ public class AdminPage<ReviewDAO> {
 		}while(choice != 9);
 	}
 
+	/**
+	 * Function to remove review either by movies or username.
+	 */
 	private void removeReviews() {
 		ReviewsDAO rDAO = new ReviewsDaoImpl();
 		MoviesDAO mDAO = new MoviesDaoImpl();
@@ -139,6 +153,9 @@ public class AdminPage<ReviewDAO> {
         } 
 	}
 
+	/**
+	 * Function to display top 5 movies either by sales or ratings.
+	 */
 	private void top5Movies() {
 		System.out.println("");
 		System.out.println("1: Top 5 by Sales");
@@ -208,6 +225,9 @@ public class AdminPage<ReviewDAO> {
 		
 	}
 
+	/**
+	 * Function to edit system settings.
+	 */
 	private void editSystemSettings() {
 		System.out.printf("\n");
 		System.out.printf("\n");
@@ -276,6 +296,9 @@ public class AdminPage<ReviewDAO> {
 		} while (choice != 6);
 	}
 
+	/**
+	 * Function for editing movie parameters.
+	 */
 	private void editMovies() {
 
 		Movies m = new Movies();
@@ -376,6 +399,9 @@ public class AdminPage<ReviewDAO> {
 		} while (!choice.equals("8"));
 	}
 
+	/**
+	 * Function to edit movie show times.
+	 */
 	private void editMoviesShowTimes() {
 		TimeSlots ts = new TimeSlots();
 		TimeSlotsDAO tsDAO = new TimeSlotsDaoImpl();
@@ -438,6 +464,9 @@ public class AdminPage<ReviewDAO> {
 		}
 	}
 
+	/**
+	 * Function to add movies to chosen cinema.
+	 */
 	public void addMoviesToCinema(){
 		System.out.printf("\n");
 		System.out.printf("\t------------------------------------\n"); // \tab
@@ -511,11 +540,17 @@ public class AdminPage<ReviewDAO> {
 
 	}
 
+	/**
+	 * Function to list all movies.
+	 */
 	public void listMovies(){
 		Movies m = new Movies();
 		m.listMovies();
 	}
 
+	/**
+	 * Function to add new movies to the system.
+	 */
 	public void addMovies(){
 		Scanner sc = new Scanner(System.in);
 		String movieName;
