@@ -7,3 +7,6 @@ Marvel Studios' Black Panther: Wakanda Forever;;1234;;5.0;;Looking forward and n
 Marvel Studios' Black Panther: Wakanda Forever;;123;;5.0;;Best marvel movie
 Marvel Studios' Black Panther: Wakanda Forever;;123;;5.0;;BEST MOVIE EVER
 Marvel Studios' Black Panther: Wakanda Forever;;123;;1.0;;BAD
+Life Is Beautiful;;test;;5.0;;Good Movie
+Spider-Man;;123;;2.0;;THIS IS A TEST REVIEW
+Life Is Beautiful;;123;;2.0;;Its been easily over a decade since I last cried at a film, but This. Movie. Crushed me.
