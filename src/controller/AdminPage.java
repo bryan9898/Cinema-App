@@ -15,6 +15,7 @@ import java.awt.print.Book;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -217,12 +218,25 @@ public class AdminPage<ReviewDAO> {
 				case 2:
 					System.out.println("Enter Date of public holiday: ");
 					String date = sc.next();
+					//check if date is a valid date
+					try {
+						LocalDate ld = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					} catch (DateTimeParseException e) {
+						System.out.println("Invalid date");
+						return;
+					}
 					work = ss.addHoliday(date);
 					if (work) {System.out.println("Holiday added successfully");} else {System.out.println("Holiday already added");}
 					break;
 				case 3:
 					System.out.println("Enter Date to be removed: ");
 					String rm = sc.next();
+					try {
+						LocalDate ld = LocalDate.parse(rm, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+					} catch (DateTimeParseException e) {
+						System.out.println("Invalid date");
+						return;
+					}
 					work = ss.removeHoliday(rm);
 					if (work) {System.out.println("Holiday Removed successfully");} else {System.out.println("Holiday not found");}
 					break;
@@ -382,6 +396,13 @@ public class AdminPage<ReviewDAO> {
 		if (choice == 1) {
 			System.out.println("Enter the new Date: ");
 			String date = sc.next();
+			//check if date is a valid date
+			try {
+				LocalDate ld = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			} catch (DateTimeParseException e) {
+				System.out.println("Invalid date");
+				return;
+			}
 			System.out.println("Enter the new time : ");
 			String time = sc.next();
 			MoviesDAO mDAO = new MoviesDaoImpl();
@@ -438,6 +459,13 @@ public class AdminPage<ReviewDAO> {
 			cinema.printCinemaLayout();
 			System.out.println("Enter Date (DD/MM/YYYY): ");
 			String showDate = sc.nextLine();
+			//check if date is a valid date
+			try {
+				LocalDate ld = LocalDate.parse(showDate, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+			} catch (DateTimeParseException e) {
+				System.out.println("Invalid date");
+				return;
+			}
 			System.out.println("Enter Time (00:00-23:59): ");
 			String time = sc.nextLine();
 
@@ -501,6 +529,13 @@ public class AdminPage<ReviewDAO> {
 		String movieStatus = sc.nextLine();
 		System.out.printf("\t Movie End of showing date (dd/mm/yyyy): ");
 		String movieEOS = sc.nextLine();
+		//check if date is a valid date
+		try {
+			LocalDate ld = LocalDate.parse(movieEOS, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		} catch (DateTimeParseException e) {
+			System.out.println("Invalid date");
+			return;
+		}
 
 		Movies movie = new Movies(movieName,movieType,moviePGRating,movieDescription,movieDirectors,movieCast,movieDuration,movieStatus,movieEOS);
 		boolean work = mDAO.addMovie(movie);
